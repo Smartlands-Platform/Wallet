@@ -1,0 +1,130 @@
+.balances-container {
+  position: relative;
+  @media screen and (max-width: 767px) {
+    /*width: 260px!important;*/
+  }
+
+  .ui.small.table {
+    text-align: center;
+    margin-bottom: 40px;
+
+    th {
+      color: #fff;
+      font-size: 12px;
+      text-transform: uppercase;
+
+      @media screen and (max-width: 767px) {
+        width: 50% !important;
+      }
+    }
+
+    td {
+      padding: 10px;
+
+      @media screen and (max-width: 767px) {
+        width: 50% !important;
+      }
+    }
+
+    th:nth-child(even) {
+      background-color: #439e68;
+    }
+    th:nth-child(odd) {
+      background-color: #3cb46d;
+    }
+
+    .send-button {
+      color: #7c7c7c !important;
+    }
+
+    .send-button:hover {
+      background-color: #3cb46d !important;
+      color: #fff !important;
+    }
+
+    .delete-button:hover {
+      background-color: red !important;
+      color: #fff !important;
+    }
+  }
+
+  .send-button {
+    box-shadow: none !important;
+    border: 1px solid #3cb46d;
+    padding: 4px 18px 5px !important;
+  }
+  .delete-button {
+    box-shadow: none !important;
+    border: 1px solid #d43d3d;
+    padding: 7px !important;
+  }
+
+  .balances-form {
+    margin-bottom: 45px;
+
+    @media screen and (max-width: 600px){
+      margin-bottom: 75px;
+    }
+
+    .required.five.wide.field {
+      padding-right: 0;
+      width: auto !important;
+
+      @media screen and (max-width: 600px){
+        width: 25% !important;
+      }
+
+      input {
+        border-radius: unset;
+        height: 50px;
+
+        @media screen and (max-width: 767px) {
+          border-radius: 4px 0 0 4px;
+        }
+      }
+    }
+    .required.twelve.wide.field {
+      padding: 0;
+      width: auto !important;
+      border-left: 0;
+      flex-grow: 2;
+
+      @media screen and (max-width: 600px) {
+        //flex-grow: 0;
+        width: 70% !important;
+      }
+
+      input {
+        border-radius: unset;
+        height: 50px;
+        border-left: none !important;
+
+        @media screen and (max-width: 767px) {
+          border-radius: 0 4px 4px 0;
+        }
+      }
+    }
+    .ui.form .four.wide.field {
+      padding: 0;
+      width: auto !important;
+
+      button {
+        background-color: #3cb46d;
+        padding: 17px 32px 18px;
+        border-radius: 0 4px 4px 0;
+        font-size: 14px !important;
+
+        @media screen and (max-width: 600px){
+          border-radius: 4px;
+          position: absolute;
+          top: 72px;
+          left: 0;
+        }
+
+        &:hover {
+          background: #439e68;
+        }
+      }
+    }
+  }
+}

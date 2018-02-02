@@ -1,0 +1,135 @@
+.bottom-bar-menu {
+  background-color: #FFFFFF !important;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 60px !important;
+  position: absolute;
+
+  .row-footer{
+    width: 100%!important;
+    margin: 0!important;
+  }
+
+  .text-field {
+    margin-bottom: 20px;
+    font-size: 21px;
+    color: #FFFFFF;
+  }
+
+
+  .input-footer {
+
+   input {
+     background: transparent !important;
+     text-align: left;
+     border: 0 solid;
+   }
+    button {
+      padding: 9.429px 18px !important;
+      background: transparent !important;
+   }
+  }
+
+
+  .image-container {
+    background-image: url('../../content/assets/images/footer.png');
+    width: 100%;
+    height: 359px;
+  }
+
+  .text-link {
+    font-size: 14.1px;
+    font-weight: 500;
+    font-family: sans-serif;
+    margin-right: 10px;
+
+    a {
+        text-decoration: none;
+      color: #a3a2a2;
+    }
+    a:hover {
+      text-decoration: none;
+      color: #201e1f;
+    }
+  }
+
+  .column-footer {
+    padding: 93px 154px !important; ;
+  }
+
+  .image-row-column {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .icon-telegram {
+    margin-right: 25px;
+    width: 21px;
+    height: 21px;
+    background-image: url('../../content/assets/images/telegram-hover.png');
+  }
+
+  .icon-slack {
+    margin-right: 25px;
+    margin-top: 30px;
+    width: 21px;
+    height: 21px;
+    background-image: url('../../content/assets/images/slack-hover.png');
+
+  }
+
+  .icon-fb {
+    margin-right: 25px;
+    margin-top: 30px;
+    width: 14px;
+    height: 19px;
+    background-image: url('../../content/assets/images/fb-hover.png');
+  }
+
+  .icon-twitter {
+    margin-right: 25px;
+    margin-top: 30px;
+    width: 21px;
+    height: 21px;
+    background-image: url('../../content/assets/images/twitter-hover.png');
+  }
+
+  .icon-bitcoin {
+    margin-right: 25px;
+    margin-top: 30px;
+    width: 15px;
+    height: 21px;
+    background-image: url('../../content/assets/images/bitcoin-hover.png');
+  }
+
+  .column-bot{
+    padding: 27px 12px!important;
+    @media screen and (max-width: 640px){
+      padding: 35px 10px!important;
+    }
+  }
+
+/*  .bottom-column{
+    @media screen and (min-width: 320px){
+      padding: 23px 10px!important;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px){
+  .column-footer {
+    padding: 50px 50px !important;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .column-footer {
+    padding: 50px 50px !important;
+  }*/
+}
+
+@media screen and (max-width: 640px){
+  .column-footer {
+    padding: 20px 20px !important;
+  }
+}

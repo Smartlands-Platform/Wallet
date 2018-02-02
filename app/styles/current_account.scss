@@ -1,0 +1,101 @@
+.wallet-address {
+  display: inline-block;
+  font-size: 20px;
+  margin-right: 45px;
+}
+
+.wallet-address-box {
+  @media screen and (max-width: 767px) {
+    /*width: 260px;*/
+  }
+  .btn {
+    padding: 7px 18px !important;
+  }
+}
+
+.keys-table {
+  padding: 20px 130px;
+  margin-bottom: 30px !important;
+  height: 100%;
+  width: 100%;
+  font-size: 14px !important;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 12px !important;
+    padding: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+  }
+
+  tr {
+    @media screen and (max-width: 768px) {
+      padding: 8px 10px !important;
+    }
+  }
+
+  th {
+    color: #3cb46d;
+  }
+  td {
+    //font-family: 'Gotham Pro', serif;
+    font-weight: bold;
+    font-style: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: none !important;
+
+    .ui.basic.green.button:hover {
+      background-color: #3cb46d !important;
+      color: #fff !important;
+    }
+  }
+}
+
+.ui.table .right.aligned {
+  @media screen and (max-width: 767px){
+    margin-top: -52px;
+    margin-bottom: 20px;
+   }
+}
+
+.ui.action.input>.button{
+  margin-right: -3.5px;
+}
+
+@media screen and (min-width: 768px) {
+  .ui.table {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .ui.table {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .ui .two.column.grid {
+    >.row {
+      >.column {
+        width: 100%;
+      }
+    }
+  }
+  .ui.table {
+    font-size: 12px;
+
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .ui.action.input>.button{
+    padding: 16px 30px;
+  }
+
+  .ui.table:not(.unstackable) tr {
+    box-shadow: none !important;
+  }
+}

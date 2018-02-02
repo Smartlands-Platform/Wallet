@@ -1,0 +1,17 @@
+.slider-tabs {
+  li {
+    padding: 5px 40px !important;
+    color: #616060 !important;
+    position: relative;
+    cursor: pointer;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+    }
+  }
+}

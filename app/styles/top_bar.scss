@@ -1,0 +1,100 @@
+.top-bar-menu {
+  background-color: #201e1f !important;
+  box-shadow: 0 0 21px 0 rgba(219, 219, 219, 0.52);
+  padding: 18px 0;
+
+  @media screen and (max-width: 767px) {
+    padding: 18px 0 25px !important;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 14px 22px !important;
+    border-radius: 4px;
+    color: #fff !important;
+    background: #201e1f;
+    border: 2px solid #7c7c7c;
+    margin: 0 0 0 20px;
+
+    @media screen and (max-width: 1024px) {
+      margin: 0;
+    }
+
+    &:hover {
+      background: #439e68;
+      border-color: #201e1f;
+    }
+  }
+
+  .btn-img {
+    background-color: #201e1f;
+    width: 40px;
+    height: 15px;
+    padding: 1px;
+    border: transparent;
+    text-align: left;
+    position: relative;
+
+    &:after {
+      background: url('../../content/assets/images/arrow-down.png') no-repeat;
+      position: absolute;
+      right: 0;
+      top: 6px;
+      width: 10px;
+      height: 6px;
+      content: "";
+    }
+  }
+
+  .item {
+    padding: 0 !important;
+
+    @media screen and (max-width: 1024px) {
+      margin: 0 0 0 20px !important;
+    }
+
+
+    @media screen and (max-width: 767px) {
+      margin: 0 30px 0 0  !important;
+    }
+  }
+
+  .logo {
+    width: 140px;
+    height: 31px;
+    padding: 0 !important;
+    margin: 0 10px 0 0 !important;
+    background: url('../../content/assets/images/logo.png') no-repeat !important;
+    text-indent: -9999px;
+
+    @media screen and (max-width: 767px) {
+      margin: -7px  0 0 30px  !important;
+    }
+
+    &:hover {
+      //background: transparent !important;
+    }
+  }
+
+  .note {
+    padding-left: 5px !important;
+
+    @media screen and (max-width: 767px) {
+      padding: 0 !important;
+      position: absolute !important;
+      left: 30px;
+      bottom: 8px;
+      font-size: 12px;
+    }
+  }
+
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    .logo {
+      background-size: 140px 31px !important;
+      background-image: url("../../content/assets/images/logo@2x.png")  !important;
+    }
+  }
+
+}
