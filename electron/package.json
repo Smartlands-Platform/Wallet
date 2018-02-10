@@ -49,6 +49,10 @@
     }
   },
   "main": "./index.js",
+  "author": {
+    "name": "ngfar",
+    "email": "pakokrew@gmail.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "electron": "^1.4.14",
