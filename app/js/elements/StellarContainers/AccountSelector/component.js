@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Container, Button, Message } from 'semantic-ui-react';
+import { Form, Container, Button, Message } from 'semantic-ui-react';
 import Clipboard from 'clipboard';
 import { Field, propTypes } from 'redux-form';
 
@@ -15,6 +15,14 @@ const styles = {
     maxWidth: '90%',
     margin: 'auto',
   },
+  link: {
+    textDecoration: 'none',
+    color: '#2185d0',
+    marginLeft: '4px',
+  },
+  label: {
+    marginLeft: '10px',
+  },
 };
 
 class AccountSelector extends Component {
@@ -23,6 +31,7 @@ class AccountSelector extends Component {
     super(props);
 
     this.state = {
+      isAccept: true,
       keypair: null,
       showSeed: false,
       resolving: false,
@@ -49,9 +58,14 @@ class AccountSelector extends Component {
     }
   }
 
+
   componentDidMount() {
     this.props.switchNetwork('test');
     new Clipboard('.account-address-copy'); // eslint-disable-line no-new
+  }
+
+  toggleChange = () => {
+    this.setState({ isAccept: !this.state.isAccept });
   }
 
   handleAddress(e, newAddress) {
@@ -93,14 +107,16 @@ class AccountSelector extends Component {
     this.props.setAccount(keypair);
   }
 
+
+
   newForm() {
-    const { values: { address } } = this.props;
+    const { values: { address } = {} } = this.props;
 
     let buttonLabel = 'Invalid address';
     const buttonContent = 'Login';
     let buttonColor = 'green';
     let disabled = true;
-    if (this.state.keypair) {
+    if (this.state.keypair && this.state.isAccept) {
       buttonColor = 'green';
       disabled = false;
       if (this.state.keypair.canSign()) {
@@ -129,6 +145,20 @@ class AccountSelector extends Component {
             loading: this.state.resolving || this.props.isAccountLoading,
           }}
         />
+        <form>
+            <input
+                type="checkbox"
+                name="term"
+                checked={this.state.isAccept}
+                onChange={this.toggleChange}
+            />
+          <label style={styles.label}>
+              By entering you agree to Smartlands'
+            <a href="https://smartlands.io/pdf/Terms_of_use.pdf" target="_blank" rel="noopener" style={styles.link}>
+                Terms of Use
+            </a>
+          </label>
+        </form>
       </div>
     );
   }
@@ -150,6 +180,7 @@ class AccountSelector extends Component {
               :
               null
           }
+
           {/*{*/}
             {/*this.props.network === 'test' &&*/}
             {/*<div>*/}
