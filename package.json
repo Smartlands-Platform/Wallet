@@ -10,7 +10,7 @@
     "lint": "npm run test:lint",
     "start": "npm run dev",
     "clean": "rm -rf ./build",
-    "build-electron": "npm run build && cd electron && npm i && npm run build-linux",
+    "build-electron": "npm run build && cd electron && npm i && npm run build-win",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint app --fix",
     "test:unit": "mocha --compilers js:babel-core/register **/*.specs.js"
