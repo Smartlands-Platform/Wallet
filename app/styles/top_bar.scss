@@ -61,10 +61,10 @@
 
   .logo {
     width: 140px;
-    height: 31px;
+    height: 40px;
     padding: 0 !important;
     margin: 0 10px 0 0 !important;
-    background: url('../../content/assets/images/logo.png') no-repeat !important;
+    background: url('../../content/assets/images/smartlands_logo1.svg') no-repeat !important;
     text-indent: -9999px;
 
     @media screen and (max-width: 767px) {
@@ -91,10 +91,10 @@
   @media
   (-webkit-min-device-pixel-ratio: 2),
   (min-resolution: 192dpi) {
-    .logo {
-      background-size: 140px 31px !important;
-      background-image: url("../../content/assets/images/logo@2x.png")  !important;
-    }
+    //.logo {
+    //  background-size: 140px 31px !important;
+    //  background-image: url("../../content/assets/images/logo@2x.png")  !important;
+    //}
   }
 
 }

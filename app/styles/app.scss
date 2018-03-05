@@ -114,8 +114,8 @@ h2, h3 {
   margin: 0 0 72px 0;
   text-indent: -99999px;
   width: 181px;
-  height: 40px;
-  background: url("../../content/assets/images/welcome-logo.png") no-repeat;
+  height: 44px;
+  background: url("../../content/assets/images/smartlands_logo1.svg") no-repeat;
 
   a {
     display: block;
@@ -749,14 +749,5 @@ i.icon.triangle.down:before {
 
   .content {
     background: #3cb46d !important;
-  }
-}
-
-@media
-(-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-  .welcome-logo {
-    background-size: 181px 40px;
-    background-image: url("../../content/assets/images/welcome-logo@2x.png");
   }
 }

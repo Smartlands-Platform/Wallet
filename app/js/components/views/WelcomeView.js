@@ -22,7 +22,9 @@ class WelcomeScreen extends Component {
         <div className="welcome-container-overlay" />
         <Container textAlign="center">
           <h1 className="welcome-logo">
-            <a href="#">SmartLands</a>
+            <a href="#">
+              {/*<img src={img} alt=""/>*/}
+            </a>
           </h1>
           <Header as="h4" style={styles.title}>
             Log in to Smartlands wallet
