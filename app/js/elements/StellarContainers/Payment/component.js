@@ -442,7 +442,7 @@ class Payment extends Component {
 
     const destinationFormLabel = {
       color: this.state.destinationKeypair ? 'teal' : 'red',
-      icon: this.state.destinationKeypair ? 'checkmark' : 'remove',
+      icon: this.state.destinationKeypair ? 'checkmark' : null,
       className: 'iconOnly',
     };
 

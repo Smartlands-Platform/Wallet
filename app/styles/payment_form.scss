@@ -232,3 +232,9 @@
     }
   }
 }
+
+@media only screen and (min-width: 768px){
+  .ui.selection.dropdown .menu {
+    max-height: 10.68571429rem;
+  }
+}
