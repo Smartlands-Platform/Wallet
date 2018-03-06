@@ -9,6 +9,7 @@ const styles = {
   asset_issuer: {
     color: 'grey',
     padding: '0 0.5rem',
+    textDecoration: 'underline'
   },
   asset_code: {
     fontWeight: 500,
@@ -59,7 +60,7 @@ class Asset extends React.Component {
 
     return (
       <Popup className="popup-box"
-        hoverable
+        on="click"
         trigger={
           <div style={style}>
             <span style={styles.asset_code}>{objAsset.getCode()}</span>

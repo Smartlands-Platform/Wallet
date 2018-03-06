@@ -39,6 +39,9 @@ class Balances extends React.Component {
   checkIssuer(e) {
     const destinationAddress = e.target.value;
     this.setState({ validIssuer: validPk(destinationAddress) });
+    if (destinationAddress === ''){
+      this.setState({ validIssuer: true });
+    }
   }
 
   goToPayment(code) {
@@ -148,6 +151,7 @@ class Balances extends React.Component {
               type="text"
               placeholder="Code"
               width="5"
+              maxLength={12}
               required
             />
             <Form.Field
@@ -156,6 +160,7 @@ class Balances extends React.Component {
               error={!this.state.validIssuer}
               control="input"
               type="text"
+              maxLength={56}
               placeholder="Issuer"
               width="12"
               required
