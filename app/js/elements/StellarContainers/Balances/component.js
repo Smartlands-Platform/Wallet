@@ -116,6 +116,8 @@ class Balances extends React.Component {
   addTrustline(e, { formData }) {
     e.preventDefault();
     this.props.createTrustline(AssetInstance(formData));
+    e.target.asset_code.value = null;
+    e.target.asset_issuer.value = null;
   }
 
   addTrustlineSLT(e) {
