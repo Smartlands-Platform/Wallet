@@ -5,12 +5,14 @@ import Amount from '../../../components/stellar/Amount';
 import { STROOP, pageWidth, getHeaderCells } from '../../../helpers/StellarTools';
 
 import OrderBook from '../../../elements/StellarContainers/OrderBook';
+import {get} from "lodash";
 
 class Offers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedCell: this.headerTitles.BUYING,
+      confirmModalOpen: false,
     };
   }
 
@@ -70,7 +72,7 @@ class Offers extends React.Component {
             <button
               className="btn-icon remove"
               data-hover="Remove"
-              onClick={::this.deleteOffer(offer)}
+              onClick={this.deleteOffer(offer)}
             />
             : null}
         </Table.Cell> : null }

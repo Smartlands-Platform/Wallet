@@ -65,6 +65,7 @@ function MemoFields({ memo }) {
         type="text"
         placeholder="Memo"
         fluid
+        maxLength={memo.type === 'text' && 28}
         disabled={memo && memo.type === 'none'}
       />
     </div>
