@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form, Header, Table, Grid, Dropdown } from 'semantic-ui-react';
+import { Form, Header, Table, Grid, Dropdown, Icon, Modal, Button } from 'semantic-ui-react';
 import Asset from '../../../components/stellar/Asset';
 import Amount from '../../../components/stellar/Amount';
 import { STROOP, pageWidth, getHeaderCells } from '../../../helpers/StellarTools';
@@ -12,7 +12,7 @@ class Offers extends React.Component {
     super(props);
     this.state = {
       selectedCell: this.headerTitles.BUYING,
-      confirmModalOpen: false,
+      removeOffer: false,
     };
   }
 
@@ -43,10 +43,46 @@ class Offers extends React.Component {
     this.props.createOffer(offerData);
   }
 
+  openConfirmModal() {
+    this.setState({ confirmModalOpen: true });
+  }
+  closeConfirmModal() {
+    this.setState({ confirmModalOpen: false });
+  }
+
+  confirmRemove() {
+    this.setState({ removeOffer: true });
+    this.closeConfirmModal();
+  }
+
+
+  renderConfirmModal() {
+    return (
+      <Modal open={this.state.confirmModalOpen} basic size="small">
+        <Header icon="archive" content="Comfirm operation" />
+        <Modal.Content>
+          <h1> Are you sure?</h1>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button basic color="red" inverted onClick={::this.closeConfirmModal}>
+            <Icon name="remove" /> No
+          </Button>
+          <Button color="green" inverted onClick={::this.confirmRemove}>
+            <Icon name="checkmark" /> Yes
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  }
+
   deleteOffer(offer) {
     return (e) => {
       e.preventDefault();
-      this.props.deleteOffer(offer);
+      this.openConfirmModal();
+      if (this.state.removeOffer === true) {
+        this.props.deleteOffer(offer);
+        this.setState({ removeOffer: false });
+      }
     };
   }
 
@@ -228,6 +264,7 @@ class Offers extends React.Component {
                     <Header as="h3">Create offer</Header>
                     {this.getOfferForm()}
                     {this.getOfferTable()}
+                    {this.renderConfirmModal()}
                   </div>
                 </Grid.Column>
                 <Grid.Column className="main-column">
