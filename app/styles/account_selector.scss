@@ -1,0 +1,71 @@
+.welcome-container {
+  .field {
+    margin: 0 0 26px !important;
+    width: 668px;
+    
+    @media screen and (max-width: 767px){
+      width: 100%!important;
+      margin-bottom: 94px !important;
+    }
+  }
+
+  @media screen and (max-width: 651px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .ui.input {
+    height: 50px !important;
+
+    @media screen and (max-width: 767px){
+      flex-wrap: wrap;
+    }
+
+    input {
+      padding-left: 36px;
+      border-radius: 4px;
+      line-height: 28px !important;
+
+      @media screen and (max-width: 767px) {
+        width: 100% !important;
+        padding: 10px !important;
+      }
+    }
+  }
+
+  .ui.button {
+    background: #3cb46d !important;
+    font-size: 14px;
+    padding: 16px 30px;
+
+    @media screen and (max-width: 767px) {
+      margin-top: 20px!important;
+      border-radius: .28571429rem!important
+    }
+
+    &.green-white {
+      background: #fff !important;
+    }
+
+    &:hover {
+      background: #439e68 !important;
+    }
+  }
+
+  .ui.basic.button {
+    box-shadow: none !important;
+  }
+
+  .note-text {
+    font-size: 14px;
+    color: #000;
+    margin: 0 0 16px;
+  }
+
+  .ui.green.disabled.button{
+    margin-right: 0;
+    @media screen and (max-width: 767px) {
+      border-radius: .28571429rem!important;
+    }
+  }
+}
+

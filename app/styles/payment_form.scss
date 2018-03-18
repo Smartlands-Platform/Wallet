@@ -1,0 +1,234 @@
+.remove.icon {
+  color: #DB2828;
+  font-size: 1em !important;
+}
+
+.ui.input {
+  border: 1px solid #dedede !important;
+  border-radius: 4px !important;
+  input {
+    border: none !important;
+  }
+}
+
+.grdt-field {
+  .ui.labeled {
+    position: relative;
+  }
+  .ui.label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 12px;
+    background: transparent !important;
+  }
+
+  .ui.input {
+    border: none !important;
+
+    input {
+      border: 1px solid #dedede !important;
+      padding: 10px 30px !important;
+      border-radius: 4px !important;
+    }
+  }
+}
+
+.payment-form {
+  label {
+    text-transform: uppercase !important;
+  }
+
+  @media screen and (max-width: 767px) {
+    background: #fff;
+    border: none !important;
+  }
+
+  .column {
+    box-shadow: none !important;
+    position: relative;
+
+    .text-center{
+      text-align: center;
+    }
+  }
+
+  .info-box {
+    display: flex;
+    align-items: center;
+    min-height: 130px;
+    padding: 30px 0 0 70px;
+    font-size: 12px;
+    color: #616060;
+
+    @media screen and (max-width: 767px){
+      padding-top: 0;
+      padding-left: 0;
+      min-height: 90px !important;
+      align-items: flex-start !important;
+    }
+  }
+
+  .btn-box {
+    display: flex;
+    align-items: center;
+    min-height: 200px;
+    justify-content: center;
+    flex-flow: column wrap;
+
+    @media screen and (max-width: 1023px) {
+      align-items: flex-end;
+    }
+
+    @media screen and (max-width: 767px) {
+      align-items: center;
+    }
+
+    .btn {
+      font-size: 14px;
+      min-width: 230px;
+
+      &:first-child {
+        margin: 0 0 20px;
+      }
+    }
+  }
+
+  .payment-column,
+  .ui.doubling.grid >.row >.column.payment-column {
+    @media screen and (max-width: 1023px) {
+      width: 100% !important;
+      padding-top: 0 !important;
+    }
+  }
+
+  .row-box {
+    @media screen and (max-width: 767px) {
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: -30px;
+        right: -5px;
+        bottom: 0;
+        border-radius: 4px;
+        border: 1px solid #dedede;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    padding: 35px 35px 20px;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 29px 17px 34px;
+  }
+}
+
+.create_account {
+  @media screen and (max-width: 767px) {
+    .btn {
+      margin: 10px 20px 0 !important;
+    }
+  }
+  .row-box {
+    @media screen and (max-width: 767px) {
+      position: relative;
+
+      &:before {
+        bottom: 25px;
+      }
+    }
+  }
+}
+
+.issue_asset {
+  @media screen and (max-width: 767px) {
+    .row {
+      .issue-box {
+        @media screen and (max-width: 767px) {
+          &:first-child {
+              position: relative;
+
+              &:before {
+                content: "";
+                position: absolute;
+                left: -5px;
+                top: -30px;
+                right: -5px;
+                bottom: -15px;
+                border-radius: 4px;
+                border: 1px solid #dedede;
+              }
+            }
+          }
+
+        &:last-child {
+          .btn-box {
+            justify-content: baseline !important;
+            padding-top: 100px;
+          }
+        }
+      }
+    }
+    .main-btn {
+      position: absolute;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+      bottom: 140px;
+    }
+  }
+}
+
+.payment {
+  @media screen and (max-width: 767px) {
+    .row-box {
+      @media screen and (max-width: 767px) {
+        position: relative;
+
+        &:after {
+          bottom: -10px;
+        }
+      }
+    }
+    .main-btn {
+      margin-top: 40px !important;
+    }
+  }
+}
+
+.dropdown {
+  padding: 11px 10px 11px 30px !important;
+}
+
+.input,
+.field {
+  input {
+    padding: 10px 10px 10px 30px !important;
+  }
+}
+
+.memo-box {
+  label {
+    display: block;
+    margin: 0 0 3px;
+  }
+
+  .memo-value {
+    color: transparent;
+  }
+}
+
+@media screen and (max-width: 767px){
+  .ui.dropdown .menu {
+    .selected.item{
+      background: #3cb46d;
+    }
+  }
+}
