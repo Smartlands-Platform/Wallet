@@ -28,38 +28,6 @@ const navs = [
 
 const Layout = ( ) =>
   <Menu className="bottom-bar-menu" fixed="bottom" text>
-    {/*<Container className="image-container">
-      <Grid columns={2} divided doubling className="image-row-column">
-        <Grid.Row className="row-footer">
-          <Grid.Column className="column-footer">
-              <Header className="text-field">
-                Follow our news and updates
-              </Header>
-              <Form>
-                <Form.Group>
-                  <Form.Input className="input-footer" placeholder="Email" />
-                  <Form.Button className="btn-black" content="Submit" />
-                </Form.Group>
-              </Form>
-          </Grid.Column>
-          <Grid.Column className="column-footer">
-            <div>
-              <Header className="text-field">
-                Join Smartlands
-              </Header>
-              <div>
-                <p>Smartlands it is a unique platform for integration real economy with blockchain technology</p>
-              </div>
-              <Icon className="icon-telegram" />
-              <Icon className="icon-slack" />
-              <Icon className="icon-fb" />
-              <Icon className="icon-twitter" />
-              <Icon className="icon-bitcoin"/>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Container>*/}
     <Container className="bottom-container">
       <Grid columns={2} divided doubling className="image-row-column" >
         <Grid.Row className="row-footer">
