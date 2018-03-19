@@ -94,7 +94,7 @@ class AccountSelector extends Component {
   }
 
   newForm() {
-    const { values: { address } } = this.props;
+    const { values: { address } = {} } = this.props;
 
     let buttonLabel = 'Invalid address';
     const buttonContent = 'Login';
@@ -118,6 +118,8 @@ class AccountSelector extends Component {
           component={InputFormField}
           onChange={::this.handleAddress}
           type="text"
+          size="10"
+          maxLength={56}
           placeholder="Enter private key"
           error={!!address && !this.state.keypair}
           fluid

@@ -17,6 +17,11 @@ class KeypairGenerator extends React.Component {
     this.setState({ keypair: Keypair.random() });
   }
 
+  closeGenerateKeypair() {
+    this.setState({ keypair: null });
+    this.props.close();
+  }
+
   render() {
     return (
       <Modal open={this.props.open} className="generate-modal">
@@ -42,7 +47,7 @@ class KeypairGenerator extends React.Component {
         </Modal.Content>
         <Modal.Actions>
           <Button onClick={::this.generateKeypair} primary>Generate</Button>
-          <Button onClick={() => this.props.close()} secondary>Close</Button>
+          <Button onClick={::this.closeGenerateKeypair} secondary>Close</Button>
         </Modal.Actions>
       </Modal>
     );

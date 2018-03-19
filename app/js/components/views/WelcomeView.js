@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Container, Header, Button } from 'semantic-ui-react';
+import React, {Component} from 'react';
+import {Container, Header, Button} from 'semantic-ui-react';
 
 import AccountSelector from '../../elements/StellarContainers/AccountSelector';
+import BottomBar from '../../elements/UiTools/BottomBar/BottomBar';
 
 const styles = {
   title: {
@@ -18,8 +19,9 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <div className="welcome-container">
-        <span className="note">This is the beta version of Smartlands Platform currently available on testnet only.</span>
-        <div className="welcome-container-overlay" />
+        <span
+          className="note">This is the beta version of Smartlands Platform currently available on testnet only.</span>
+        <div className="welcome-container-overlay"/>
         <Container textAlign="center">
           <h1 className="welcome-logo">
             <a href="#">
@@ -29,8 +31,9 @@ class WelcomeScreen extends Component {
           <Header as="h4" style={styles.title}>
             Log in to Smartlands wallet
           </Header>
-          <AccountSelector />
+          <AccountSelector/>
         </Container>
+        <BottomBar />
       </div>
     );
   }
