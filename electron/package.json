@@ -10,7 +10,8 @@
     "_build_common": "npm run _clean-app && npm run _cp-app",
     "build-win": "npm run _build_common && build --win --x64",
     "_cp-app": "cp -r ../build app",
-    "_clean-app": "rm -rf ./dist ./app"
+    "_clean-app": "rm -rf ./dist ./app",
+    "inspect-main": "electron-inspector"
   },
   "build": {
     "appId": "app.smartlands.portal",
@@ -57,6 +58,7 @@
   "devDependencies": {
     "electron": "^1.4.14",
     "electron-builder": "^11.2.5",
+    "electron-inspector": "^0.1.4",
     "electron-rebuild": "^1.5.6"
   },
   "dependencies": {
