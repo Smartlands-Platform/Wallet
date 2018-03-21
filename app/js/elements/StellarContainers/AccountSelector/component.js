@@ -134,7 +134,6 @@ class AccountSelector extends Component {
           component={InputFormField}
           onChange={::this.handleAddress}
           type="text"
-          size="10"
           maxLength={56}
           placeholder="Enter private key"
           error={!!address && !this.state.keypair}
