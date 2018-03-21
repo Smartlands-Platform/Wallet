@@ -147,7 +147,7 @@ class AccountSelector extends Component {
             loading: this.state.resolving || this.props.isAccountLoading,
           }}
         />
-        <form>
+        {/*<form>
             <input
                 type="checkbox"
                 name="term"
@@ -160,7 +160,7 @@ class AccountSelector extends Component {
                 Terms of Use
             </a>
           </label>
-        </form>
+        </form>*/}
       </div>
     );
   }
