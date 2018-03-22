@@ -42,13 +42,13 @@
     font-weight: 500;
     font-family: sans-serif;
     margin-right: 10px;
+    user-select: text;
 
     a {
         text-decoration: none;
       color: #a3a2a2;
     }
     a:hover {
-      text-decoration: none;
       color: #201e1f;
     }
   }

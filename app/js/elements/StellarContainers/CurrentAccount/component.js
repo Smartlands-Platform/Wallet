@@ -69,7 +69,7 @@ class CurrentAccount extends Component {
             </h3>
           }
           {
-            !this.state.showButton && (this.state.showSeed ?
+            !this.state.showButton && canSign && (this.state.showSeed ?
               <button
                 type="button"
                 className="btn option-btn green-white"

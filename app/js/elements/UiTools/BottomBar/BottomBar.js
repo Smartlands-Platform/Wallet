@@ -37,7 +37,7 @@ const Layout = ( ) =>
                  <a href="mailto:contact@smartlands.io" >Contact</a>
               </span>
               <span className="text-link">
-                <a href="https://smartlands.io/pdf/Terms_of_use.pdf">Terms of use</a>
+                <a href="https://smartlands.io/pdf/Terms_of_use.pdf" rel="noreferrer noopener" target="_blank">Terms of use</a>
               </span>
               <span className="text-link">
                 <a>contact@smartlands.io</a>
@@ -48,7 +48,7 @@ const Layout = ( ) =>
             <Menu.Item position="right">
               {navs.map((nav, index) =>
                 <span key={index} className="text-link">
-                  <a href={nav.href}>{nav.text}</a>
+                  <a href={nav.href} rel="noopener noreferrer" target="_blank">{nav.text}</a>
                 </span>
               )}
             </Menu.Item>

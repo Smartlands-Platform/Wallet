@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
-import { Form, Header, Table, Grid, Dropdown } from 'semantic-ui-react';
+import { Form, Header, Table, Grid, Dropdown, Icon, Modal, Button } from 'semantic-ui-react';
 import Asset from '../../../components/stellar/Asset';
 import Amount from '../../../components/stellar/Amount';
 import { STROOP, pageWidth, getHeaderCells } from '../../../helpers/StellarTools';
 
 import OrderBook from '../../../elements/StellarContainers/OrderBook';
+import {get} from "lodash";
 
 class Offers extends React.Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class Offers extends React.Component {
       this.props.deleteOffer(offer);
     };
   }
+
 
   getOfferRow(offer, index) {
     // console.log('this.state', this.props.offers);
