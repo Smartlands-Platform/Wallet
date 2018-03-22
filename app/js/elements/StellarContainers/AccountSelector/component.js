@@ -3,6 +3,7 @@ import { Form, Container, Button, Message } from 'semantic-ui-react';
 import Clipboard from 'clipboard';
 import { Field, propTypes } from 'redux-form';
 
+
 import * as StellarHelper from '../../../helpers/StellarTools';
 import InputFormField from '../../UiTools/SemanticForm/Input';
 import KeypairGenerator from '../../../elements/UiTools/KeypairGenerator';
@@ -196,11 +197,23 @@ class AccountSelector extends Component {
           {/*}*/}
           <p className="note-text">No Smartlands wallet yet? Generate your keypair here:</p>
           <Button
-            className="btn big green-white"
+            className="btn big green-white fixed-width"
             content="Generate keypair"
             loading={this.props.isCreatingTestAccount}
             onClick={this.props.createTestAccount}
           />
+          <br/>
+          { window.innerWidth > 767
+            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-mac.zip">
+                <Button className="btn big green-white download-btn" content="Download for Mac"/>
+              </a>
+            : null }
+          { window.innerWidth > 767
+            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-win.zip">
+                <Button  className="btn big green-white download-btn" content="Download for Windows"/>
+              </a>
+            : null }
+
           {/*onClick={this.props.openKeypairModal}*/}
           <KeypairGenerator open={this.props.keypairModalOpen} close={this.props.closeKeypairModal} />
         </Container>

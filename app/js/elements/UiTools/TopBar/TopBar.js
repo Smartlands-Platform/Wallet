@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Container, Menu } from 'semantic-ui-react';
+import { Container, Menu, Button } from 'semantic-ui-react';
 
 import NetworkSwitcher from '../../../elements/UiTools/NetworkSwitcher';
 import AccountSwitcher from '../../../elements/UiTools/AccountSwitcher';
@@ -23,9 +23,17 @@ const Layout = ({ keypair, goHome, keypairModalOpen, openKeypairModal, closeKeyp
         </Menu.Item>
         <Menu.Item position="right">
           { window.innerWidth > 767
-            ? <button className="btn gray" onClick={openKeypairModal}>Keypair generator</button>
+            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-mac.zip">
+              <button className="btn grey">Download for Mac</button>
+            </a>
             : null }
-          <KeypairGenerator open={keypairModalOpen} close={closeKeypairModal} />
+        </Menu.Item>
+        <Menu.Item>
+          { window.innerWidth > 767
+            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-win.zip">
+              <button className="btn grey">Download for Windows</button>
+            </a>
+            : null }
         </Menu.Item>
         { window.innerWidth < 768 ?
           <Menu.Item>
