@@ -67,5 +67,24 @@
       border-radius: .28571429rem!important;
     }
   }
+
+  .download-btn{
+    margin-top: 25px;
+    margin-right: 100px;
+    a {
+      text-decoration: none;
+      color: #3cb46d;
+    }
+
+    a:hover{
+      color: #FFFFFF;
+    }
+  }
+
+  .fixed-width{
+     width: 199px;;
+  }
+
+
 }
 

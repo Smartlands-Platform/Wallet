@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { Container, Button, Message } from 'semantic-ui-react';
+import { Form, Container, Button, Message } from 'semantic-ui-react';
 import Clipboard from 'clipboard';
 import { Field, propTypes } from 'redux-form';
+
 
 import * as StellarHelper from '../../../helpers/StellarTools';
 import InputFormField from '../../UiTools/SemanticForm/Input';
@@ -15,6 +16,14 @@ const styles = {
     maxWidth: '90%',
     margin: 'auto',
   },
+  link: {
+    textDecoration: 'none',
+    color: '#2185d0',
+    marginLeft: '4px',
+  },
+  label: {
+    marginLeft: '10px',
+  },
 };
 
 class AccountSelector extends Component {
@@ -23,6 +32,7 @@ class AccountSelector extends Component {
     super(props);
 
     this.state = {
+      isAccept: true,
       keypair: null,
       showSeed: false,
       resolving: false,
@@ -49,9 +59,14 @@ class AccountSelector extends Component {
     }
   }
 
+
   componentDidMount() {
     this.props.switchNetwork('test');
     new Clipboard('.account-address-copy'); // eslint-disable-line no-new
+  }
+
+  toggleChange = () => {
+    this.setState({ isAccept: !this.state.isAccept });
   }
 
   handleAddress(e, newAddress) {
@@ -93,14 +108,16 @@ class AccountSelector extends Component {
     this.props.setAccount(keypair);
   }
 
+
+
   newForm() {
-    const { values: { address } } = this.props;
+    const { values: { address } = {} } = this.props;
 
     let buttonLabel = 'Invalid address';
     const buttonContent = 'Login';
     let buttonColor = 'green';
     let disabled = true;
-    if (this.state.keypair) {
+    if (this.state.keypair && this.state.isAccept) {
       buttonColor = 'green';
       disabled = false;
       if (this.state.keypair.canSign()) {
@@ -118,6 +135,7 @@ class AccountSelector extends Component {
           component={InputFormField}
           onChange={::this.handleAddress}
           type="text"
+          maxLength={56}
           placeholder="Enter private key"
           error={!!address && !this.state.keypair}
           fluid
@@ -129,6 +147,20 @@ class AccountSelector extends Component {
             loading: this.state.resolving || this.props.isAccountLoading,
           }}
         />
+        {/*<form>
+            <input
+                type="checkbox"
+                name="term"
+                checked={this.state.isAccept}
+                onChange={this.toggleChange}
+            />
+          <label style={styles.label}>
+              By entering you agree to Smartlands'
+            <a href="https://smartlands.io/pdf/Terms_of_use.pdf" target="_blank" rel="noopener" style={styles.link}>
+                Terms of Use
+            </a>
+          </label>
+        </form>*/}
       </div>
     );
   }
@@ -150,6 +182,7 @@ class AccountSelector extends Component {
               :
               null
           }
+
           {/*{*/}
             {/*this.props.network === 'test' &&*/}
             {/*<div>*/}
@@ -164,11 +197,23 @@ class AccountSelector extends Component {
           {/*}*/}
           <p className="note-text">No Smartlands wallet yet? Generate your keypair here:</p>
           <Button
-            className="btn big green-white"
+            className="btn big green-white fixed-width"
             content="Generate keypair"
             loading={this.props.isCreatingTestAccount}
             onClick={this.props.createTestAccount}
           />
+          <br/>
+          { window.innerWidth > 767
+            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-mac.zip">
+                <Button className="btn big green-white download-btn" content="Download for Mac"/>
+              </a>
+            : null }
+          { window.innerWidth > 767
+            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-win.zip">
+                <Button  className="btn big green-white download-btn" content="Download for Windows"/>
+              </a>
+            : null }
+
           {/*onClick={this.props.openKeypairModal}*/}
           <KeypairGenerator open={this.props.keypairModalOpen} close={this.props.closeKeypairModal} />
         </Container>
