@@ -1,6 +1,7 @@
 {
   "name": "smartlands-platform",
   "version": "0.1.0",
+  "homepage": "https://wallet.smartlands.io",
   "description": "Decentralized smartlands platform",
   "scripts": {
     "postinstall": "install-app-deps",
@@ -13,26 +14,30 @@
     "_clean-app": "rm -rf ./dist ./app"
   },
   "build": {
-    "appId": "app.smartlands.portal",
+    "appId": "app.smartlands.platform",
     "electronVersion": "1.4.14",
     "productName": "Smartlands Platform",
-    "mac": {
+    "dmg": {
       "icon": "icons/icon.icns",
       "iconSize": 180,
-      "target": [
-        "dmg",
-        "zip"
-      ],
-      "category": "public.app-category.finance"
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/icons"
+        }
+      ]
     },
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "deb"
       ]
-    },
-    "dmg": {
-      "icon": "icons/icon.icns",
-      "iconSize": 180
     },
     "nsis": {
       "oneClick": false,
@@ -42,8 +47,8 @@
     "win": {
       "icon": "icons/icon.ico",
       "target": [
-        "nsis",
         "squirrel",
+        "nsis",
         "zip"
       ]
     }
@@ -55,11 +60,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.4.14",
-    "electron-builder": "^11.2.5",
-    "electron-rebuild": "^1.5.6"
+    "electron": "^1.8.4",
+    "electron-builder": "^13.10.1",
+    "electron-rebuild": "^1.7.0"
   },
   "dependencies": {
-    "electron-builder-squirrel-windows": "^11.4.0"
+    "electron-builder-squirrel-windows": "^13.10.1"
   }
 }
