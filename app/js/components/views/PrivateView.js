@@ -14,15 +14,13 @@ import TabsPanel from '../../elements/UiTools/TabsPanel';
 import SliderRessponsive from '../../elements/UiTools/SliderTabsPanel';
 // import '../../../styles/panel_tabs.scss';
 
-const userAgent = navigator.userAgent.toLowerCase();
-
 const PrivateView = () => (
     <div className="pages-container">
         <TopBar/>
         <CurrentAccount/>
 
         <TabsPanel/>
-        {userAgent.indexOf(' electron/') === -1 && <BottomBar/>}
+        <BottomBar/>
         {/*<BottomBar/>*/}
 
         {/*<Container>*/}
