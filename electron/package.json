@@ -17,21 +17,14 @@
     "appId": "app.smartlands.platform",
     "electronVersion": "1.4.14",
     "productName": "Smartlands-Platform",
-    "dmg": {
+    "mac": {
       "icon": "icons/icon.icns",
       "iconSize": 180,
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/icons"
-        }
-      ]
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.finance"
     },
     "linux": {
       "target": [
