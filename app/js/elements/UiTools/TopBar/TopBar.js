@@ -1,18 +1,14 @@
 import React, { PropTypes } from 'react';
-import { Container, Menu, Button } from 'semantic-ui-react';
+import { Container, Menu } from 'semantic-ui-react';
 
 import NetworkSwitcher from '../../../elements/UiTools/NetworkSwitcher';
 import AccountSwitcher from '../../../elements/UiTools/AccountSwitcher';
 import MobileNavigation from '../../../elements/UiTools/MobileNavigation';
 import KeypairGenerator from '../../../elements/UiTools/KeypairGenerator';
 
-import icon from '../../../../../content/assets/images/logo.png';
+import { downloadDeskBuild } from '../../../helpers/common';
 
 import '../../../../styles/top_bar.scss';
-
-function duplicateTab() {
-  window.open(window.location.href);
-}
 
 const Layout = ({ keypair, goHome, keypairModalOpen, openKeypairModal, closeKeypairModal }) =>
     <Menu className="top-bar-menu" fixed="top" inverted secondary>
@@ -23,14 +19,14 @@ const Layout = ({ keypair, goHome, keypairModalOpen, openKeypairModal, closeKeyp
         </Menu.Item>
         <Menu.Item position="right">
           { window.innerWidth > 767
-            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-mac.zip">
+            ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'mac')}>
               <button className="btn grey">Download for Mac</button>
             </a>
             : null }
         </Menu.Item>
         <Menu.Item>
           { window.innerWidth > 767
-            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-win.zip">
+            ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'win')}>
               <button className="btn grey">Download for Windows</button>
             </a>
             : null }

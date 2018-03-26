@@ -19,6 +19,20 @@ if (process.env.PROXY) {
 }
 
 app.use(express.static(appPath));
-app.get('/*', (req, res) => res.sendFile(path.join(appPath, 'index.html')));
+app.get('/*', (req, res) => {
+  if (req.url === '/builds/mac' || req.url === '/builds/win') {
+      getDeskBuild(req.url, res);
+      return null;
+  }
+  res.sendFile(path.join(appPath, 'index.html'))
+});
 
 app.listen(app.get('port'), '0.0.0.0', () => console.log(`Server listening on port ${app.get('port')}`));
+
+function getDeskBuild(url, res) {
+    const platform = url.substr(url.lastIndexOf('/') + 1);
+    let file = path.join(__dirname, `/build_app/${platform}/Smartlands-Platform-0.1.0-${platform}.zip`);
+    if (platform === 'mac') file = path.join(__dirname, `/build_app/${platform}/SmartlandsPlatform.dmg`);
+    res.download(file);
+    return null;
+}

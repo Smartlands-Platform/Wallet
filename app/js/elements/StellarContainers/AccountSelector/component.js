@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Container, Button, Message } from 'semantic-ui-react';
+import { Container, Button, Message } from 'semantic-ui-react';
 import Clipboard from 'clipboard';
 import { Field, propTypes } from 'redux-form';
-
 
 import * as StellarHelper from '../../../helpers/StellarTools';
 import InputFormField from '../../UiTools/SemanticForm/Input';
 import KeypairGenerator from '../../../elements/UiTools/KeypairGenerator';
+import {downloadDeskBuild} from '../../../helpers/common';
 
 import '../../../../styles/account_selector.scss';
 
@@ -108,8 +108,6 @@ class AccountSelector extends Component {
     this.props.setAccount(keypair);
   }
 
-
-
   newForm() {
     const { values: { address } = {} } = this.props;
 
@@ -204,12 +202,12 @@ class AccountSelector extends Component {
           />
           <br/>
           { window.innerWidth > 767
-            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-mac.zip">
+            ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'mac')}>
                 <Button className="btn big green-white download-btn" content="Download for Mac"/>
               </a>
             : null }
           { window.innerWidth > 767
-            ? <a href="https://qa-wallet.technorely.com/media/Smartlands%20Platform-0.1.0-win.zip">
+            ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'win')}>
                 <Button  className="btn big green-white download-btn" content="Download for Windows"/>
               </a>
             : null }
