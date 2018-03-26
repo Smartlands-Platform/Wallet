@@ -16,7 +16,7 @@
   "build": {
     "appId": "app.smartlands.platform",
     "electronVersion": "1.4.14",
-    "productName": "Smartlands Platform",
+    "productName": "Smartlands-Platform",
     "dmg": {
       "icon": "icons/icon.icns",
       "iconSize": 180,
