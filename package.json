@@ -12,6 +12,7 @@
     "clean": "rm -rf ./build",
     "build-electron:linux": "npm run build && cd electron && npm i && npm run build-linux",
     "build-electron:mac": "npm run build && cd electron && npm i && npm run build-mac",
+    "build-electron:mac:dmg": "node_modules/.bin/electron-installer-dmg electron/dist/mac/Smartlands-Platform.app SmartlandsPlatform --icon=electron/icons/icon.icns --prune=true --overwrite",
     "build-electron:win": "npm run build && cd electron && npm i && npm run build-win",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint app --fix",
@@ -29,7 +30,9 @@
     "lumens"
   ],
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "electron-installer-dmg": "^0.2.1"
+  },
   "dependencies": {
     "@webpack-blocks/babel6": "^0.4.0",
     "@webpack-blocks/css-modules": "^0.4.0",
