@@ -27,6 +27,7 @@ const navs = [
 
 const userAgent = navigator.userAgent.toLowerCase();
 
+
 const Layout = () =>
   <Menu className="bottom-bar-menu" fixed="bottom" text>
       {userAgent.indexOf(' electron/') === -1 && (<Container className="bottom-container">
