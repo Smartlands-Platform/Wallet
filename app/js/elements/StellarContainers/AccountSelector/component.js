@@ -10,6 +10,8 @@ import {downloadDeskBuild} from '../../../helpers/common';
 
 import '../../../../styles/account_selector.scss';
 
+const userAgent = navigator.userAgent.toLowerCase();
+
 const styles = {
   inputContainer: {
     width: '720px',
@@ -201,12 +203,12 @@ class AccountSelector extends Component {
             onClick={this.props.createTestAccount}
           />
           <br/>
-          { window.innerWidth > 767
+          { window.innerWidth > 767 && userAgent.indexOf(' electron/') === -1
             ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'mac')}>
                 <Button className="btn big green-white download-btn" content="Download for Mac"/>
               </a>
             : null }
-          { window.innerWidth > 767
+          { window.innerWidth > 767 && userAgent.indexOf(' electron/') === -1
             ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'win')}>
                 <Button  className="btn big green-white download-btn" content="Download for Windows"/>
               </a>

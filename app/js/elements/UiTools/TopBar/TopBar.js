@@ -10,6 +10,8 @@ import { downloadDeskBuild } from '../../../helpers/common';
 
 import '../../../../styles/top_bar.scss';
 
+const userAgent = navigator.userAgent.toLowerCase();
+
 const Layout = ({ keypair, goHome, keypairModalOpen, openKeypairModal, closeKeypairModal }) =>
     <Menu className="top-bar-menu" fixed="top" inverted secondary>
       <Container>
@@ -18,14 +20,14 @@ const Layout = ({ keypair, goHome, keypairModalOpen, openKeypairModal, closeKeyp
           <strong>Beta-version, testnet.</strong>
         </Menu.Item>
         <Menu.Item position="right">
-          { window.innerWidth > 767
+          { window.innerWidth > 767 && userAgent.indexOf(' electron/') === -1
             ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'mac')}>
               <button className="btn grey">Download for Mac</button>
             </a>
             : null }
         </Menu.Item>
         <Menu.Item>
-          { window.innerWidth > 767
+          { window.innerWidth > 767 && userAgent.indexOf(' electron/') === -1
             ? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'win')}>
               <button className="btn grey">Download for Windows</button>
             </a>
