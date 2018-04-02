@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Grid, Form, Container, Icon, Menu, Button, Header } from 'semantic-ui-react';
 import '../../../../styles/bottom_bar.scss';
 
+
 const light = {
   color: '#bababa',
 };
