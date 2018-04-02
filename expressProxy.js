@@ -31,7 +31,7 @@ app.listen(app.get('port'), '0.0.0.0', () => console.log(`Server listening on po
 
 function getDeskBuild(url, res) {
     const platform = url.substr(url.lastIndexOf('/') + 1);
-    let file = path.join(__dirname, `/build_app/${platform}/Smartlands-Platform-0.1.0-${platform}.zip`);
+    let file = path.join(__dirname, `/build_app/${platform}/SmartlandsPlatform.exe`);
     if (platform === 'mac') file = path.join(__dirname, `/build_app/${platform}/SmartlandsPlatform.dmg`);
     res.download(file);
     return null;

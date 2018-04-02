@@ -39,10 +39,15 @@
     },
     "win": {
       "icon": "icons/icon.ico",
+      "iconUrl": "https://gitlab.com/jorikburlakov/suprime-portal/blob/stage/electron/icons/icon.ico",
       "target": [
         "squirrel",
         "nsis",
         "zip"
+      ],
+      "arch": [
+        "x64",
+        "ia32"
       ]
     }
   },
