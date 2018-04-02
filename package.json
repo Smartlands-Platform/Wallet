@@ -13,6 +13,7 @@
     "build-electron:linux": "npm run build && cd electron && npm i && npm run build-linux",
     "build-electron:mac": "npm run build && cd electron && npm i && npm run build-mac",
     "build-electron:mac:dmg": "node_modules/.bin/electron-installer-dmg electron/dist/mac/Smartlands-Platform.app SmartlandsPlatform --icon=electron/icons/icon.icns --prune=true --overwrite",
+    "build-electron:win:exe": "electron-packager electron/dist/win-unpacked SmartlandsPlatform --overwrite --asar=false --platform=win32 --arch=ia32 --icon=electron/icons/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"SmartlandsPlatform\"",
     "build-electron:win": "npm run build && cd electron && npm i && npm run build-win",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint app --fix",
