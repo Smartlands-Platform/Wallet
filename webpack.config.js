@@ -15,8 +15,12 @@ const config = require('./config');
 
 const appDir = config.appPath;
 const buildDir = config.buildPath;
+const devTool = config.devtool;
 
 module.exports = createConfig([
+    // {
+    //     devtool: "source-map"
+    // },
   setOutput({
     filename: '[hash].[name].js',
     path: buildDir()

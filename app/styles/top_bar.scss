@@ -53,9 +53,8 @@
       margin: 0 0 0 20px !important;
     }
 
-
     @media screen and (max-width: 767px) {
-      margin: 0 30px 0 0  !important;
+      margin: 0 30px 0 0 !important;
     }
   }
 
@@ -68,7 +67,12 @@
     text-indent: -9999px;
 
     @media screen and (max-width: 767px) {
-      margin: -7px  0 0 30px  !important;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 25.9375vw;
+      height: 3.59375vh;
+      margin: -7px 0 0 11% !important;
     }
 
     &:hover {
@@ -88,8 +92,25 @@
     }
   }
 
-  @media
-  (-webkit-min-device-pixel-ratio: 2),
+  .menu-button {
+    width: 40px;
+    height: 30px;
+    margin-left: 7.8vw;
+    background: transparent;
+    border: none;
+
+    .first-button{
+      width: 4.84375vw;
+      height: 3.75vh;
+    }
+
+    .second-button{
+      width: 7.34375vw;
+      height: 2.4218vh;
+    }
+  }
+
+  @media(-webkit-min-device-pixel-ratio: 2),
   (min-resolution: 192dpi) {
     //.logo {
     //  background-size: 140px 31px !important;

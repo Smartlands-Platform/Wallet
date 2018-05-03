@@ -53,7 +53,7 @@ class Payments extends React.Component {
           <AmountComponent payment={payment} />
           { !pageWidth() ? <PaymentArrow toMe={isToMyAccount} /> : null }
         </Table.Cell>
-        { this.state.selectedCell === this.headerTitles.ASSET || pageWidth() ? <Table.Cell>
+        { this.state.selectedCell === this.headerTitles.ASSET || pageWidth() ? <Table.Cell className="prime">
           <Asset {...payment} />
         </Table.Cell> : null }
         { this.state.selectedCell === this.headerTitles.ACCOUNT || pageWidth() ? <Table.Cell>
@@ -160,7 +160,7 @@ class Payments extends React.Component {
 
     return (
       <div className="balances-container">
-        <Table singleLine size="small" compact unstackable>
+        <Table fixed singleLine size="small"  compact unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>AMOUNT</Table.HeaderCell>
@@ -178,7 +178,7 @@ class Payments extends React.Component {
               directPayments.map(::this.getPaymentRow)
               :
               <Table.Row>
-                <Table.Cell colSpan="6" textAlign="center">No payments</Table.Cell>
+                <Table.Cell colSpan="6" textAlign="center" >No payments</Table.Cell>
                 <Table.Cell />
               </Table.Row>
             }

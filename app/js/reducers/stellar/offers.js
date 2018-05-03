@@ -18,6 +18,7 @@ function resetAccount() {
 
 function getOffersSuccess(state, action) {
   const { offers } = action;
+    // console.log("offers", offers);
   return {
     ...state,
     data: offers,
@@ -40,6 +41,7 @@ function deletingOffer(state, action) {
 
 function getOffersStream(state, action) {
   const { offer } = action;
+  console.log("offer", offer);
   return {
     ...state,
     data: state.data.concat(offer),

@@ -11,7 +11,6 @@ class CurrentAccount extends Component {
 
     this.state = {
       showString: props.showString || false,
-      showButton: props.showButton || false,
       showSeed: props.showSeed || false,
       windowWidth: 2,
     };
@@ -20,17 +19,13 @@ class CurrentAccount extends Component {
   componentDidMount() {
     new Clipboard('.account-address-copy'); // eslint-disable-line no-new
     this.checkPageSize();
-    window.addEventListener('resize', ::this.handleResize);
+    window.addEventListener('resize', ::this.checkPageSize, false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', ::this.handleResize)
+    window.removeEventListener('resize', ::this.checkPageSize, false)
   }
-
-  handleResize() {
-    this.checkPageSize();
-  }
-
+//TODO ACCOUNT: keypair.secret()
   openOnNewTab() {
     let url = '/?';
     url += `network=${this.props.network}`;
@@ -53,7 +48,7 @@ class CurrentAccount extends Component {
     this.setState({windowWidth: window.innerWidth});
   }
 
-  accountInfo() {
+  get accountInfo() {
     if (!this.props.keypair) { return null; }
 
     const { keypair } = this.props;
@@ -61,28 +56,11 @@ class CurrentAccount extends Component {
     return (
       <div>
         <div className="wallet-address-box">
-          <h3 className="wallet-address">Wallet address</h3>
           {
             this.props.showString &&
             <h3 className="as-block note-title">
               Save Private key securely before transferring any funds to the account!
             </h3>
-          }
-          {
-            !this.state.showButton && canSign && (this.state.showSeed ?
-              <button
-                type="button"
-                className="btn option-btn green-white"
-                onClick={() => this.setState({ showSeed: false })}>
-                Hide private key
-              </button>
-              :
-              <button
-                type="button"
-                className="btn option-btn green-white"
-                onClick={() => this.setState({ showSeed: true })}>
-                Show private key
-              </button>)
           }
         </div>
         <Table className='keys-table' compact>
@@ -111,6 +89,7 @@ class CurrentAccount extends Component {
                   Private key:
                 </Table.HeaderCell>
                 <Table.Cell>
+                  {/*//TODO ACCOUNT: keypair.secret()*/}
                   {this.state.windowWidth < 601 ? this.getAccountIdText(keypair.secret()) : keypair.secret() }
                 </Table.Cell>
                 <Table.Cell textAlign="right">
@@ -132,9 +111,7 @@ class CurrentAccount extends Component {
   render() {
     return (
       <div>
-        <Container>
-          {this.accountInfo()}
-        </Container>
+          {this.accountInfo}
       </div>
     );
   }

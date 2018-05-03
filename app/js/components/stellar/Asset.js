@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Stellar from 'stellar-sdk';
 import { Popup, Button } from 'semantic-ui-react';
 import Clipboard from 'clipboard';
@@ -16,7 +16,7 @@ const styles = {
   },
 };
 
-class Asset extends React.Component {
+class Asset extends Component {
 
   constructor(props) {
     super(props);
@@ -25,6 +25,8 @@ class Asset extends React.Component {
     };
   }
   componentDidMount() {
+    // console.log("getAssets", this.props);console.log("getAssets", this.props);
+
     new Clipboard('.asset-address-copy'); // eslint-disable-line no-new
     this.checkPageSize();
     window.addEventListener('resize', ::this.checkPageSize);
@@ -43,6 +45,9 @@ class Asset extends React.Component {
 
   render() {
     const { asset, asset_type, asset_code, asset_issuer } = this.props;
+
+    // console.log("Asset props", this.props);
+
     if (!asset && !asset_type) {
       return null;
     }
@@ -59,8 +64,9 @@ class Asset extends React.Component {
     }
 
     return (
-      <Popup className="popup-box"
-        on="click"
+      <Popup
+        className="popup-box"
+        hoverable
         trigger={
           <div style={style}>
             <span style={styles.asset_code}>{objAsset.getCode()}</span>
@@ -87,15 +93,29 @@ class Asset extends React.Component {
 }
 
 Asset.getIssuerText = (issuer) => {
-  const firstThree = issuer.slice(0, 3);
-  const lastThree = issuer.slice(-3);
+    const firstThree = issuer.slice(0, 10);
+    const lastThree = issuer.slice(-13);
+  //TODO get long texts
+  // const firstThree = issuer.slice(0, 3);
+  // const lastThree = issuer.slice(-3);
+  // console.log("issuer", issuer);
   return `${firstThree}...${lastThree}`;
 };
 
 Asset.getAssetString = asset => (
+  // console.log("asset", asset),
   asset.isNative() ? 'XLM' :
     `${asset.getCode()} (${Asset.getIssuerText(asset.getIssuer())})`
 );
+
+Asset.setNewData = (image) =>{
+  return image
+};
+
+Asset.setSiteData = (site) =>{
+    return site
+};
+
 
 Asset.propTypes = {
   asset: PropTypes.object,

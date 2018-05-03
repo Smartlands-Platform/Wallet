@@ -5,7 +5,7 @@ class AccountSwitcher extends React.Component {
     const { resetAccount } = this.props;
 
     return (
-      <button className="btn gray" onClick={resetAccount}>Change account</button>
+      <button className="btn gray" onClick={resetAccount}>Log out</button>
     );
   }
 }

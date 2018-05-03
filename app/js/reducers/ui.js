@@ -66,6 +66,15 @@ function setDestinationTrustlines(state, action) {
   };
 }
 
+export function toggleNavigation(state, action) {
+  const { toggle } = action;
+    console.log('action', toggle);
+  return {
+    ...state,
+    toggle,
+  };
+}
+
 export default createReducer(initialState, {
   [types.SEND_OFFER]: sendingOffer,
   [types.SEND_OFFER_SUCCESS]: sendOfferSuccess,
@@ -73,5 +82,6 @@ export default createReducer(initialState, {
   [types.CLOSE_ERROR_MODAL]: closeErrorModal,
   [types.OPEN_KEYPAIR_MODAL]: openKeypairModal,
   [types.CLOSE_KEYPAIR_MODAL]: closeKeypairModal,
+  [types.TOGGLE_NAVIGATION]: toggleNavigation,
   [stellarTypes.SET_DESTINATION_TRUSTLINES]: setDestinationTrustlines,
 });

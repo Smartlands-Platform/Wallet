@@ -4,10 +4,12 @@ import Balances from './component';
 import { canSign, getBalances } from '../../../selectors/account';
 import { isCreatingTrustline } from '../../../selectors/ui';
 import { createTrustline, deleteTrustline } from '../../../actions-creators/stellar';
+import {getTrustlines} from "js/selectors/stellarData";
 
 const mapStateToProps = state => ({
   balances: getBalances(state),
   canSign: canSign(state),
+  trustlines: getTrustlines(state),
   creatingTrustline: isCreatingTrustline(state),
 });
 

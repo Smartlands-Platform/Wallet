@@ -19,8 +19,6 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <div className="welcome-container">
-        <span
-          className="note">This is the beta version of Smartlands Platform currently available on testnet only.</span>
         <div className="welcome-container-overlay"/>
         <Container textAlign="center">
           <h1 className="welcome-logo">
@@ -32,8 +30,8 @@ class WelcomeScreen extends Component {
             Log in to Smartlands wallet
           </Header>
           <AccountSelector/>
+          <BottomBar />
         </Container>
-        <BottomBar />
       </div>
     );
   }

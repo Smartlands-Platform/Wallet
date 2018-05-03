@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   keypairModalOpen: isModalKeypairOpen(state),
 });
 
+
 const mapDispatchToProps = dispatch => ({
   openKeypairModal: () => dispatch(openKeypairModal()),
   closeKeypairModal: () => dispatch(closeKeypairModal()),

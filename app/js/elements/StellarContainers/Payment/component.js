@@ -99,10 +99,10 @@ class Payment extends Component {
   setType(tabIndex) {
     let type = OPERATIONS.PAYMENT;
     switch (tabIndex) {
-      case 5:
+      case 3:
         type = OPERATIONS.ISSUE_ASSET;
         break;
-      case 6:
+      case 4:
         type = OPERATIONS.CREATE_ACCOUNT;
         break;
       default:

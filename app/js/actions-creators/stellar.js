@@ -88,6 +88,8 @@ const changeTrust = ({ asset, limit }) => (dispatch, getState) => {
 };
 
 export const createTrustline = asset => (dispatch) => {
+  // console.log("createTrustline", asset);
+    //TODO create trusline async dispatch
   dispatch(AsyncActions.startLoading(ASYNC_CREATE_TRUSTLINE));
 
   dispatch(changeTrust({ asset, limit: null }))
@@ -156,6 +158,11 @@ export const setOrderbook = ({ selling, buying }) => (dispatch) => {
   return true;
 };
 
+export const resetOrderbook = () => (dispatch) => {
+    dispatch(AsyncActions.successFetch(ASYNC_GET_ORDERBOOK, null))
+};
+
+//TODO add assets to balance
 export const getDestinationTrustlines = accountId => (dispatch) => {
   StellarServer.getAccount(accountId)
     .then(account => account.balances.map(balance => ({

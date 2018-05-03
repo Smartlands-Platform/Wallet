@@ -3,11 +3,12 @@ h3 {
 }
 
 .panel-tabs {
-  display: block;
   position: relative;
-  @media screen and (max-width: 767px) {
-    /*width: 260px!important;*/
-  }
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  height: 100%;
 
   .react-tabs {
     &__tab-list {
@@ -16,98 +17,62 @@ h3 {
       padding: 40px 0 0;
       border-bottom: 1px solid #dedede;
       position: relative;
-      display: flex;
-      justify-content: space-between;
-      //align-items: center;
     }
   }
   .tabs-list {
     list-style: none;
-    margin: 0 0 28px;
-    padding: 40px 0 0;
-    border-bottom: 1px solid #dedede;
+    margin: 0;
+    padding: 20px 0 20px 30px;
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex: 0 0 190px;
+    background: #201e1f;
+    color: #818181;
+    font-size: 14px;
+    font-weight: bold;
 
-    .slick-track {
-      div {
-        padding: 5px 19px !important;
-        color: #616060 !important;
-        position: relative;
-        cursor: pointer;
-        text-align: center;
-        font-size: 12px;
+    @media screen and (max-width: 767px){
+      flex: auto;
+      padding: 20px 0 20px 0;
+      text-align: center;
+      z-index: 1;
 
-        &.active {
-          border: none;
-          box-shadow: none;
-          background-color: #fafafa;
-          padding: 0;
-          color: #3cb46d !important;
-          border-color: #3cb46d !important;
+    }
 
-          &:after {
-            background: #3cb46d;
-          }
+    li {
+      padding: 11px 15px 14px;
+      margin: 0 0 10px;
+      position: relative;
+      cursor: pointer;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+
+        @media screen and (max-width: 767px){
+          width: 6px;
         }
+      }
+
+
+
+      &.active {
+        background: #1a1819;
+        color: #fff;
 
         &:after {
-          content: '';
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: -1px;
-          height: 2px;
+          background: #6fb370;
         }
       }
     }
   }
 
-  .slick-prev,
-  .slick-next {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background: url('../../content/assets/images/slider-arrow.png') no-repeat 50% 50%;
-    text-indent: -9999px;
-    border: none;
-    width: 10px;
-    height: 30px;
-    cursor: pointer;
-    z-index: 100;
-  }
-
-  .slick-prev {
-    right: auto;
-    left: 0;
-    transform: rotate(180deg);
-  }
-
-  .panel-title {
-    position: absolute;
-    left: 0;
-    top: 4px;
-
-    @media screen and (max-width: 767px) {
-      top: -10px;
-
-    }
-  }
-
-  .react-tabs__tab--selected {
-    border: none;
-    box-shadow: none;
-    background-color: #fafafa;
-    padding: 0;
-    color: #3cb46d !important;
-    border-color: #3cb46d !important;
-
-
-    &:after {
-      background: #3cb46d;
-    }
+  .tab-panel {
+    flex: 1;
+    padding: 15px 20px 40px 25px;
+    overflow-y: auto;
   }
 }

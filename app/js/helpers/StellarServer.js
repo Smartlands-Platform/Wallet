@@ -21,12 +21,14 @@ export const getAccount = accountId =>
         return augmentAccount(account);
       }
       throw 'no account';
-    });
+    })
 
+//TODO OrderBook realization
 export const Orderbook = ({ selling, buying }) =>
   getServerInstance()
     .orderbook(AssetInstance(selling), AssetInstance(buying))
     .call();
+
 export const OrderbookStream = ({ selling, buying }, onmessage) =>
   getServerInstance()
     .orderbook(AssetInstance(selling), AssetInstance(buying))
@@ -36,7 +38,8 @@ export const OrderbookDetail = ({ selling, buying }) =>
   getServerInstance()
     .orderbook(AssetInstance(selling), AssetInstance(buying))
     .trades()
-    .call();
+     .call();
+
 
 export const AccountStream = (accountId, callback) =>
   getServerInstance()
@@ -55,7 +58,7 @@ export const OffersStream = (accountId, callback) => {
       .offers('accounts', accountId)
       .order('desc')
       .call()
-      .then(result => callback(result.records));
+      .then(result => (callback(result.records)));
   }, REFRESH_INTERVAL);
 
   return () => clearInterval(timerId);
@@ -68,6 +71,7 @@ export const EffectsStream = (accountId, onmessage) =>
     .order('asc')
     .stream({ onmessage });
 
+//TODO PaymentStream realization
 export const PaymentStream = (accountId, onmessage) =>
   getServerInstance()
     .payments()
@@ -75,6 +79,7 @@ export const PaymentStream = (accountId, onmessage) =>
     .order('asc')
     .stream({
       onmessage: (payment) => {
+        // console.log("payment", payment);
         payment.transaction().then((transaction) => {
           onmessage({
             ...payment,
@@ -93,6 +98,7 @@ export const switchNetwork = (network) => {
       break;
     case 'public':
       Server = new Stellar.Server('https://horizon.stellar.org');
+      // Server = new Stellar.Server('https://horizon.smartlands.io/');
       Stellar.Network.usePublicNetwork();
       break;
     default:
@@ -103,6 +109,7 @@ export const switchNetwork = (network) => {
   }
 };
 
+//TODO ACCOUNT: generate test pair keys
 export async function generateTestPair() {
   const pair = Stellar.Keypair.random();
 
@@ -115,3 +122,5 @@ export async function generateTestPair() {
 }
 
 switchNetwork();
+// Transactions();
+

@@ -14,6 +14,7 @@ export const setAccount = keys => (dispatch, getState) => {
   const keypair = KeypairInstance(keys);
   const network = getNetwork(getState());
 
+  //TODO ACCOUNT: keypair.secret()
   return getAccount(keypair.publicKey())
     .then((account) => {
       dispatch(AsyncActions.successFetch(ASYNC_FETCH_ACCOUNT, account));

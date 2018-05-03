@@ -6,6 +6,7 @@ export const DELETE_OFFER = 'offer:delete:fetching';
 export const SEND_OFFER = 'offer:send:fetching';
 export const SEND_OFFER_SUCCESS = 'offer:send:success';
 export const DELETE_TRUSTLINE = 'trustline:delete:fetching';
+export const TOGGLE_NAVIGATION = 'navigation:toggle';
 
 export function openKeypairModal() {
   return {
@@ -53,5 +54,12 @@ export function deletingTrustline(trustline, balances) {
     type: DELETE_TRUSTLINE,
     trustline,
     balances,
+  };
+}
+
+export function toggleNavigation(toggle) {
+  return {
+    type: TOGGLE_NAVIGATION,
+    toggle,
   };
 }

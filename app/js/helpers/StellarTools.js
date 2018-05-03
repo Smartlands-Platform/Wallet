@@ -15,6 +15,9 @@ export const validDestination = address =>
   resolveAddress(address).then(() => true).catch(() => false);
 
 export const AssetInstance = (asset) => {
+
+  // console.log("AssetInstance", asset);
+
   if (!asset) return null;
   if (asset instanceof Asset) {
     return asset;
@@ -53,6 +56,7 @@ export const AmountInstance = (number) => {
   return decimal.toString();
 };
 
+//TODO add balances
 export const augmentAccount = account => ({
   ...account,
   balances: account.balances.map(b => ({

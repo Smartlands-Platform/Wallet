@@ -4,12 +4,12 @@ import { Keypair } from 'stellar-sdk';
 
 import AccountKeyViewer from '../../StellarContainers/CurrentAccount';
 
-
 class KeypairGenerator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       keypair: null,
+      open: false,
     };
   }
 
@@ -17,9 +17,22 @@ class KeypairGenerator extends React.Component {
     this.setState({ keypair: Keypair.random() });
   }
 
-  closeGenerateKeypair() {
+  cancelCloses() {
+    this.setState({ open: false });
+  }
+
+  confirmCloses() {
+    this.setState({ open: false });
     this.setState({ keypair: null });
     this.props.close();
+  }
+
+  closeGenerateKeypair() {
+    if (this.state.keypair) {
+      this.setState({ open: true });
+    } else {
+      this.props.close();
+    }
   }
 
   render() {
@@ -41,6 +54,20 @@ class KeypairGenerator extends React.Component {
               </p>
             </Message>
           </Container>
+          <Modal size={'small'} open={this.state.open}>
+            <Modal.Header>
+              Close Keypair Generator
+            </Modal.Header>
+            <Modal.Content>
+              <h4>Are you sure to want to close the generator keypair? If you don't save the keys, you can't recover them</h4>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button negative onClick={::this.cancelCloses}>
+                No
+              </Button>
+              <Button onClick={::this.confirmCloses} positive icon="checkmark" labelPosition="right" content="Yes" />
+            </Modal.Actions>
+          </Modal>
         </Modal.Content>
         <Modal.Content>
           {!!this.state.keypair && <AccountKeyViewer keypair={this.state.keypair} showSeed showString/>}

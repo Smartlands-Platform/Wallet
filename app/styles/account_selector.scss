@@ -1,6 +1,6 @@
 .welcome-container {
   .field {
-    margin: 0 0 26px !important;
+    margin: 0 0 10px !important;
     width: 668px;
     
     @media screen and (max-width: 767px){
@@ -70,7 +70,7 @@
 
   .download-btn{
     margin-top: 25px;
-    margin-right: 100px;
+    margin-right: 25px;
     a {
       text-decoration: none;
       color: #3cb46d;
@@ -85,6 +85,18 @@
      width: 199px;;
   }
 
+  .label-checkbox{
+      font-size: 14px!important;
+      margin-left: 0;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      width: 670px;
+      font-weight: 400;
+
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
 
 }
 

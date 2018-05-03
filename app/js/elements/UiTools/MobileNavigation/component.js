@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import {Container, Modal } from 'semantic-ui-react';
 
-import icon2 from '../../../../../content/assets/images/keypair-gen.png'
+import icon2 from '../../../../../content/assets/images/gear.png';
 
 import KeypairGenerator from '../../../elements/UiTools/KeypairGenerator';
 
@@ -32,11 +32,11 @@ class MobileNavigation extends React.Component {
       <Modal dimmer={false} className="navigation-modal" open={this.state.showNavigation}>
         <Modal.Content>
           <Container>
-            <div className="nav">
+            {/*<div className="nav">
               <a href="#" onClick={::this.openKeypairModal}>Keypair generator</a>
-            </div>
+            </div>*/}
             <div className="nav">
-              <a className="nav" href="#" onClick={resetAccount}>Change account</a>
+              <a className="nav" href="#" onClick={resetAccount}>Log out</a>
             </div>
           </Container>
         </Modal.Content>
@@ -48,7 +48,7 @@ class MobileNavigation extends React.Component {
     return (
       <div>
         <button className="navigation-box btn-img" onClick={::this.toggleNavigation}><img src={icon2} /></button>
-        <KeypairGenerator open={this.props.keypairModalOpen} close={this.props.closeKeypairModal} />
+        {/*<KeypairGenerator open={this.props.keypairModalOpen} close={this.props.closeKeypairModal} />*/}
         {this.renderNavigationModal}
       </div>
     );

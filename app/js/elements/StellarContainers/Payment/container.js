@@ -37,6 +37,7 @@ const mapStateToProps = state => ({
   values: getFormValues(FORM_NAME)(state),
 });
 
+
 const mapDispatchToProps = {
   sendOperation,
   getDestinationTrustlines,

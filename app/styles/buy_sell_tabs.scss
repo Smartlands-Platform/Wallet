@@ -1,0 +1,36 @@
+.tabs-nav{
+  text-align: center;
+  list-style: none;
+  margin: 0;
+  background: transparent;
+  color: #878787;
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  border-bottom: #878787 1px solid;
+
+  li {
+    display: inline-block;
+    padding: 11px 15px 14px;
+    position: relative;
+    cursor: pointer;
+    width: 45%;
+    text-align: center;
+
+    &.active {
+      background: transparent;
+      color: #d43d3d;
+      border-bottom: #d43d3d 3px solid;
+
+      &:after {
+        background: #6fb370;
+      }
+    }
+  }
+}
+
+.sel-buy-tabs {
+  flex: 1;
+  padding: 20px 8px 22px 0px;
+  overflow-y: auto;
+}

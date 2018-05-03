@@ -2,8 +2,48 @@
   background-color: #FFFFFF !important;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 60px !important;
   position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 30px;
+  margin: 0!important;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 767px){
+    padding: 0 0 0 23px;
+    height: 40px;
+    justify-content: end;
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    &.alt {
+      margin-right: 60px;
+      @media screen and (max-width: 767px){
+        margin-right: 0;
+      }
+    }
+
+    li {
+      float: left;
+      padding: 0 10px
+    }
+  }
+
+  .ui {
+    .text{
+      .menu{
+        margin: 0!important;
+      }
+    }
+  }
 
   .row-footer{
     width: 100%!important;
@@ -43,6 +83,11 @@
     font-family: sans-serif;
     margin-right: 10px;
     user-select: text;
+
+   @media screen and (max-width: 767px){
+     font-size: 9px;
+     margin-right: 0;
+   }
 
     a {
         text-decoration: none;
@@ -102,12 +147,12 @@
     background-image: url('../../content/assets/images/bitcoin-hover.png');
   }
 
-  .column-bot{
+  /*.column-bot{
     padding: 27px 12px!important;
     @media screen and (max-width: 640px){
       padding: 35px 10px!important;
     }
-  }
+  }*/
 
 /*  .bottom-column{
     @media screen and (min-width: 320px){
