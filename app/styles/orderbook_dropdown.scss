@@ -109,7 +109,9 @@
   }
 }
 .order-wrap:last-child{
-  background-color: #EEF9FD;
+  background-color: #fff;
+  border: 1px solid #3cb46d;
+  border-radius: 3px 3px;
   .order-drop{
     border-color: rgb(8, 181, 229);
   }
@@ -132,7 +134,7 @@
   }
 }
 .ui.fluid.selection.order-drop.dropdown{
-  background-color: #3cb46d;
+  background-color: #fff;
   text-align: end;
   .text{
     width: 84%;
@@ -289,6 +291,7 @@
 
 #PriceChart{
   width: 100% !important;
+  height: 423px !important;
   .highcharts-container{
     z-index: 999 !important;
   }
@@ -301,6 +304,7 @@
 }
 .PriceChartChunk{
   width: 100% !important;
+  height: 423px !important;
   position: relative;
   .sweet-loading{
     top: 50%;
@@ -315,6 +319,7 @@
 }
 .depth-chart{
   width: 100% !important;
+  height: 300px !important;
 }
 .amcharts-chart-div{
   width: 100% !important;
@@ -353,4 +358,161 @@
 }
 .panel-tabs{
   margin-top: -3px;
+}
+
+.order-wrap{
+  position: relative;
+  z-index: 9;
+}
+.order-book{
+  & > .ui.two.column.grid{
+    & > .row{
+      position: relative;
+      &:after{
+        content: '';
+        position: absolute;
+        display: inline-block;
+        width: 50px;
+        height: 6px;
+        border: 1px solid rgba(0,0,0,0.5);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 8;
+      }
+    }
+  }
+}
+
+//sell/buy form responsive
+.exchange-block{
+  .OfferTable__header{
+    border-radius: 6px 6px 0 0;
+  }
+
+  @media screen and (max-width: 640px) {
+    .order-book{
+      .OfferTables{
+        .island__sub__division{
+          width: 0;
+          &:first-child{
+            .OfferTable__header{
+              .OfferTable__header__item.OfferTable__cell--amount,
+              .OfferTable__header__item.OfferTable__cell--price{
+                width: 50%;
+              }
+              .OfferTable__header__item.OfferTable__cell--amount{
+                text-align: left;
+                padding-left: 15px;
+              }
+              .OfferTable__header__item.OfferTable__cell--price{
+                text-align: right;
+                padding-right: 10px;
+              }
+            }
+            .OfferTable__table{
+              .OfferTable__row__item.OfferTable__cell--amount,
+              .OfferTable__row__item.OfferTable__cell--price{
+                width: 50%;
+              }
+              .OfferTable__row__item.OfferTable__cell--amount{
+                padding-left: 15px !important;
+                text-align: left;
+              }
+              .OfferTable__row__item.OfferTable__cell--price{
+                padding-right: 10px!important;
+                text-align: right;
+              }
+            }
+            & + div.island__sub__division{
+              .OfferTable__header{
+                .OfferTable__header__item.OfferTable__cell--amount,
+                .OfferTable__header__item.OfferTable__cell--price{
+                  width: 50%;
+                }
+                .OfferTable__header__item.OfferTable__cell--amount{
+                  text-align: right;
+                  padding-right: 10px;
+                }
+                .OfferTable__header__item.OfferTable__cell--price{
+                  text-align: left;
+                  padding-left: 15px;
+                }
+              }
+              .OfferTable__table{
+                .OfferTable__row__item.OfferTable__cell--amount,
+                .OfferTable__row__item.OfferTable__cell--price{
+                  width: 50%;
+                }
+                .OfferTable__row__item.OfferTable__cell--amount{
+                  padding-right: 10px !important;
+                  text-align: right;
+                }
+                .OfferTable__row__item.OfferTable__cell--price{
+                  padding-left: 15px!important;
+                  text-align: left;
+                }
+              }
+            }
+          }
+        }
+        .OfferTable__header{
+          .OfferTable__header__item.OfferTable__cell--amount,
+          .OfferTable__header__item.OfferTable__cell--price{
+            width: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .exchange-block {
+    .buy-form, .sell-form {
+      table {
+        thead {
+          tr {
+            display: block;
+            position: relative;
+          }
+        }
+        tbody {
+          display: block;
+          overflow: auto;
+          width: 100%;
+          max-height: 73px;
+          tr {
+            width: 100%;
+            display: block;
+            td {
+              width: 33%;
+              padding: 4px 10px 4px 10px !important;
+              display: inline-block;
+              vertical-align: top;
+              text-align: center !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .island__sub__division {
+    .OfferTable {
+      .OfferTable__table {
+        display: block;
+        overflow-y: hidden;
+        width: 100%;
+        max-height: 285px;
+
+      }
+    }
+  }
+  .exchange-block .table td:first-child{
+    padding-left: 0 !important;
+  }
+}
+@media screen and (max-width: 767px){
+  .balances-container .ui.small.table td:last-child {
+    text-align: center !important;
+  }
 }

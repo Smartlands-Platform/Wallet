@@ -29,7 +29,7 @@ class TabsPanel extends React.Component {
     //TODO Active offers comments, changed order tabs
 
     get navigation() {
-        const tabs = ['Wallet', 'Payments', 'Exchange', /*'Active offers',*/ /*'Payment history',*/ 'Token issue', 'Create account'];
+        const tabs = ['Wallet', 'Payments', 'Exchange', /*'Active offers',*/ 'Payment history', 'Token issue', 'Create account'];
         const slides = tabs.map((tab, index) =>
             <li key={index}
                 className={this.state.tabIndex === index ? 'active' : ''}
@@ -59,25 +59,25 @@ class TabsPanel extends React.Component {
                     <OffersViewer canCreate={true} />
                 </div>;
                 break;
-            /*case 3:
+           //  case 3:
+           //      tabPanel = <div className="tab-panel">
+           //          {this.headerPanel('Active offers')}
+           //          <OffersViewer />
+           //      </div>;
+           //      break;
+           case 3:
                 tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Active offers')}
-                    <OffersViewer />
-                </div>;
-                break;*/
-           /* case 3:
-                tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Payment history')}
+                    {this.headerPanel('Payments history')}
                     <PaymentsViewer />
                 </div>;
-                break;*/
-            case 3:
+                break;
+            case 4:
                 tabPanel = <div className="tab-panel">
                     {this.headerPanel('Token issue')}
                     <Payment selectedIndex={this.state.tabIndex} curTab={::this.onSelect}/>
                 </div>;
                 break;
-            case 4:
+            case 5:
                 tabPanel = <div className="tab-panel">
                     {this.headerPanel('Create account')}
                     <Payment selectedIndex={this.state.tabIndex} />

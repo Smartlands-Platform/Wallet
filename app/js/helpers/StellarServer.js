@@ -98,7 +98,7 @@ export const switchNetwork = (network) => {
       break;
     case 'public':
       Server = new Stellar.Server('https://horizon.stellar.org');
-      // Server = new Stellar.Server('https://horizon.smartlands.io/');
+      // Server = new Stellar.Server('https://stellar.technorely.com/');
       Stellar.Network.usePublicNetwork();
       break;
     default:

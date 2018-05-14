@@ -2,12 +2,138 @@
   position: relative;
   @media screen and (max-width: 767px) {
     /*width: 260px!important;*/
+
+    table.ui.celled.striped.table{
+      width: 100% !important;
+      tbody{
+        tr{
+          padding-left: 10px;
+        }
+      }
+      .margin-bottom-md{
+        margin-bottom: 0 !important;
+      }
+      tr{
+        td{
+          display: table-cell !important;
+          button{
+            width: 110px !important;
+            padding: 0 !important;
+            line-height: 33px;
+            text-align: center;
+          }
+          &:first-child{
+            padding: 0 0 0 0 !important;
+            .item-table{
+              border-right: none !important;
+              line-height: 33px;
+              padding: 0 10px 0 15px !important;
+              border-radius: 2.3px 0 0 2.3px !important;
+            }
+            & + td{
+              //border: 1px solid #dedede !important;
+              min-width: 152px !important;
+              width: 100%;
+              //border-left: none !important;
+              padding: 0 !important;
+              .item-table{
+                border-left: none !important;
+                line-height: 33px;
+                border-radius: 0 2.3px 2.3px 0 !important;
+
+              }
+              tr{
+                padding: 0 !important;
+              }
+              & + td{
+                .item-table{
+                  border: none !important;
+                }
+              }
+            }
+          }
+          img{
+            width: 17px !important;
+            height: 17px !important;
+            position: relative;
+            top: 5px;
+          }
+          .item-table{
+            border: 1px solid #dedede !important;
+            font-size: 12px !important;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+
+  //Recent table style
+  .recent-trades-title{
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.1;
+    letter-spacing: 0.2px;
+    color: #201e1f;
+    display: block;
+    text-align: center;
+  }
+  @media screen and (min-width: 768px) {
+    .exchange-table{
+      th:nth-child(odd), th:nth-child(even){
+        background-color: #3cb46d !important;
+        font-size: 11px !important;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1 !important;
+        letter-spacing: normal;
+        text-align: center !important;
+        color: #ffffff !important;
+        padding: 11px !important;
+        width: 33%;
+        display: inline-block;
+      }
+    }
+  }
+  .recent-table {
+    width: 100%;
+    max-width: 250px;
+    //margin-left: 47px;
+    th:nth-child(odd), th:nth-child(even){
+      background-color: #fafafa !important;
+      font-size: 11px !important;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1 !important;
+      letter-spacing: normal;
+      text-align: center;
+      color: #656565 !important;
+    }
+    tbody{
+      td{
+       line-height: 1 !important;
+        padding: 5px 10px !important;
+        font-size: 9px !important;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #656565;
+        &:first-child{
+
+        }
+      }
+    }
   }
 
   .ui.small.table {
     text-align: center;
     margin-bottom: 40px;
-
     th {
       color: #fff;
       font-size: 12px;
@@ -141,4 +267,11 @@
     width: 100px !important;
     max-height: none !important;
   }
+}
+.recent-trades-title + .is-relative{
+  width: 215px;
+  display: inline-block;
+}
+.stock-block{
+  padding-top: 10px;
 }

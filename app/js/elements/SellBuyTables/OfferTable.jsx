@@ -26,8 +26,8 @@ export default function OfferTable(props) {
   let header;
   if (props.side === 'buy') {
     header = <div className="OfferTable__header">
-      <div className="OfferTable__header__item OfferTable__cell--depth">Sum {props.counterCurrency}</div>
-      <div className="OfferTable__header__item OfferTable__cell--amount">{props.counterCurrency}</div>
+      { window.innerWidth > 640 ? <div className="OfferTable__header__item OfferTable__cell--depth">Sum {props.counterCurrency}</div>: null}
+      { window.innerWidth > 640 ? <div className="OfferTable__header__item OfferTable__cell--amount">{props.counterCurrency}</div>: null}
       <div className="OfferTable__header__item OfferTable__cell--amount">{props.baseCurrency}</div>
       <div className="OfferTable__header__item OfferTable__cell--price">Price</div>
     </div>
@@ -35,8 +35,8 @@ export default function OfferTable(props) {
     header = <div className="OfferTable__header">
       <div className="OfferTable__header__item OfferTable__cell--price">Price</div>
       <div className="OfferTable__header__item OfferTable__cell--amount">{props.baseCurrency}</div>
-      <div className="OfferTable__header__item OfferTable__cell--amount">{props.counterCurrency}</div>
-      <div className="OfferTable__header__item OfferTable__cell--depth">Sum {props.counterCurrency}</div>
+        { window.innerWidth > 640 ? <div className="OfferTable__header__item OfferTable__cell--amount">{props.counterCurrency}</div>: null}
+        { window.innerWidth > 640 ? <div className="OfferTable__header__item OfferTable__cell--depth">Sum {props.counterCurrency}</div>: null}
     </div>
   }
   return <div className="OfferTable">
@@ -49,11 +49,11 @@ export default function OfferTable(props) {
           // console.log(props.maxDepth + '+' + depthPercentage)
           let rowStyle = {};
           if (props.side === 'buy') {
-            if (window.innerWidth < 767){
-              rowStyle.background = `linear-gradient(to right, ${buyBackground} ${depthPercentage}%, ${altColor} ${depthPercentage}%)`;
-            }else {
+            // if (window.innerWidth < 767){
+            //   rowStyle.background = `linear-gradient(to right, ${buyBackground} ${depthPercentage}%, ${altColor} ${depthPercentage}%)`;
+            // }else {
               rowStyle.background = `linear-gradient(to left, ${buyBackground} ${depthPercentage}%, ${altColor} ${depthPercentage}%)`;
-            }
+            // }
           } else {
             rowStyle.background = `linear-gradient(to right, ${sellBackground} ${depthPercentage}%, ${altColor} ${depthPercentage}%)`;
           }
@@ -69,8 +69,8 @@ export default function OfferTable(props) {
               style={rowStyle}
               // onClick={() => props.d.orderbook.handlers.pickPrice(offer.price)}>
               >
-              {cellDepth}
-              {cellCounter}
+              {window.innerWidth > 640 ? cellDepth: null}
+              {window.innerWidth > 640 ? cellCounter: null}
               {cellBase}
               {cellPrice}
             </div>
@@ -81,10 +81,10 @@ export default function OfferTable(props) {
               style={rowStyle}
               // onClick={() => props.d.orderbook.handlers.pickPrice(offer.price)}>
             >
-              {cellPrice}
+              { cellPrice}
               {cellBase}
-              {cellCounter}
-              {cellDepth}
+              {window.innerWidth > 640 ? cellCounter: null}
+              {window.innerWidth > 640 ? cellDepth: null}
             </div>
           }
         })

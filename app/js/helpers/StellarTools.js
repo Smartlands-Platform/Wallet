@@ -4,7 +4,7 @@ import Decimal from 'decimal.js';
 import { map } from 'lodash';
 
 export const STROOP = 0.0000001;
-export const REFRESH_INTERVAL = 2000;
+export const REFRESH_INTERVAL = 5000;
 
 export const validPk = pk => StrKey.isValidEd25519PublicKey(pk);
 export const validSeed = seed => StrKey.isValidEd25519SecretSeed(seed);

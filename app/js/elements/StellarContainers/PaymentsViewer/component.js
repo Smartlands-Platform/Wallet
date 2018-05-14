@@ -44,13 +44,14 @@ class Payments extends React.Component {
   }
 
   getPaymentRow(payment, index) {
+    // console.log("payment", payment);
     const isToMyAccount = this.props.account.account_id === payment.to;
     const externalAccount = isToMyAccount ? payment.from : payment.to;
     const network = this.props.network;
     return (
       <Table.Row key={index} positive={isToMyAccount} negative={!isToMyAccount}>
         <Table.Cell className="inline-block-inside">
-          <AmountComponent payment={payment} />
+          <AmountComponent  amount={payment.amount} accountId={externalAccount} payment={payment} />
           { !pageWidth() ? <PaymentArrow toMe={isToMyAccount} /> : null }
         </Table.Cell>
         { this.state.selectedCell === this.headerTitles.ASSET || pageWidth() ? <Table.Cell className="prime">
@@ -62,7 +63,7 @@ class Payments extends React.Component {
           </a>
         </Table.Cell> : null }
         { this.state.selectedCell === this.headerTitles.MEMO || pageWidth() ? <Table.Cell>
-          {payment.transaction.memo}
+          {payment.transaction.memo_type}
         </Table.Cell> : null }
         { this.state.selectedCell === this.headerTitles.DATE || pageWidth() ? <Table.Cell>
           {this.getDate(payment.transaction)}
@@ -155,6 +156,7 @@ class Payments extends React.Component {
 
   render() {
     const directPayments = this.props.payments.slice().reverse();
+      // console.log("directPayments", directPayments);
     const pathPayments = this.props.pathPayments.slice().reverse();
     const colSpanDefault = pageWidth() ? '6' : '2';
 

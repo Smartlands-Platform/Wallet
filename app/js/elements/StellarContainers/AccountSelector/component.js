@@ -191,9 +191,10 @@ class AccountSelector extends Component {
             this.props.error ?
               <Message negative>
                 <Message.Header>Account error</Message.Header>
-                <p>There was an error while fetching this account's data.</p>
-                <p>Either the account does not exists or you are on the wrong network.
-                  Try to switch to public/testnet.</p>
+                <p>The account (keypair) you try to access is unfunded.</p>
+                <p>Please send at least 1 XLM to the account address (public key) to activate it: <b>{this.state.keypair.publicKey()}</b></p>
+                <p>You can find more information about the minimum balance requirements on the Stellar network&nbsp;
+                  <b><a href="https://www.stellar.org/developers/guides/concepts/fees.html" target="_blank">here</a></b>.</p>
               </Message>
               :
               null

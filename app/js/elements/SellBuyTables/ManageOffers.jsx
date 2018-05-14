@@ -19,7 +19,7 @@ export default class ManageOffers extends Component {
     let offersArray = this.props.d.offers;
 
       // console.log("orderbook", orderbook);
-      console.log("offersArray", offersArray);
+      // console.log("offersArray", offersArray);
 
     let rectifiedBuyOffers = [];
     let rectifiedSellOffers = [];

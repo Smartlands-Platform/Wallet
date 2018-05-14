@@ -6,6 +6,7 @@ import { STROOP, pageWidth, getHeaderCells } from '../../../helpers/StellarTools
 import MyStockChart from '../../../elements/Charts';
 import DepthChart from '../../../elements/Charts/depth_chart';
 import OrderBook from '../../../elements/StellarContainers/OrderBook';
+import RecentTable from '../../../elements/RecentTable';
 // import OfferTables from '../../SellBuyTables/OfferTables';
 // import ManageOffers from '../../SellBuyTables/ManageOffers';
 import {get, map, sortBy, isEqual} from 'lodash';
@@ -123,7 +124,6 @@ createOfferSell(e, { formData }) {
     };
 
     this.props.createOffer(offerData);
-    // console.log("passive", formData.passive)
 }
 
 
@@ -169,7 +169,6 @@ createOfferSell(e, { formData }) {
 
 
   getBuyOfferRow(offer, index) {
-    // console.log("offer", offer);
     return (
       <Table.Row key={index}>
         <Table.Cell>
@@ -181,21 +180,6 @@ createOfferSell(e, { formData }) {
             />
             : null}
         </Table.Cell>
-        {/*{ this.state.selectedCell === this.headerTitles.BUYING || pageWidth() ? <Table.Cell>*/}
-          {/*<Asset {...offer.buying} />*/}
-        {/*</Table.Cell> : null }*/}
-          {/*{ this.state.selectedCell === this.headerTitles.CANCEL || pageWidth() ? <Table.Cell>*/}
-              {/*{this.props.canSign ?*/}
-                  {/*<button*/}
-                      {/*className="btn-icon remove"*/}
-                      {/*data-hover="Remove"*/}
-                      {/*onClick={::this.deleteOffer(offer)}*/}
-                  {/*/>*/}
-                  {/*: null}*/}
-          {/*</Table.Cell> : null }*/}
-          {/*{ this.state.selectedCell === this.headerTitles.TIME || pageWidth() ? <Table.Cell>*/}
-              {/*{0}*/}
-          {/*</Table.Cell> : null }*/}
           { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.Cell>
               <Amount amount={Number(offer.amount*offer.price).toFixed(4)} />
           </Table.Cell> : null }
@@ -208,25 +192,13 @@ createOfferSell(e, { formData }) {
     getSellOfferRow(offer, index) {
         return (
             <Table.Row key={index}>
-              <Table.Cell>
-                {this.props.canSign ?
-                  <button
-                    className="btn-icon remove"
-                    data-hover="Remove"
-                    onClick={::this.deleteOffer(offer)}
-                  />
-                  : null}
-              </Table.Cell>
                 { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.Cell>
                     <Amount amount={offer.price} />
                 </Table.Cell> : null }
                 { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.Cell>
                     <Amount amount={offer.amount} />
                 </Table.Cell> : null }
-                {/*{ this.state.selectedCell === this.headerTitles.TIME || pageWidth() ? <Table.Cell>*/}
-                    {/*{0}*/}
-                {/*</Table.Cell> : null }*/}
-                {/*{ this.state.selectedCell === this.headerTitles.CANCEL || pageWidth() ? <Table.Cell>
+                <Table.Cell>
                     {this.props.canSign ?
                         <button
                             className="btn-icon remove"
@@ -234,7 +206,7 @@ createOfferSell(e, { formData }) {
                             onClick={::this.deleteOffer(offer)}
                         />
                         : null}
-                </Table.Cell> : null }*/}
+                </Table.Cell>
             </Table.Row>
         );
     }
@@ -273,6 +245,7 @@ createOfferSell(e, { formData }) {
           var buyingCode = this.props.orderbook.base.asset_code;
           // console.log("buyingCode", buyingCode);
       }
+
   function getValues(array, buyingCode) {
       return array
           .filter(function(values, item){
@@ -283,23 +256,22 @@ createOfferSell(e, { formData }) {
           });
     }
     let buyOffers = getValues(OffersArray, buyingCode);
+    let sortOffersBuy = buyOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).reverse();
+
     const colSpanDefault = pageWidth() ? '3' : '2';
     return (
       <div className="is-relative">
         <Table className={this.props.canCreate ? 'exchange-table' : ''} singleLine size="small" compact unstackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>CANCEL</Table.HeaderCell>
-              {/*{ this.state.selectedCell === this.headerTitles.BUYING || pageWidth() ? <Table.HeaderCell>Buying</Table.HeaderCell> : null }*/}
-                {/*{ this.state.selectedCell === this.headerTitles.CANCEL || pageWidth() ? <Table.HeaderCell>Cancel</Table.HeaderCell> : null }*/}
-                {/*{ this.state.selectedCell === this.headerTitles.TIME || pageWidth() ? <Table.HeaderCell>Time ago</Table.HeaderCell> : null }*/}
+              <Table.HeaderCell>Cancel</Table.HeaderCell>
                 { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.HeaderCell>Quantity({`${buyingCode}`})</Table.HeaderCell> : null }
                 { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.HeaderCell>Price(XLM)</Table.HeaderCell> : null }
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {this.props.offers.length ?
-                buyOffers.map(::this.getBuyOfferRow) :
+                sortOffersBuy.map(::this.getBuyOfferRow) :
               <Table.Row>
                 <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">No offers</Table.Cell>
               </Table.Row>
@@ -323,6 +295,8 @@ createOfferSell(e, { formData }) {
               });
       }
       let sellOffers = getValues(OffersArray, buyingCode);
+      let sortOffersSell = sellOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+
         const colSpanDefault = pageWidth() ? '3' : '2';
 
         return (
@@ -330,17 +304,14 @@ createOfferSell(e, { formData }) {
                 <Table className={this.props.canCreate ? 'exchange-table' : ''} singleLine size="small" compact unstackable>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>CANCEL</Table.HeaderCell>
-                            {/*{ this.state.selectedCell === this.headerTitles.BUYING || pageWidth() ? <Table.HeaderCell>Buying</Table.HeaderCell> : null }*/}
                             { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.HeaderCell>Price(XLM)</Table.HeaderCell> : null }
                             { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.HeaderCell>Quantity({buyingCode})</Table.HeaderCell> : null }
-                            {/*{ this.state.selectedCell === this.headerTitles.TIME || pageWidth() ? <Table.HeaderCell>Time ago</Table.HeaderCell> : null }*/}{/*
-                            { this.state.selectedCell === this.headerTitles.CANCEL || pageWidth() ? <Table.HeaderCell>Cancel</Table.HeaderCell> : null }*/}
+                            <Table.HeaderCell>Cancel</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         {this.props.offers.length ?
-                            sellOffers.map(::this.getSellOfferRow) :
+                            sortOffersSell.map(::this.getSellOfferRow) :
                             <Table.Row>
                                 <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">No offers</Table.Cell>
                             </Table.Row>
@@ -375,88 +346,12 @@ createOfferSell(e, { formData }) {
     );
   }
 
-  // onChangeSellS1(e, data) {
-    // console.log("e", e);
-    // const match = e.target.textContent.match(/^(.+?)\(/);
-    // let selectedSell = "XLM";
-    // let selectedSell;
-    // if (match) {
-    //   selectedSell = match[1];
-    //     console.log("selectedSell", selectedSell);
-    // } else {
-    //   selectedSell = e.target.textContent;
-    //   console.log("selectedSell", selectedSell);
-    // }
-    // this.setState({selectedSell});
-      // console.log("selectedSell", selectedSell);
-  // }
-
-  // onChangeBuyB1(e, data) {
-  //   const match = e.target.textContent.match(/^(.+?)\(/);
-  //   let selectedBuy;
-  //   if (match) {
-  //     selectedBuy = match[1];
-  //   } else {
-  //     selectedBuy = e.target.textContent;
-  //   }
-  //   this.setState({selectedBuy});
-  //   this.onChangeSellS1();
-  // }
-
-    // onChangeSellS2(e, data) {
-    //     const match = e.target.textContent.match(/^(.+?)\(/);
-    //     let selectedSell;
-    //     if (match) {
-    //         selectedSell = match[1];
-    //     } else {
-    //         selectedSell = e.target.textContent;
-    //     }
-    //     this.setState({selectedSell});
-    //     // console.log("selectedSell", selectedSell);
-    //     this.onChangeBuyB2();
-    //     // return this.props.d.orderbook.base.asset_code;
-    // }
-
-    // onChangeBuyB2(e, data) {
-    //     // const match = e.target.textContent.match(/^(.+?)\(/);
-    //     let selectedBuy = "XLM";
-    //     // if (match) {
-    //     //     selectedBuy = match[1];
-    //     // } else {
-    //     //     selectedBuy = e.target.textContent;
-    //     // }
-    //     this.setState({selectedBuy});
-    // }
-
-
   getOfferFormBuy() {
-      // console.log("dataForBuy", dataForBuy);
-    // const getAssetsOptions = assets => assets.map((asset, index) => (
-    //   {
-    //     value: index,
-    //     text: Asset.getAssetString(asset),
-    //   }));
+
 
     return (
       <Form onSubmit={::this.createOfferBuy} loading={this.props.sendingOffer}>
         <Form.Group widths="12">
-          {/*<Form.Select*/}
-              {/*label="Buy"*/}
-              {/*name="buy_asset"*/}
-              {/*// defaultValue={17}*/}
-              {/*options={getAssetsOptions(this.props.trustlines)}*/}
-              {/*onChange={::this.onChangeBuyB1}*/}
-              {/*placeholder="Asset to buy"*/}
-              {/*required*/}
-          {/*/>*/}
-          {/*<Form.Select*/}
-            {/*label="Sell"*/}
-            {/*name="sell_asset"*/}
-            {/*options={getAssetsOptions(this.props.trustlines)}*/}
-            {/*onChange={::this.onChangeSellS1}*/}
-            {/*placeholder="Asset to sell"*/}
-            {/*required*/}
-          {/*/>*/}
         </Form.Group>
         <Form.Group widths="12">
           <Form.Field
@@ -508,37 +403,10 @@ createOfferSell(e, { formData }) {
     );
   }
   getOfferFormSell() {
-        // console.log("dataForSell", dataForSell);
-        // let dataForOfferSell = dataForSell;
-        // const getAssetsOptions = assets => assets.map((asset, index) => (
-        //     {
-        //         value: index,
-        //         text: Asset.getAssetString(asset),
-        //     }));
-
-      // this.onChangeSellS2(dataForOfferSell);
-
         return (
             <div className="exchange-form">
                 <Form onSubmit={::this.createOfferSell} loading={this.props.sendingOffer}>
               <Form.Group widths="12">
-                {/*<Form.Select*/}
-                    {/*label="Sell"*/}
-                    {/*name="sell_asset"*/}
-                    {/*// defaultValue={17}*/}
-                    {/*options={getAssetsOptions(this.props.trustlines)}*/}
-                    {/*onChange={::this.onChangeSellS2}*/}
-                    {/*placeholder="Asset to sell"*/}
-                    {/*required*/}
-                {/*/>*/}
-                {/*<Form.Select*/}
-                    {/*label="Buy"*/}
-                    {/*name="buy_asset"*/}
-                    {/*options={getAssetsOptions(this.props.trustlines)}*/}
-                    {/*onChange={::this.onChangeBuyB2}*/}
-                    {/*placeholder="Asset to buy"*/}
-                    {/*required*/}
-                {/*/>*/}
               </Form.Group>
               <Form.Group widths="12">
                 <Form.Field
@@ -657,9 +525,6 @@ createOfferSell(e, { formData }) {
   }
 
   render() {
-      // console.log("this.props.offer", this.props);
-    // var dataForBuySell = this.props.d.orderbook.base.asset_code;
-
         if (this.props.canSign && this.props.canCreate) {
           if(window.innerWidth > 640){
             var exchangeBlock = <div>
@@ -695,17 +560,22 @@ createOfferSell(e, { formData }) {
                           </div> : this.getSellOfferTable()}
                         </div>
                       </div>
-                      {/*<OfferTables d={this.props} />*/}
                     </Grid.Column>
-                    {/*<OfferTables d={this.props} />*/}
-                    {/*<ManageOffers d={this.props} />*/}
-                    {/*<SellBuyTables/>*/}
                   </Grid.Row>
                 </Grid>
               </div>
               <div className="stock-block">
-                  <MyStockChart d={this.props}  />
-                  <DepthChart d={this.props}/>
+                  <MyStockChart d={this.props}/>
+                  <div>
+                      <div style={{display: "inline-block", verticalAlign: "top", "width": 52 + "%"}}>
+                          <DepthChart d={this.props}/>
+                      </div>
+                      <div style={{display: "inline-block", verticalAlign: "top", "width": 40+ "%"}}>
+                          <RecentTable d={this.props} />
+                      </div>
+
+                  </div>
+
               </div>
             </div>
           }else {

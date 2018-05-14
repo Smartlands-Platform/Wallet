@@ -260,7 +260,8 @@ class Balances extends React.Component {
         'asset_code': code,
         'asset_issuer': issuer
       };
-       return <Table.Body>
+      // console.log("rustline.text", trustline.text.split(/\r?\n/)[0]);
+       return <Table.Body key={index}>
           <Table.Row key={index}>
             <Table.Cell>
               <div className="item-table">
@@ -269,20 +270,28 @@ class Balances extends React.Component {
             </Table.Cell>
             <Table.Cell>
                 <Table.Row>
-                  {trustline.text.split(/\r?\n/)[0]}
+                  <div className="item-table">
+                      {trustline.text.split(/\r?\n/)[0]}
+                  </div>
                 </Table.Row>
-                <Table.Row>
-                  {trustline.text.split(/\r?\n/)[1]}
-                </Table.Row>
+                { window.innerWidth > 767 ?
+                    <Table.Row>
+                        {trustline.text.split(/\r?\n/)[1]}
+                    </Table.Row>: null}
             </Table.Cell>
             <Table.Cell collapsing textAlign='right'>
               <div className="item-table">
-                { code &&
+                {window.innerWidth > 767 ? code &&
                 <button
                   type="button"
                   className="btn green normal margin-bottom-md"
                   onClick={() => {this.props.createTrustline(AssetInstance(formData)), this.handleLoaderTrustlines()}}
-                >Add the trustline for {formData.asset_code}</button>  }
+                >Add the trustline for {formData.asset_code}</button>: code &&
+                    <button
+                        type="button"
+                        className="btn green normal margin-bottom-md"
+                        onClick={() => {this.props.createTrustline(AssetInstance(formData)), this.handleLoaderTrustlines()}}
+                    >Accept {formData.asset_code}</button> }
               </div>
 
           </Table.Cell>
@@ -412,7 +421,7 @@ class Balances extends React.Component {
         {this.getTrustlineForm()}
           {/*{console.log("tickersPrice", this.getBalanceRows())}*/}
         {!pageWidth() ? this.mobileTableFilter() : null}
-        {window.innerWidth > 767 && <Table celled striped>
+        {<Table celled striped>
             {this.state.loadingTrust ? <div className='sweet-loading'>
               <ClipLoader
                   color={'#000000'}

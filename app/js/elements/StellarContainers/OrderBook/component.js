@@ -9,7 +9,7 @@ import '../../../../styles/orderbook_dropdown.scss';
 import data from '../../../helpers/DataServer/logos.json';
 import '../../../../styles/style.scss';
 import {Asset} from 'stellar-sdk';
-import DepthChart from '../../../elements/Charts/depth_chart';
+// import DepthChart from '../../../elements/Charts/depth_chart';
 // import logo from '../../../../../content/assets/images/vector-smart-object.png';
 
 import OfferTables from '../../SellBuyTables/OfferTables';

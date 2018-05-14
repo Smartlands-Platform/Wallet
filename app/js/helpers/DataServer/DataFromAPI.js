@@ -9,7 +9,6 @@ const ParseData = {
                 this.counterSelling = counterSelling;
                 this.ready = true;
                 onUpdate();
-                // console.log("res", res);
             });
         let streamingOrderbookClose = Server.orderbook(baseBuying, counterSelling, limit)
             .stream({
@@ -53,6 +52,7 @@ const ParseData = {
         let firstFullFetchFinished = false;
         let fetchManyTrades = async () => {
             let records = [];
+            let recentRecords = [];
             let satisfied = false;
             let first = true;
             let depth = 0;
@@ -62,29 +62,45 @@ const ParseData = {
             let fetchTimeout = 20000; // milliseconds before we stop fetching history
             let nowDate = Date.now() + 86400000;
             let result;
+            let resultRecent;
 
             while (!this.closed && !satisfied && depth < MAX_DEPTH && Date.now() - startTime < fetchTimeout) {
                 depth += 1;
                 let tradeResults;
+                let tradeRecent;
                 if (first) {
+
                     tradeResults = await Server.tradeAggregation(baseBuying, counterSelling, 1514764800, Date.now() + 86400000, 900000).limit(200).order('desc').call()
 
+                    tradeRecent = await Server.trades().forAssetPair(baseBuying, counterSelling).limit(10).order('desc').call();
+
                     first = false;
-                    // console.log("Server", tradeResults);
                 }
                 else {
 
+                    tradeRecent =  await prevCall();
                     tradeResults = await prevCall();
                 }
 
                 prevCall = tradeResults.next;
+                prevCall = tradeRecent.next;
 
-                // console.log("tradeResults", tradeResults.records);
+                // console.log("tradeRecent", tradeRecent);
+
+                recentRecords.push(...tradeRecent.records);
+
                 records.push(...tradeResults.records);
+
+
                 if (tradeResults.records.length < 200) {
                     satisfied = true;
                 }
 
+                if (tradeRecent.records.length < 200) {
+                    satisfied = true;
+                }
+
+                // console.log("tradeRecent", recentRecords);
 
                 // Optimization: use this filter before saving it into the records array
                 result = _.filter(
@@ -95,10 +111,13 @@ const ParseData = {
                         return !isNaN(entry[1]);
                     }
                 );
+
                 result.sort((a,b) => {
                     return a[0]-b[0];
                 });
+
                 if (!firstFullFetchFinished) {
+                    this.recentTrades = recentRecords;
                     this.trades = smoothTrades(result);
                 }
                 if (depth > 1) {
@@ -106,7 +125,13 @@ const ParseData = {
                 }
             }
             firstFullFetchFinished = true;
+
+            this.recentTrades = recentRecords;
+
             this.trades = smoothTrades(result);
+
+            // console.log()
+
             onUpdate();
 
             setTimeout(() => {
