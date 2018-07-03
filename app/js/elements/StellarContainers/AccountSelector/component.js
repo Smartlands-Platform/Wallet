@@ -7,7 +7,9 @@ import { debounce } from 'lodash';
 import * as StellarHelper from '../../../helpers/StellarTools';
 import InputFormField from '../../UiTools/SemanticForm/Input';
 import KeypairGenerator from '../../../elements/UiTools/KeypairGenerator';
-import {downloadDeskBuild} from '../../../helpers/common';
+import {DEFAULT_KEY} from '../../../helpers/defaultData';
+// import {downloadDeskBuild} from '../../../helpers/common';
+// import hashModal from '../../StellarContainers/Payment/hashModal';
 
 import '../../../../styles/account_selector.scss';
 
@@ -42,6 +44,8 @@ class AccountSelector extends Component {
       showSeed: false,
       resolving: false,
     };
+
+      history.pushState(null, "", location.href.split("?")[0]);
      //TODO ACCOUNT: keypair.secret()
     if (this.props.keypair) {
       this.state.accountId = this.props.keypair.publicKey();
@@ -67,6 +71,7 @@ class AccountSelector extends Component {
 
 
   componentDidMount() {
+
     // this.props.switchNetwork('test');
     this.props.switchNetwork('public');
     new Clipboard('.account-address-copy'); // eslint-disable-line no-new
@@ -74,13 +79,16 @@ class AccountSelector extends Component {
 
   toggleChange = () => {
     this.setState({ isAccept: !this.state.isAccept });
-  }
+  };
 
   handleAddress = debounce((e, newAddress) => {
     this.setState({resolving: true});
+
     const address = newAddress;
 
     const isSeed = StellarHelper.validSeed(address);
+
+
     if (isSeed) {
       const keypair = StellarHelper.KeypairInstance({secretSeed: address});
       this.setState({
@@ -106,13 +114,30 @@ class AccountSelector extends Component {
       });
   }, 300);
 
+  handleSetExchange(e) {
+      e.preventDefault();
+      // if (!keypair) return;
+
+      StellarHelper.resolveAddress(DEFAULT_KEY)
+          .then((resolved) => {
+              let keypair;
+              return keypair = StellarHelper.KeypairInstance({publicKey: resolved.account_id});
+          })
+          .then(keypair => {
+              this.props.setAccount(keypair);
+          })
+          .catch((error) => {
+              console.error(error);
+          });
+  }
+
   handleSet(e) {
     e.preventDefault();
+
     const keypair = this.state.keypair;
     if (!keypair) return;
-
-    // console.log('keypair', keypair)
     this.props.setAccount(keypair);
+
   }
 
   blockChars(event){
@@ -219,6 +244,31 @@ class AccountSelector extends Component {
             content="Generate keypair"
             onClick={this.props.openKeypairModal}
           />
+          <Button
+              className="btn big green-white fixed-width"
+              content="Exchange"
+              onClick={::this.handleSetExchange}
+          />
+          {/*<Field*/}
+              {/*name="address"*/}
+              {/*component={InputFormField}*/}
+              {/*// onChange={::this.handleAddress}*/}
+              {/*type="password"*/}
+              {/*maxLength={56}*/}
+              {/*placeholder="Enter private key"*/}
+              {/*// pristine={true}*/}
+              {/*// value="GDSOB3DI4IU5EODPLHLW2A2KSNQLWNXPDJDHZFQCHGJCGCKWPV4JWISS"*/}
+              {/*//error={!!address && !this.state.keypair}*/}
+              {/*// onKeyPress={this.blockChars}*/}
+              {/*// normalize={toUpperCase}*/}
+              {/*fluid*/}
+              {/*action={{*/}
+                  {/*color: "gray",*/}
+                  {/*// disabled,*/}
+                  {/*content: "Exchange",*/}
+                  {/*onClick: ::this.handleSetExchange,*/}
+              {/*}}*/}
+          {/*/>*/}
           <br/>
           {/*{ window.innerWidth > 767 && userAgent.indexOf(' electron/') === -1*/}
             {/*? <a onClick={downloadDeskBuild.bind(downloadDeskBuild, 'mac')}>*/}
@@ -232,6 +282,7 @@ class AccountSelector extends Component {
             {/*: null }*/}
 
           {/*/!*onClick={this.props.openKeypairModal}*!/*/}
+          {/*<hashModal open={this.props.keypairModalOpen} close={this.props.closeKeypairModal}/>*/}
           <KeypairGenerator open={this.props.keypairModalOpen} close={this.props.closeKeypairModal} />
         </Container>
       </div>

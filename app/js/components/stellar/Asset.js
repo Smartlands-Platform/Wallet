@@ -93,8 +93,8 @@ class Asset extends Component {
 }
 
 Asset.getIssuerText = (issuer) => {
-    const firstThree = issuer.slice(0, 10);
-    const lastThree = issuer.slice(-13);
+    const firstThree = issuer.slice(0, 3);
+    const lastThree = issuer.slice(-3);
   //TODO get long texts
   // const firstThree = issuer.slice(0, 3);
   // const lastThree = issuer.slice(-3);

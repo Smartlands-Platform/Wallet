@@ -2,14 +2,30 @@
 
 body {
   background-color: #fafafa;
+  font-family: sans-serif, "MuseoSansCyrl" !important;
 }
-html {font-size: 12px;}
+html {
+  font-family: sans-serif, "MuseoSansCyrl" !important;
+  font-size: 12px;
+}
 
 a {
   color: white;
 }
 a.no-style {
   color: inherit;
+}
+
+h1, h2, h3, h4, h5{
+  font-family: sans-serif, "MuseoSansCyrl" !important;
+}
+
+input{
+  font-family: sans-serif, "MuseoSansCyrl" !important;
+}
+
+button{
+  font-family: sans-serif, "MuseoSansCyrl" !important;
 }
 
 h2, h3 {

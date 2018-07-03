@@ -22,10 +22,14 @@ const Printify = {
     let unemphMatch = remaining.match(/\.?0+$/);
     let unemph;
     if (unemphMatch !== null) {
-      unemph = <span className="lightenZeros__unemph">{unemphMatch[0]}</span>
+      unemph = <span className="lightenZeros__unemph">{unemphMatch[0]}</span>;
+
     }
+    // console.log("dasdasd", Number(wholeAmount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}));
     // Formats a number into a react element with 0s unemphasized
-    return <span className="lightenZeros">{Number(wholeAmount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}{emph}{unemph}</span>;
+
+    const strongNumber = Number(wholeAmount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    return <span className="lightenZeros">{<strong>{strongNumber}</strong>}{emph}{unemph}</span>;
   },
   lighten(input) {
     if (!_.isString(input)) {

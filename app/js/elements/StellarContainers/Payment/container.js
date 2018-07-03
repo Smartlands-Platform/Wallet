@@ -19,6 +19,7 @@ import {
   getDestinationTrustlines as getDestinationTrustlinesSelector,
   isSendingPayment,
   isModalKeypairOpen,
+  isSendingPaymentData
 } from '../../../selectors/ui';
 
 import { openKeypairModal, closeKeypairModal } from '../../../actions/ui';
@@ -30,6 +31,7 @@ const mapStateToProps = state => ({
   trustlines: getTrustlines(state),
   canSign: canSign(state),
   sendingPayment: isSendingPayment(state),
+  sendingPaymentData: isSendingPaymentData(state),
   destinationTruslines: getDestinationTrustlinesSelector(state),
 
   keypairModalOpen: isModalKeypairOpen(state),

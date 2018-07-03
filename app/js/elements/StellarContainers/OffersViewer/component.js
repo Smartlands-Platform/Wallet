@@ -1,131 +1,174 @@
 import React, { PropTypes } from 'react';
 import { Form, Header, Table, Grid, Dropdown, Icon, Modal, Button } from 'semantic-ui-react';
-import Asset from '../../../components/stellar/Asset';
 import Amount from '../../../components/stellar/Amount';
 import { STROOP, pageWidth, getHeaderCells } from '../../../helpers/StellarTools';
 import MyStockChart from '../../../elements/Charts';
-import DepthChart from '../../../elements/Charts/depth_chart';
+import DepthChart from '../../../elements/DepthChart';
 import OrderBook from '../../../elements/StellarContainers/OrderBook';
 import RecentTable from '../../../elements/RecentTable';
-// import OfferTables from '../../SellBuyTables/OfferTables';
-// import ManageOffers from '../../SellBuyTables/ManageOffers';
 import {get, map, sortBy, isEqual} from 'lodash';
-import { ClipLoader } from 'react-spinners';
-import '../../../../styles/buy_sell_tabs.scss'
+import '../../../../styles/buy_sell_tabs.scss';
+import BigNumber from 'bignumber.js';
+import OfferTables from '../../SellBuyTables';
+import {Loading} from "../../../helpers/Loading/Loading";
+import {DEFAULT_KEY} from '../../../helpers/defaultData';
+
+import MarketTable from '../../MarketTable';
+
+
+const priceStyle ={
+    position: 'relative',
+    paddingLeft: '.5em',
+    paddingRight: '.5em',
+};
+
 
 class Offers extends React.Component {
-  constructor(props) {
-    super(props);
-      this.base = {
-          code: get(this.props.orderbook, 'base.asset_code', 'not'),
-          issuer: get(this.props.orderbook, 'base.asset_issuer', 'not')
-      };
-    this.state = {
-      selectedCell: this.headerTitles.PRICE,
-      buyingData: null,
-      sellData: null,
-        loading: true,
-      tabIndex: 0,
-      windowWidth: window.innerWidth,
-      price: "",
-      amount: "",
-      priceSell: "",
-      amountSell: ""
-    };
+    constructor(props) {
+        super(props);
+        this.base = {
+            code: get(this.props.orderbook, 'base.asset_code', 'not'),
+            issuer: get(this.props.orderbook, 'base.asset_issuer', 'not')
+        };
+        this.baseData = {
+            defaultPriceBuy: null,
+            defaultPriceSell: null,
+        };
+        this.state = {
+            selectedCell: this.headerTitles.PRICE,
+            buyingData: null,
+            sellData: null,
+            loading: true,
+            tabIndex: 0,
+            windowWidth: window.innerWidth,
 
-    // console.log("this", this.props);
-  }
+            priceBuy: '',
+            amountBuy: '',
+            totalBuy: '',
+            // defaultPriceBuy: null,
 
-  componentDidMount() {
-      if(this.base.code != "not"){
-          setTimeout(() => this.setState({ loading: false }), 2500);
-      }
+            priceSell: '',
+            amountSell: '',
+            totalSell: '',
+            // defaultPriceSell: '',
+
+        };
+
+    }
+
+    componentDidMount() {
+
+        if(this.base.code != "not"){
+            setTimeout(() => this.setState({ loading: false }), 1000);
+        }
         this.checkPageSize();
         window.addEventListener('resize', ::this.checkPageSize, false);
-      this.buySellButton();
-      this.sellBuyButton();
-  }
+        this.buySellButton();
+        this.sellBuyButton();
+    }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', ::this.checkPageSize, false);
-  }
+    componentWillUnmount() {
+        window.removeEventListener('resize', ::this.checkPageSize, false);
+    }
 
     componentWillReceiveProps(nextProps) {
         const code = get(nextProps.orderbook, 'base.asset_code', null) || 'not';
         const issuer = get(nextProps.orderbook, 'base.asset_issuer', null) || 'not';
-        if (!isEqual(code, this.base.code) && !isEqual(issuer, this.base.issuer)) {
+        const bids = get(nextProps.orderbook, 'bids');
+        const asks = get(nextProps.orderbook, 'asks');
+
+        if (this.props.orderbookIsChanged) {
             this.setState({loading: true});
-            setTimeout(() => this.setState({ loading: false }), 2000);
+        } else {
+            this.setState({loading: false});
+        }
+
+        if(!isEqual(nextProps.priceData, this.props.priceData)){
+            this.setState({priceBuy: nextProps.priceData, priceSell: nextProps.priceData});
+            this.updateState('price_buy', nextProps.priceData);
+            this.updateState('price_sell', nextProps.priceData);
+        }
+
+        if (!isEqual(code, this.base.code) && !isEqual(issuer, this.base.issuer)) {
+            if (bids != undefined && bids.length > 0){
+                this.setState({priceBuy: bids[0].price});
+            }
+            if (asks != undefined && asks.length > 0){
+                this.setState({priceSell: asks[0].price});
+            }
+
+            this.setState({loading: true});
+            setTimeout(() => this.setState({ loading: false }), 1000);
             this.base.code = code;
             this.base.issuer = issuer;
         }
     }
 
-  checkPageSize() {
-    this.onSelect(Number(this.isMobileView));
-    this.setState({windowWidth: window.innerWidth});
-  }
+    checkPageSize() {
+        this.onSelect(Number(this.isMobileView));
+        this.setState({windowWidth: window.innerWidth});
+    }
 
-  get headerTitles() {
-    return {
-      CANCEL: "CANCEL",
-      PRICE: 'Price',
-      AMOUNT: 'Amount',
-    };
-  }
+    get headerTitles() {
+        return {
+            CANCEL: "CANCEL",
+            PRICE: 'Price',
+            AMOUNT: 'Amount',
+        };
+    }
 
-  rounded(number){
+    rounded(number){
         let numberToString = String(number).slice(0, -4);
         return +Number(numberToString).toFixed(1);
     };
 
-createOfferBuy(e, { formData }) {
-    e.preventDefault();
-    let buyingData = this.props.orderbook.base.asset_code;
-    let trustLines = this.props.trustlines;
-    // console.log("buyingData", buyingData);
-    let index = trustLines.findIndex(x => x.code === buyingData);
-    let formSell = this.props.trustlines.length - 1;
-    const selling = this.props.trustlines[formSell];
-    const buying = this.props.trustlines[index];
-    const offerData = {
-        buying,
-      selling,
-      // date: Date.now(),
-      amount: Number(formData.total).toFixed(7) ,
-      price: Number(1/formData.price).toFixed(7),
-      total: Number(formData.amount).toFixed(7),
-      passive: false,
-    };
-    // console.log("formData",formData);
-    // console.log("offer",offerData);
-    this.props.createOffer(offerData);
-  }
-createOfferSell(e, { formData }) {
-    e.preventDefault();
-    let sellAsset = this.props.orderbook.base.asset_code;
-    // console.log("sellAsset", sellAsset);
-    let trustLines = this.props.trustlines;
-    let index = trustLines.findIndex(x => x.code === sellAsset);
-    // console.log("sellAsset", index);
-    let formBuy = this.props.trustlines.length - 1;
-    const selling = this.props.trustlines[index];
-    // const buying = this.props.trustlines[formData.buy_asset];
-    const buying = this.props.trustlines[formBuy];
+    createOfferBuy(e, { formData }) {
+        e.preventDefault();
+        let buyingData = this.props.orderbook.base.asset_code;
+        let trustLines = this.props.trustlines;
+        // console.log("buyingData", buyingData);
+        let index = trustLines.findIndex(x => x.code === buyingData);
+        let formSell = this.props.trustlines.length - 1;
+        const selling = this.props.trustlines[formSell];
+        const buying = this.props.trustlines[index];
+        const offerData = {
+            buying,
+            selling,
+            // date: Date.now(),
+            amount: Number(formData.total).toFixed(7),
+            price: Number(1/formData.price),
+            // price: new BigNumber(1).dividedBy(new BigNumber(formData.price)).toFixed(7),
+            total: Number(formData.amount).toFixed(7),
+            passive: false,
+        };
 
-    const offerData = {
-        selling,
-        buying,
-        // date: Date.now(),
-        amount: Number(formData.amount).toFixed(7),
-        price: Number(formData.price).toFixed(7),
-        total: Number(formData.total).toFixed(7),
-        passive: false,
-    };
+        this.props.createOffer(offerData);
+    }
 
-    this.props.createOffer(offerData);
-}
+    createOfferSell(e, { formData }) {
+        e.preventDefault();
+        let sellAsset = this.props.orderbook.base.asset_code;
+        // console.log("sellAsset", sellAsset);
+        let trustLines = this.props.trustlines;
+        let index = trustLines.findIndex(x => x.code === sellAsset);
+        // console.log("sellAsset", index);
+        let formBuy = this.props.trustlines.length - 1;
+        const selling = this.props.trustlines[index];
+        // const buying = this.props.trustlines[formData.buy_asset];
+        const buying = this.props.trustlines[formBuy];
 
+        const offerData = {
+            selling,
+            buying,
+            // date: Date.now(),
+            amount: Number(formData.amount).toFixed(7),
+            price: Number(formData.price).toFixed(7),
+            total: Number(formData.total).toFixed(7),
+            passive: false,
+        };
+
+        this.props.createOffer(offerData);
+    }
 
     handleLoader () {
         this.setState({loading: true});
@@ -133,62 +176,63 @@ createOfferSell(e, { formData }) {
             this.setState({loading: false})
         }, 6500)
     }
-  deleteOffer(offer) {
-    return (e) => {
-        if (e){
-            this.handleLoader();
-        }
-      e.preventDefault();
-      this.props.deleteOffer(offer);
-    };
-  }
 
-  buySellButton(){
-      var buttonName = '';
-      if (this.props.orderbook === null){
-        buttonName = 'Buy SLT';
+    deleteOffer(offer) {
+        return (e) => {
+            if (e){
+                this.handleLoader();
+            }
+            e.preventDefault();
+            this.props.deleteOffer(offer);
+        };
+    }
 
-
-      }else if(this.props.orderbook.base.asset_code){
-        buttonName = `Buy ${this.props.orderbook.base.asset_code}`;
-
-      }
-      return buttonName;
-  }
-    sellBuyButton(){
-    var  buttonName = '';
+    buySellButton(){
+        var buttonName = '';
         if (this.props.orderbook === null){
-          buttonName = 'Sell SLT';
+            buttonName = 'Buy SLT';
+
 
         }else if(this.props.orderbook.base.asset_code){
-          buttonName = `Sell ${this.props.orderbook.base.asset_code}`;
+            buttonName = `Buy ${this.props.orderbook.base.asset_code}`;
+
+        }
+        return buttonName;
+    }
+    sellBuyButton(){
+        var  buttonName = '';
+        if (this.props.orderbook === null){
+            buttonName = 'Sell SLT';
+
+        }else if(this.props.orderbook.base.asset_code){
+            buttonName = `Sell ${this.props.orderbook.base.asset_code}`;
         }
         return buttonName;
     }
 
 
 
-  getBuyOfferRow(offer, index) {
-    return (
-      <Table.Row key={index}>
-        <Table.Cell>
-          {this.props.canSign ?
-            <button
-              className="btn-icon remove"
-              data-hover="Remove"
-              onClick={::this.deleteOffer(offer)}
-            />
-            : null}
-        </Table.Cell>
-          { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.Cell>
-              <Amount amount={Number(offer.amount*offer.price).toFixed(4)} />
-          </Table.Cell> : null }
-        { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.Cell>
-          <Amount amount={Number(1/offer.price).toFixed(7)} />
-        </Table.Cell> : null }
-      </Table.Row>
-    );
-  }
+    getBuyOfferRow(offer, index) {
+        return (
+            <Table.Row key={index}>
+                <Table.Cell>
+                    {this.props.canSign ?
+                        <button
+                            className="btn-icon remove"
+                            data-hover="Remove"
+                            onClick={::this.deleteOffer(offer)}
+                        />
+                        : null}
+                </Table.Cell>
+                { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.Cell>
+                    <Amount amount={Number(offer.amount*offer.price).toFixed(4)} />
+                </Table.Cell> : null }
+                { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.Cell>
+                    <Amount amount={new BigNumber(offer.price_r.d).dividedBy(offer.price_r.n).toFixed(7)} />
+                </Table.Cell> : null }
+            </Table.Row>
+        );
+    }
     getSellOfferRow(offer, index) {
         return (
             <Table.Row key={index}>
@@ -211,94 +255,168 @@ createOfferSell(e, { formData }) {
         );
     }
 
-    handleChangeAmountBuy(e){
-        e.preventDefault();
-        let amount = e.target.value;
-        this.setState({amount: amount})
-    };
 
-    handleChangePriceBuy(e){
-        e.preventDefault();
-        var price = e.target.value;
-        this.setState({price: price})
+    updateState(item, value){
+        // console.log("item");
+        let state = Object.assign(this.state, {
+            // Reset messages
+            successMessage: '',
+            errorMessage: false,
+        });
+        state.valid = false;
 
-    }
+        switch (item) {
+            case 'price_buy':
+                state.priceBuy = value;
+                break;
+            case 'amount_buy':
+                state.amountBuy = value;
+                break;
+            case 'total_buy':
+                state.totalBuy = value;
+                break;
+            case 'price_sell':
+                state.priceSell = value;
+                break;
+            case 'amount_sell':
+                state.amountSell = value;
+                break;
+            case 'total_sell':
+                state.totalSell = value;
+                break;
+            default:
+                throw new Error('Invalid item type');
+        }
 
+        try {
 
-    handleChangeAmountBuySell(e){
-        e.preventDefault();
-        let amount = e.target.value;
-        this.setState({amountSell: amount})
-    };
-
-    handleChangePriceBuySell(e){
-        e.preventDefault();
-        var price = e.target.value;
-        this.setState({priceSell: price})
-    }
-
-  getBuyOfferTable() {
-
-      let OffersArray = this.props.offers;
-      var buyingCode = "SLT";
-      if (this.props.orderbook != null){
-          var buyingCode = this.props.orderbook.base.asset_code;
-          // console.log("buyingCode", buyingCode);
-      }
-
-  function getValues(array, buyingCode) {
-      return array
-          .filter(function(values, item){
-              return (values.buying.asset_code != undefined && values.buying.asset_code === buyingCode);
-          })
-          .map(function (item) {
-              return item;
-          });
-    }
-    let buyOffers = getValues(OffersArray, buyingCode);
-    let sortOffersBuy = buyOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).reverse();
-
-    const colSpanDefault = pageWidth() ? '3' : '2';
-    return (
-      <div className="is-relative">
-        <Table className={this.props.canCreate ? 'exchange-table' : ''} singleLine size="small" compact unstackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Cancel</Table.HeaderCell>
-                { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.HeaderCell>Quantity({`${buyingCode}`})</Table.HeaderCell> : null }
-                { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.HeaderCell>Price(XLM)</Table.HeaderCell> : null }
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {this.props.offers.length ?
-                sortOffersBuy.map(::this.getBuyOfferRow) :
-              <Table.Row>
-                <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">No offers</Table.Cell>
-              </Table.Row>
+            switch (item) {
+                case 'price_buy':
+                    state.totalBuy = new BigNumber(new BigNumber(value).times(new BigNumber(state.amountBuy)).toFixed(7)).toString();
+                    break;
+                case 'amount_buy':
+                    state.totalBuy = new BigNumber(new BigNumber(value).times(new BigNumber(state.priceBuy)).toFixed(7)).toString();
+                    break;
+                case 'total_buy':
+                    state.amountBuy = new BigNumber(new BigNumber(value).dividedBy(new BigNumber(state.priceBuy)).toFixed(7)).toString();
+                    break;
+                case 'price_sell':
+                    state.totalSell = new BigNumber(new BigNumber(value).times(new BigNumber(state.amountSell)).toFixed(7)).toString();
+                    break;
+                case 'amount_sell':
+                    state.totalSell = new BigNumber(new BigNumber(value).times(new BigNumber(state.priceSell)).toFixed(7)).toString();
+                    break;
+                case 'total_sell':
+                    state.amountSell = new BigNumber(new BigNumber(value).dividedBy(new BigNumber(state.priceSell)).toFixed(7)).toString();
+                    break;
+                default:
+                    throw new Error('Invalid item type');
             }
-          </Table.Body>
-        </Table>
-        {!pageWidth() ? this.mobileTableFilter() : null}
-      </div>
-    );
-  }
-  getSellOfferTable() {
-      let OffersArray = this.props.offers;
-      let buyingCode = get(this.props.orderbook, 'base.asset_code', 'SLT');
-      function getValues(array, buyingCode) {
-          return array
-              .filter(function(values, item){
-                  return (values.selling.asset_code === buyingCode)
-              })
-              .map(function (item) {
-                  return item;
-              });
-      }
-      let sellOffers = getValues(OffersArray, buyingCode);
-      let sortOffersSell = sellOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+
+            // TODO: truer valid
+            state.valid = true;
+        } catch(e) {
+            // Invalid input somewhere
+        }
+        this.setState(state);
+    };
+
+    getBuyOfferTable() {
+
+        let OffersArray = this.props.offers;
+
+        // console.log("OffersArray", OffersArray);
+        var buyingCode = "SLT";
+        if (this.props.orderbook != null){
+            var buyingCode = this.props.orderbook.base.asset_code;
+        }
+
+        function getValues(array, buyingCode) {
+            return array
+                .filter(function(values, item){
+                    return (values.buying.asset_code != undefined && values.buying.asset_code === buyingCode);
+                })
+                .map(function (item) {
+                    return item;
+                });
+        }
+        let buyOffers = getValues(OffersArray, buyingCode);
+        let sortOffersBuy = buyOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).reverse();
 
         const colSpanDefault = pageWidth() ? '3' : '2';
 
+
+        const {resetAccount} = this.props;
+        let offersRowBuy;
+
+        if(this.props.offers.length){
+            offersRowBuy = sortOffersBuy.map(::this.getBuyOfferRow)
+        }else if(this.props.keypair.publicKey() === DEFAULT_KEY){
+            offersRowBuy = <Table.Row>
+                <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">
+                    <a href="#" className="loginLink" onClick={resetAccount} style={{width: 100 + "%", display: "block", textAlign: "center", fontSize: 14 + "px"}}>Log in to see your open offers</a>
+                </Table.Cell>
+            </Table.Row>
+        }else{
+            offersRowBuy = <Table.Row>
+                <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">No offers</Table.Cell>
+            </Table.Row>
+        }
+
+        return (
+            <div className="is-relative">
+                <Table className={this.props.canCreate ? 'exchange-table' : ''} singleLine size="small" compact unstackable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Cancel</Table.HeaderCell>
+                            { this.state.selectedCell === this.headerTitles.AMOUNT || pageWidth() ? <Table.HeaderCell>Quantity({`${buyingCode}`})</Table.HeaderCell> : null }
+                            { this.state.selectedCell === this.headerTitles.PRICE || pageWidth() ? <Table.HeaderCell>Price(XLM)</Table.HeaderCell> : null }
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {offersRowBuy}
+                    </Table.Body>
+                </Table>
+                {!pageWidth() ? this.mobileTableFilter() : null}
+            </div>
+        );
+    }
+
+    getSellOfferTable() {
+        // console.log("this.price", this.props.priceData);
+        let OffersArray = this.props.offers;
+        let buyingCode = get(this.props.orderbook, 'base.asset_code', 'SLT');
+        function getValues(array, buyingCode) {
+            return array
+                .filter(function(values, item){
+                    return (values.selling.asset_code === buyingCode)
+                })
+                .map(function (item) {
+                    return item;
+                });
+        }
+
+        let sellOffers = getValues(OffersArray, buyingCode);
+        let sortOffersSell = sellOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+
+        const colSpanDefault = pageWidth() ? '3' : '2';
+
+        const {resetAccount} = this.props;
+        let offersRow;
+
+        if(this.props.offers.length){
+            offersRow = sortOffersSell.map(::this.getSellOfferRow)
+        }else if(this.props.keypair.publicKey() === DEFAULT_KEY){
+            offersRow = <Table.Row>
+                <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">
+                    <a href="#" className="loginLink" onClick={resetAccount} style={{width: 100 + "%", display: "block", textAlign: "center", fontSize: 14 + "px"}}>Log in to see your open offers</a>
+                </Table.Cell>
+            </Table.Row>
+        }else{
+            offersRow = <Table.Row>
+                <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">No offers</Table.Cell>
+            </Table.Row>
+        }
         return (
             <div className="is-relative">
                 <Table className={this.props.canCreate ? 'exchange-table' : ''} singleLine size="small" compact unstackable>
@@ -310,12 +428,7 @@ createOfferSell(e, { formData }) {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {this.props.offers.length ?
-                            sortOffersSell.map(::this.getSellOfferRow) :
-                            <Table.Row>
-                                <Table.Cell className="nodata" colSpan={colSpanDefault} textAlign="center">No offers</Table.Cell>
-                            </Table.Row>
-                        }
+                        {offersRow}
                     </Table.Body>
                 </Table>
                 {!pageWidth() ? this.mobileTableFilter() : null}
@@ -324,137 +437,178 @@ createOfferSell(e, { formData }) {
     }
 
 
+    mobileTableFilter() {
+        const changeCell = (e, t) => {
+            this.setState({ selectedCell: t.value });
+        };
 
-  mobileTableFilter() {
-    const changeCell = (e, t) => {
-      this.setState({ selectedCell: t.value });
-    };
+        return (
+            <Dropdown
+                className="cell-filter"
+                options={getHeaderCells(this.headerTitles)}
+                selection
+                fluid
+                placeholder="Select Cell"
+                name="selected_cell"
+                value={this.state.selectedCell}
+                onChange={changeCell}
+            />
+        );
+    }
 
-    // console.log("Все значеня для таблици ", t.value);
+    getOfferFormBuy(balance) {
+        const {resetAccount} = this.props;
+        let buySellBTN;
+        // console.log("balance", balance);
+        if(this.props.canSign && balance.length > 0){
+            buySellBTN = <Form.Button
+                type="submit"
+                primary
+                className="create-btn"
+                color="green"
+                content={this.buySellButton()}
+            />;
+        }else if(balance.length === 0){
+            buySellBTN = <Form.Button
+                type="submit"
+                primary
+                disabled
+                className="create-btn"
+                color="green"
+                content={this.buySellButton()}
+            />;
+        }
+        else {
+            buySellBTN = <a href="#" className="loginLink" onClick={resetAccount} style={{width: 100 + "%", display: "block", textAlign: "center", fontSize: 14 + "px"}}>Login</a>
+        }
+        return (
+            <Form onSubmit={::this.createOfferBuy} loading={this.props.sendingOffer}>
+                <Form.Group widths="12">
+                </Form.Group>
+                <Form.Group widths="12">
+                    <div className="price-form-wrap" style={priceStyle}>
+                        <span className="price-form-price">{`XLM/${this.base.code}`}</span>
+                        <Form.Field
+                            name="price"
+                            label="Price"
+                            control="Input"
+                            type="number"
+                            placeholder="1"
+                            step={STROOP}
+                            value={this.state.priceBuy}
+                            onChange={(e) => this.updateState('price_buy', e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="price-form-wrap" style={priceStyle}>
+                        <span className="price-form-amount">{`${this.base.code}`}</span>
+                        <Form.Field
+                            name="amount"
+                            label="Amount"
+                            control="Input"
+                            type="number"
+                            placeholder="0"
+                            step={STROOP}
+                            value={this.state.amountBuy}
+                            onChange={(e) => this.updateState('amount_buy', e.target.value)}
+                            required
+                        />
+                    </div>
+                    <Form.Field
+                        name="total"
+                        label="Total"
+                        control="Input"
+                        type="number"
+                        placeholder="1"
+                        value={this.state.totalBuy}
+                        onChange={(e) => this.updateState('total_buy', e.target.value)}
+                        step={STROOP}
+                    />
 
-    return (
-      <Dropdown
-        className="cell-filter"
-        options={getHeaderCells(this.headerTitles)}
-        selection
-        fluid
-        placeholder="Select Cell"
-        name="selected_cell"
-        value={this.state.selectedCell}
-        onChange={changeCell}
-      />
-    );
-  }
+                </Form.Group>
+                <Form.Group className="control-box">
+                    {buySellBTN}
+                </Form.Group>
+            </Form>
+        );
+    }
+    getOfferFormSell(balance) {
+        const {resetAccount} = this.props;
+        // console.log("balance", balance);
+        let sellBuyBTN;
+        if(this.props.canSign && balance != undefined ? balance.length > 0: null){
+            sellBuyBTN =<Form.Button
+                type="submit"
+                primary
+                className="create-btn"
+                color="green"
+                content={this.sellBuyButton()}
+            />
+        }else if(balance != undefined ? balance.length === 0: null){
+            sellBuyBTN =<Form.Button
+                type="submit"
+                primary
+                disabled
+                className="create-btn"
+                color="green"
+                content={this.sellBuyButton()}
+            />
+        }
+        else {
+            sellBuyBTN = <a href="#" className="loginLink" onClick={resetAccount} style={{width: 100 + "%", display: "block", textAlign: "center", fontSize: 14 + "px"}}>Login</a>
 
-  getOfferFormBuy() {
-
-
-    return (
-      <Form onSubmit={::this.createOfferBuy} loading={this.props.sendingOffer}>
-        <Form.Group widths="12">
-        </Form.Group>
-        <Form.Group widths="12">
-          <Form.Field
-              name="price"
-              label="Price"
-              control="Input"
-              type="number"
-              placeholder="1"
-              step={STROOP}
-              onChange={(e) => this.handleChangePriceBuy(e)}
-              required
-          />
-          <Form.Field
-            name="amount"
-            label="Amount"
-            control="Input"
-            type="number"
-            placeholder="0"
-            step={STROOP}
-            onChange={(e) => this.handleChangeAmountBuy(e)}
-            required
-          />
-          <Form.Field
-              name="total"
-              label="Total"
-              control="Input"
-              type="number"
-              placeholder="1"
-              value={Number(this.state.price*this.state.amount).toFixed(7)}
-              step={STROOP}
-              disabled
-          />
-
-        </Form.Group>
-        <Form.Group className="control-box">
-          {/*<Form.Checkbox*/}
-            {/*name="passive"*/}
-            {/*label="Passive offer"*/}
-          {/*/>*/}
-          <Form.Button
-            type="submit"
-            primary
-            className="create-btn"
-            color="green"
-            content={this.buySellButton()}
-          />
-        </Form.Group>
-      </Form>
-    );
-  }
-  getOfferFormSell() {
+        }
         return (
             <div className="exchange-form">
                 <Form onSubmit={::this.createOfferSell} loading={this.props.sendingOffer}>
-              <Form.Group widths="12">
-              </Form.Group>
-              <Form.Group widths="12">
-                <Form.Field
-                    name="price"
-                    label="Price"
-                    control="Input"
-                    type="number"
-                    placeholder="1"
-                    step={STROOP}
-                    onChange={(e) => this.handleChangePriceBuySell(e)}
-                    required
-                />
-                <Form.Field
-                    name="amount"
-                    label="Amount"
-                    control="Input"
-                    type="number"
-                    placeholder="0"
-                    step={STROOP}
-                    onChange={(e) => this.handleChangeAmountBuySell(e)}
-                    required
-                />
-                <Form.Field
-                    name="total"
-                    label="Total"
-                    control="Input"
-                    type="number"
-                    placeholder="1"
-                    step={STROOP}
-                    value={this.state.priceSell*this.state.amountSell}
-                    disabled
-                />
+                    <Form.Group widths="12">
+                    </Form.Group>
+                    <Form.Group widths="12">
+                        <div className="price-form-wrap" style={priceStyle}>
+                            <span className="price-form-price">{`XLM/${this.base.code}`}</span>
+                            <Form.Field
+                                name="price"
+                                label="Price"
+                                control="Input"
+                                type="number"
+                                placeholder="1"
+                                step={STROOP}
+                                style={priceStyle}
+                                value={this.state.priceSell}
+                                onChange={(e) => this.updateState('price_sell', e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="price-form-wrap" style={priceStyle}>
+                            <span className="price-form-amount">{`${this.base.code}`}</span>
+                            <Form.Field
+                                name="amount"
+                                label="Amount"
+                                control="Input"
+                                type="number"
+                                placeholder="0"
+                                step={STROOP}
+                                value={this.state.amountSell}
+                                onChange={(e) => this.updateState('amount_sell', e.target.value)}
+                                required
+                            />
+                        </div>
+                        <Form.Field
+                            name="total"
+                            label="Total"
+                            control="Input"
+                            type="number"
+                            placeholder="1"
+                            step={STROOP}
+                            value={this.state.totalSell}
+                            onChange={(e) => this.updateState('total_sell', e.target.value)}
+                        />
 
-              </Form.Group>
-              <Form.Group className="control-box">
-                  {/*<Form.Checkbox*/}
-                  {/*name="passive"*/}
-                  {/*label="Passive offer"*/}
-                  {/*/>*/}
-                <Form.Button
-                    type="submit"
-                    primary
-                    className="create-btn"
-                    color="green"
-                    content={this.sellBuyButton()}
-                />
-              </Form.Group>
-            </Form>
+                    </Form.Group>
+                    <Form.Group className="control-box">
+                        {sellBuyBTN}
+                    </Form.Group>
+                </Form>
             </div>
         );
     }
@@ -469,155 +623,235 @@ createOfferSell(e, { formData }) {
         }
     }
 
-  get tabList() {
-      const tabs = ['Buy', 'Sell'];
-      const slides = tabs.map((tab, index) =>
-          <li key={index}
-              className={this.state.tabIndex === index + 1 ? 'active' : ''}
-              onClick={this.onSelect.bind(this, index + 1)}>{tab}</li>
-      );
+    get tabList() {
+        const tabs = ['Buy', 'Sell'];
+        const slides = tabs.map((tab, index) =>
+            <li key={index}
+                className={this.state.tabIndex === index + 1 ? 'active' : ''}
+                onClick={this.onSelect.bind(this, index + 1)}>{tab}</li>
+        );
 
-      return <ul className="tabs-nav">
-          {slides}
-      </ul>;
-  }
+        return <ul className="tabs-nav">
+            {slides}
+        </ul>;
+    }
 
-  get tabPanel() {
-      let tabPanel;
-      switch(this.state.tabIndex) {
-          case 1:
-              tabPanel = <div className="buy-form">
-                {this.getOfferFormBuy()}
-                {this.getBuyOfferTable()}
-              </div>;
-              break;
-          case 2:
-            tabPanel = <div className="sell-form">
-              {this.getOfferFormSell()}
-              {this.getSellOfferTable()}
-            </div>;
-              break;
-          default:
-              tabPanel = <div className="buy-form">
-                  {this.getOfferFormBuy()}
-                  {this.getBuyOfferTable()}
-              </div>;
-      }
+    get tabPanel() {
+        let tabPanel;
+        const balancesData = this.props.balances;
+        let buyingCode = get(this.props.orderbook, 'base.asset_code', 'SLT');
 
-      return <div className="sel-buy-tabs">
-          {tabPanel}
-      </div>;
-  }
+        function getValuesSell(array, buyingCode) {
+            return array
+                .filter(function(values, item){
+                    return (values.asset_type === buyingCode)
+                })
+                .map(function (item) {
+                    return item;
+                });
+        }
+        let balanceCodeSell = getValuesSell(balancesData, 'native');
 
-  onSelect(tabIndex) {
-      this.setState({ tabIndex });
-  }
+        let balanceCodeFilterSell = balanceCodeSell.sort((a, b) => parseFloat(a.balance) - parseFloat(b.balance));
 
-  get tabView() {
-      return <div className="holder">
-          {this.isMobileView && this.tabList}
-          {this.tabPanel}
-      </div>
-  }
 
-  get isMobileView() {
-      return this.state.windowWidth < 640;
-  }
+        function getValuesBuy(array, buyingCode) {
+            return array
+                .filter(function(values, item){
+                    return (values.asset_code === buyingCode)
+                })
+                .map(function (item) {
+                    return item;
+                });
+        }
 
-  render() {
-        if (this.props.canSign && this.props.canCreate) {
-          if(window.innerWidth > 640){
-            var exchangeBlock = <div>
-              <div className="exchange-block">
-                <Grid columns={1} divided doubling>
-                  <Grid.Row>
-                    <Grid.Column className="main-column offers-main">
-                      <div className="holder">
-                        <OrderBook />
-                      </div>
-                    </Grid.Column>
-                    <Grid.Column className="main-column offers-main-form">
-                      <div className="holder">
-                        <div className="buy-form">
-                          {this.getOfferFormBuy()}
+        let balanceCodeBuy = getValuesBuy(balancesData, buyingCode);
 
-                          {this.state.loading ? <div className='sweet-loading'>
-                              <ClipLoader
-                                  color={'#000000'}
-                                  loading={this.state.loading}
-                              />
-                          </div> : this.getBuyOfferTable()}
+        var balanceCodeFilterBuy;
 
-                        </div>
-                        <div className="sell-form">
-                          {this.getOfferFormSell()}
+        if(balanceCodeBuy.length > 0){
+            balanceCodeFilterBuy = balanceCodeBuy.sort((a, b) => parseFloat(a.balance) - parseFloat(b.balance));
+        }
+        switch(this.state.tabIndex) {
+            case 1:
+                tabPanel = <div className="buy-form">
+                    {this.getOfferFormBuy(balanceCodeBuy)}
+                    {this.getBuyOfferTable()}
+                </div>;
+                break;
+            case 2:
+                tabPanel = <div className="sell-form">
+                    {this.getOfferFormSell(balanceCodeBuy)}
+                    {this.getSellOfferTable()}
+                </div>;
+                break;
+            default:
+                tabPanel = <div className="buy-form">
+                    {this.getOfferFormBuy(balanceCodeBuy)}
+                    {this.getBuyOfferTable()}
+                </div>;
+        }
 
-                          {this.state.loading ? <div className='sweet-loading'>
-                              <ClipLoader
-                                  color={'#000000'}
-                                  loading={this.state.loading}
-                              />
-                          </div> : this.getSellOfferTable()}
-                        </div>
-                      </div>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </div>
-              <div className="stock-block">
-                  <MyStockChart d={this.props}/>
-                  <div>
-                      <div style={{display: "inline-block", verticalAlign: "top", "width": 52 + "%"}}>
-                          <DepthChart d={this.props}/>
-                      </div>
-                      <div style={{display: "inline-block", verticalAlign: "top", "width": 40+ "%"}}>
-                          <RecentTable d={this.props} />
-                      </div>
+        return <div className="sel-buy-tabs">
+            {tabPanel}
+        </div>;
+    }
 
-                  </div>
+    onSelect(tabIndex) {
+        this.setState({ tabIndex });
+    }
 
-              </div>
-            </div>
-          }else {
-            exchangeBlock = <div>
-              <div className="exchange-block">
-                <Grid.Row>
-                  <Grid.Column className="main-column offers-main-form">
-                    <div className="holder">
-                      <MyStockChart d={this.props} />
-                      <OrderBook />
-                      {this.tabView}
+    get tabView() {
+        return <div className="holder">
+            {this.isMobileView && this.tabList}
+            {this.tabPanel}
+        </div>
+    }
+
+    get isMobileView() {
+        return this.state.windowWidth < 640;
+    }
+
+    render() {
+
+        const balancesData = this.props.balances;
+        let buyingCode = get(this.props.orderbook, 'base.asset_code', 'SLT');
+
+        function getValuesSell(array, buyingCode) {
+            return array
+                .filter(function(values, item){
+                    return (values.asset_type === buyingCode)
+                })
+                .map(function (item) {
+                    return item;
+                });
+        }
+        let balanceCodeSell = getValuesSell(balancesData, 'native');
+
+        let balanceCodeFilterSell = balanceCodeSell.sort((a, b) => parseFloat(a.balance) - parseFloat(b.balance));
+
+
+        function getValuesBuy(array, buyingCode) {
+            return array
+                .filter(function(values, item){
+                    return (values.asset_code === buyingCode)
+                })
+                .map(function (item) {
+                    return item;
+                });
+        }
+
+        let balanceCodeBuy = getValuesBuy(balancesData, buyingCode);
+
+        var balanceCodeFilterBuy;
+
+        if(balanceCodeBuy.length > 0){
+            balanceCodeFilterBuy = balanceCodeBuy.sort((a, b) => parseFloat(a.balance) - parseFloat(b.balance));
+        }
+
+        // console.log("balanceCodeBuy", balanceCodeBuy);
+
+        if (true) {
+            if(window.innerWidth > 640){
+                var exchangeBlock = <div>
+                    <div className="exchange-block">
+                        <Grid columns={1} divided doubling>
+                            <Grid.Row>
+                                <Grid.Column className="main-column offers-main">
+                                    <div className="holder">
+                                        <OrderBook />
+                                    </div>
+                                </Grid.Column>
+                                <Grid.Column className="main-column offers-main-form">
+                                    <div className="holder row">
+                                        {this.state.loading ? <Loading loading={this.state.loading}/> : <div className="buy-form column">
+                                            <h3 className="form-title">Buy {`${this.base.code}`} using XLM</h3>
+                                            {balanceCodeBuy.length > 0 && this.props.keypair.publicKey() != DEFAULT_KEY ? <p className="form-available"><span>Available</span> {balanceCodeFilterSell[0].balance} XLM</p> : null}
+                                            {this.getOfferFormBuy(balanceCodeBuy)}
+                                        </div>}
+                                        {this.state.loading ? <Loading loading={this.state.loading}/> : <div className="sell-form column">
+                                            <h3 className="form-title">Sell {`${this.base.code}`} for XLM</h3>
+                                            {balanceCodeBuy.length > 0 && this.props.keypair.publicKey() != DEFAULT_KEY ? <p className="form-available"><span>Available</span> {balanceCodeFilterBuy[0].balance} {`${this.base.code}`}</p>: null}
+                                            {this.getOfferFormSell(balanceCodeBuy)}
+                                        </div>}
+                                    </div>
+
+                                    {/* Include Offer Tables*/}
+                                    <OfferTables/>
+
+                                    {/* Include MyOffers Tables*/}
+                                    <p className="my-Offer-title">My offers</p>
+                                    <div className="holder row">
+                                        <div className="buy-form column buy-form-table">
+                                            {this.state.loading ? <Loading loading={this.state.loading}/> : this.getBuyOfferTable()}
+                                        </div>
+                                        <div className="sell-form column sell-form-table">
+                                            {this.state.loading ? <Loading loading={this.state.loading}/> : this.getSellOfferTable()}
+                                        </div>
+                                    </div>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
                     </div>
-                  </Grid.Column>
-                </Grid.Row>
-              </div>
-            </div>
-          }
+                    <div className="stock-block">
+                        <MyStockChart/>
+                        <div>
+                            <div style={{display: "inline-block", verticalAlign: "top", "width": 60 + "%"}}>
+                                <MarketTable />
+                                <div className="amChartWrap">
+                                    <Loading className="amChartLoading" loading={true}/>
+                                    <DepthChart/>
+                                </div>
+                            </div>
+                            <div style={{display: "inline-block", verticalAlign: "top", "width": 40+ "%", paddingRight: 35 + "px"}}>
+                                <RecentTable />
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            }else {
+                exchangeBlock = <div>
+                    <div className="exchange-block">
+                        <Grid.Row>
+                            <Grid.Column className="main-column offers-main-form">
+                                <div className="holder">
+                                    <MyStockChart d={this.props} />
+                                    <OrderBook />
+                                    <OfferTables/>
+                                    {this.tabView}
+                                </div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </div>
+                </div>
+            }
         } else {
-          null
+            null
         }
 
 
-    return (
-      <div className="balances-container">
-          {exchangeBlock}
-        {!this.props.canCreate ?
-          this.getBuyOfferTable()
-          : null
-        }
-      </div>
-    );
-  }
+        return (
+            <div className="balances-container">
+                {exchangeBlock}
+                {!this.props.canCreate ?
+                    this.getBuyOfferTable()
+                    : null
+                }
+            </div>
+        );
+    }
 }
 
 Offers.propTypes = {
-  trustlines: PropTypes.array,
-  offers: PropTypes.array,
-  createOffer: PropTypes.func.isRequired,
-  deleteOffer: PropTypes.func.isRequired,
-  canSign: PropTypes.bool,
-  sendingOffer: PropTypes.bool,
-  canCreate: PropTypes.bool,
+    trustlines: PropTypes.array,
+    offers: PropTypes.array,
+    createOffer: PropTypes.func.isRequired,
+    deleteOffer: PropTypes.func.isRequired,
+    canSign: PropTypes.bool,
+    sendingOffer: PropTypes.bool,
+    canCreate: PropTypes.bool,
 };
 
 export default Offers;

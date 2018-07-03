@@ -1,3 +1,4 @@
+//TODO STELLAR SERVER API
 import Stellar from 'stellar-sdk';
 
 // import StellarOffline from './StellarOffline';
@@ -24,21 +25,25 @@ export const getAccount = accountId =>
     })
 
 //TODO OrderBook realization
-export const Orderbook = ({ selling, buying }) =>
-  getServerInstance()
-    .orderbook(AssetInstance(selling), AssetInstance(buying))
-    .call();
+
+// export const setAssetStream = (code, issuer) => { new Stellar.Asset(code, issuer)};
+
 
 export const OrderbookStream = ({ selling, buying }, onmessage) =>
   getServerInstance()
     .orderbook(AssetInstance(selling), AssetInstance(buying))
+    .limit(60)
     .stream({ onmessage });
 
-export const OrderbookDetail = ({ selling, buying }) =>
+export const TradesStream = ({buying, selling}, callback) =>
   getServerInstance()
-    .orderbook(AssetInstance(selling), AssetInstance(buying))
-    .trades()
-     .call();
+      .trades()
+      .forAssetPair(AssetInstance(buying), AssetInstance(selling))
+      .limit(20)
+      .order('desc')
+      .call()
+      .then(result => (callback(result)));
+
 
 
 export const AccountStream = (accountId, callback) =>

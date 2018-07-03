@@ -2,14 +2,22 @@ const streamers = {};
 
 export function newStream(name, stream) {
   if (streamers[name]) {
-    streamers[name]();
+      if (typeof streamers[name] === "function") {
+          streamers[name]();
+      }else{
+          streamers[name] = stream;
+      }
+
   }
   streamers[name] = stream;
 }
 
 export function killStreams() {
   Object.keys(streamers).forEach((k) => {
-    streamers[k]();
-    delete streamers[k];
+      if (typeof streamers[k] === "function") {
+          streamers[k]();
+      }else{
+          delete streamers[k];
+      }
   });
 }

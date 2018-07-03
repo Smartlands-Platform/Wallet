@@ -20,7 +20,7 @@ const Layout = ({
     openKeypairModal,
     closeKeypairModal,
 }) =>
-    <Menu className="top-bar-menu custom-container" fixed="top" inverted secondary>
+    <Menu className="top-bar-menu custom-container header--block" fixed="top" inverted secondary>
         {window.innerWidth < 768 &&
         <Menu.Item>
           <MenuButton />

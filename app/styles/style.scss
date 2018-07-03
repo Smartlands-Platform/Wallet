@@ -181,7 +181,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: sans-serif, "MuseoSansCyrl" !important;
   font-size: 1em; }
 
 /* Forms
@@ -1106,6 +1106,7 @@ ul.privacy__ul li {
   padding: 0 9px;
   justify-content: space-between;
   flex-wrap: wrap-reverse;
+  margin-bottom: 16px;
 }
 
 .island__sub__division {
@@ -1464,7 +1465,7 @@ ul.privacy__ul li {
   width: 100%; }
 
 .OfferTable__header {
-  font-family: MuseoSansCyrl, sans-serif;
+  font-family: sans-serif, "MuseoSansCyrl" !important;
   display: flex;
   background: #fafafa;
   font-weight: bold;
@@ -1530,12 +1531,12 @@ ul.privacy__ul li {
   width: 25%;
   padding: 4px 8px 4px 2px;
   text-align: right;
-  font-weight: 900;
+  font-weight: 500;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.5;
   letter-spacing: normal;
-  font-family: MuseoSansCyrl, sans-serif;
+  font-family: sans-serif, "MuseoSansCyrl" !important;
   font-size: 0.625em;
 
   @media screen and (max-width: 2280px){

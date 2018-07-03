@@ -8,3 +8,4 @@ yarn-error.log
 /electron/app
 seeds.txt
 /sandbox
+package-lock.json

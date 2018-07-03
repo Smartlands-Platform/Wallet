@@ -133,7 +133,7 @@
 
   .ui.small.table {
     text-align: center;
-    margin-bottom: 40px;
+    //margin-bottom: 40px;
     th {
       color: #fff;
       font-size: 12px;
@@ -237,9 +237,10 @@
 
       button {
         background-color: #3cb46d;
-        padding: 17px 32px 18px;
+        padding: 12px 32px 12px;
         border-radius: 0 4px 4px 0;
         font-size: 14px !important;
+        white-space: nowrap;
 
         @media screen and (max-width: 600px){
           border-radius: 4px;
@@ -261,17 +262,2373 @@
   font-weight: 500;
   font-size: 15px;
   vertical-align: center;
-
-
   img {
     width: 100px !important;
     max-height: none !important;
   }
 }
 .recent-trades-title + .is-relative{
-  width: 215px;
-  display: inline-block;
+  width: 100%;
+  text-align: right;
+  table{
+    float: right;
+    //display: inline-block;
+    thead{
+      th{
+        width: 33%;
+      }
+    }
+    tbody{
+      tr{
+        td{
+          //width: 33%;
+          //text-align: right !important;
+          //padding-right: 5px !important;
+          &:last-child{
+            //padding-right: 20px !important;
+          }
+        }
+      }
+    }
+  }
 }
 .stock-block{
   padding-top: 10px;
+}
+
+.recent-trades-head, .recent-trades-key{
+  font-family: sans-serif, "MuseoSansCyrl" !important;
+  color: #656565 !important;
+  margin-bottom: 0 !important;
+}
+.recent-trades-head{
+  font-weight: normal !important;
+}
+.trustTable{
+  .tableTrustCell{
+    tr{
+      background-color: transparent !important;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+  }
+}
+.amChartWrap{
+  position: relative;
+  min-height: 300px;
+  height: auto;
+  .sweet-loading{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 31%;
+    z-index: 10;
+    transform: translateY(-50%);
+  }
+  .depth-chart{
+    z-index: 12;
+    background-color: #fff;
+    position: relative;
+  }
+}
+.MarketTable-wrap{
+  padding-left: 35px;
+
+}
+
+.MarketTable-style{
+  border: 1px solid #656565;
+  border-radius: 3px;
+  td{
+    white-space: nowrap;
+    text-align: center;
+    padding: 3px 10px;
+    font-size: 10px;
+    line-height: 21.6px;
+    color: #656565;
+    border-bottom: 1px solid #656565;
+  }
+}
+.error_modal{
+  width: 30% !important;
+  transform: translate(-50%, -50%);
+  margin: 0 !important;
+  .negative.message{
+    text-align: center;
+    .header{
+      font-size: 16px;
+      line-height: 30px;
+    }
+  }
+}
+
+.order-wrap{
+  .dropdown.icon{
+    display: none;
+  }
+}
+.amcharts-chart-div, .item.logo{
+  font-family: sans-serif, "MuseoSansCyrl" !important;
+}
+
+.item.form-group, .active.selected.item.form-group{
+  background: rgba(0,0,0,0.1) !important;
+}
+
+
+@media screen and (max-width: 500px){
+  .ui.fluid.selection.order-drop.dropdown .text{
+    font-size: 9px !important;
+  }
+}
+
+@media screen
+    and (min-width: 1900px)
+    and (min-device-width: 1900px)
+    and (max-width: 1920px)
+    and (max-device-width: 1920px)
+    and (-webkit-min-device-pixel-ratio: 1){
+  .pages-container{
+    padding-top: 40px;
+    padding-bottom: 33px;
+  }
+
+  .balances-container .recent-table tbody td{
+    padding: 5px 22px !important;
+    font-size: 11px !important;
+  }
+
+  .exchange-block{
+    padding-right: 20px;
+  }
+  .stock-block{
+    padding-left: 20px;
+  }
+  .order-book > .ui.two.column.grid > .row{
+    padding-bottom: 0;
+  }
+  .order-drop{
+    height: 65px !important;
+  }
+  #PriceChart, .PriceChartChunk{
+    height: 415px !important;
+    .highcharts-container{
+      height: 415px !important;
+      .highcharts-root{
+        height: 415px !important;
+      }
+    }
+  }
+  .exchange-block .offers-main-form .buy-form .exchange-form,
+  .exchange-block .offers-main-form .sell-form .exchange-form{
+    margin-bottom: 35px !important;
+  }
+  .exchange-block .table th,
+  .exchange-block .table td{
+    padding: 3px 10px 3px 10px !important;
+    .btn-icon{
+      width: 19px !important;
+      height: 19px !important;
+      &:after{
+        width: 9px !important;
+        height: 12px !important;
+      }
+    }
+  }
+  .balances-container .recent-trades-title{
+    text-align: right !important;
+    padding-right: 75px !important;
+  }
+  .my-Offer-title{
+    font-size: 16.5px !important;
+    margin-bottom: -14px !important;
+    margin-top: 6px;
+  }
+  .loginLink{
+    font-size: 11px !important;
+  }
+
+  .order-wrap:last-child p{
+    bottom: 24% !important;
+  }
+  .order-wrap img.top-image{
+    top: 39% !important;
+  }
+  .offers-main {
+    max-width: 98% !important;
+    width: 100% !important;
+    //padding-bottom: 0 !important;
+  }
+  .depth-chart{
+    height: 338px !important;
+  }
+
+  .exchange-block .create-btn .button{
+    font-size: 13.5px;
+  }
+
+  table.recent-table tbody{
+    max-height: 316px !important;
+  }
+  .form-title{
+    font-size: 13.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #201e1f !important;
+  }
+  .form-available {
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+    margin-bottom: 0;
+  }
+  .exchange-block label {
+    font-size: 13.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+  }
+  .exchange-block .offers-main-form .buy-form input[type=number],
+  .exchange-block .offers-main-form .sell-form input[type=number] {
+    //max-width: 222px !important;
+    //width: 100% !important;
+    height: 36px !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    border: solid 1px #dedede !important;
+    //border: solid 1px var(--white) !important;
+  }
+  .order-book{
+    .row{
+      .column{
+        //width: 40% !important;
+      }
+    }
+    .order-wrap{
+      width: 100%;
+      //max-width: 285px;
+      height: 65px;
+      border-radius: 4px;
+      background-color: #3cb46d;
+      border: solid 1px transparent !important;
+    }
+  }
+  .buy-form, .sell-form{
+    form{
+      .twelve.fields{
+        &:first-child + div{
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .sell-form{
+    //padding-left: 7px !important;
+  }
+  .offers-main-form{
+    max-width: 98% !important;
+    width: 100% !important;
+    padding-top: 22px !important;
+  }
+  .island__sub__division__title{
+    font-size: 16.5px !important;
+    //font-weight: bold !important;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.79;
+    letter-spacing: 0.2px;
+    text-align: left;
+    color: #201e1f;
+    margin-bottom: 4px !important;
+    margin-top: 0px !important;
+  }
+  .island__sub__division .OfferTable .OfferTable__table{
+    max-height: 284px !important;
+  }
+  .OfferTable__header{
+    font-size: 13.5px !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-stretch: normal;
+    line-height: 2.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .OfferTable__row__item{
+    font-size: 11px !important;
+    font-weight: 500;
+    font-style: normal !important;
+    font-stretch: normal;
+    line-height: 1.9 !important;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .header--block{
+    height: 70px;
+  }
+  .panel-tabs .tabs-list{
+    padding: 0 !important;
+    padding-left: 40px !important;
+    padding-top: 84px !important;
+  }
+  .panel-tabs .tabs-list li{
+    padding: 0 !important;
+    margin-bottom: 72px !important;
+    padding-left: 15px !important;
+    //margin: 0 0 10px;
+    position: relative;
+    cursor: pointer;
+    font-size: 16.5px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.8;
+    letter-spacing: 0.2px;
+    text-align: left;
+    color: #818181;
+  }
+  .panel-tabs .tab-panel{
+    padding: 30px 20px 0 48px !important;
+  }
+  .exchange-block .offers-main-form .buy-form .field,
+  .exchange-block .offers-main-form .sell-form .field {
+    margin-bottom: 6px !important;
+    &:last-child{
+      margin-bottom: 0 !important;
+    }
+  }
+  .offers-main-form{
+    .holder{
+      padding-bottom: 0px !important;
+      margin-bottom: 0px !important;
+      max-height: 236px;
+    }
+  }
+  .island__sub{
+    padding: 0 0 16px 2px !important;
+    margin-bottom: 0 !important;
+  }
+  .OfferTable__cell--depth{
+    width: 25% !important;
+
+  }
+  .OfferTable__header__item{
+    width: 25% !important;
+    padding: 0 !important;
+  }
+  .island__sub__division:first-child{
+    margin-right: 2px;
+  }
+  .exchange-block .table{
+    //margin-top: 46px !important;
+  }
+  .so-back{
+   padding-left: 0 !important;
+  }
+  .PriceChartChunk{
+    //height: 443px !important;
+  }
+  .MarketTable-style{
+    //width: 438px !important;
+  }
+  .MarketTable-style td{
+    font-size: 11px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: normal !important;
+    text-align: left;
+    color: #656565 !important;
+    background-color: #fafafa;
+    padding: 6px 10px !important;
+  }
+}
+
+
+@media screen
+   and (min-width: 1370px)
+   and (min-device-width: 1370px)
+   and (max-width: 1899px)
+   and (max-device-width: 1899px)
+{
+    .MarketTable-style td{
+     font-size: 9px!important;
+   }
+  .balances-container .recent-table tbody td{
+    padding: 5px 15px!important;
+    font-size: 8px!important;
+  }
+  .balances-container .recent-table th:nth-child(2n),
+  .balances-container .recent-table th:nth-child(odd){
+    font-size: 7px!important;
+    display: inline-block !important;
+  }
+  table.recent-table tbody{
+    max-height: 263px !important;
+  }
+  .OfferTable__header__item{
+    font-size: 10px !important;
+  }
+  .OfferTable__row__item {
+    font-size: 9px !important;
+  }
+}
+
+@media screen
+    and (min-width: 1346px)
+    and (min-device-width: 1346px)
+    and (max-width: 1370px)
+    and (max-device-width: 1370px)
+    and (-webkit-min-device-pixel-ratio: 1){
+
+  .pages-container{
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .my-Offer-title{
+    line-height: 1 !important;
+  }
+  .loginLink{
+    font-size: 9.5px !important;
+  }
+
+  .exchange-block{
+    padding-right: 20px;
+  }
+  .stock-block{
+    padding-left: 20px;
+  }
+
+  #PriceChart, .PriceChartChunk{
+    height: 260px !important;
+    .highcharts-container{
+      height: 260px !important;
+      .highcharts-root{
+        height: 260px !important;
+      }
+    }
+  }
+  .exchange-block .table th,
+  .exchange-block .table td{
+    padding: 3px 10px 3px 10px !important;
+    .btn-icon{
+      width: 19px !important;
+      height: 19px !important;
+      &:after{
+        width: 9px !important;
+        height: 12px !important;
+      }
+    }
+  }
+  .islandBack{
+    padding-bottom: 14px !important;
+  }
+
+  .MarketTable-style td{
+    padding: 1px 10px !important;
+  }
+  .depth-chart{
+    height: 241px !important;
+  }
+  .order-wrap img.top-image{
+    width: 45px !important;
+    height: 45px !important;
+    top: 50% !important;
+  }
+  .order-book{
+    & > .column{
+      & > .row{
+        padding-bottom: 0px !important;
+      }
+    }
+  }
+
+  .exchange-block .create-btn .button{
+    padding: 6px 20px !important;
+    font-size: 9.5px !important;
+  }
+
+  .island__sub__division .OfferTable .OfferTable__table{
+    max-height: 160px !important;
+    width: 101% !important;
+  }
+
+  .buy-form-table, .sell-form-table{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    .exchange-table{
+      margin: 0 !important;
+    }
+  }
+
+  .form-title{
+    font-size: 9.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #201e1f !important;
+  }
+  .form-available {
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+    margin-bottom: 0;
+  }
+  .exchange-block label {
+    font-size: 9.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+  }
+  .exchange-block .offers-main-form .buy-form input[type=number],
+  .exchange-block .offers-main-form .sell-form input[type=number] {
+    //max-width: 158px !important;
+    //width: 100% !important;
+    height: 26px !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    border: solid 1px #dedede !important;
+    //border: solid 1px var(--white) !important;
+  }
+
+  .buy-form .price-form-amount,
+  .buy-form .price-form-price,
+  .sell-form .price-form-amount,
+  .sell-form .price-form-price{
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+  .buy-form .twelve .field:before,
+  .sell-form .twelve .field:before{
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+
+
+  .panel-tabs{
+    margin-top: -5px !important;
+    .tabs-list{
+      flex: 0 0 174px !important;
+    }
+  }
+  .order-book{
+    .row{
+      .column{
+        //width: 40% !important;
+      }
+    }
+    .order-wrap{
+      width: 100%;
+      //max-width: 203px;
+      height: 48px;
+      border-radius: 4px;
+      background-color: #3cb46d;
+      border: solid 1px transparent !important;
+    }
+  }
+  .buy-form, .sell-form{
+    //width: 100% !important;
+    //max-width: 203px !important;
+    //padding-left: 0px !important;
+  }
+  .sell-form{
+    //padding-left: 7px !important;
+  }
+  .offers-main-form{
+    max-width: 98% !important;
+    width: 100% !important;
+    padding-top: 11px !important;
+  }
+  .OfferTable{
+    width: 102% !important;
+  }
+  .island__sub__division__title{
+    font-size: 11.5px !important;
+    font-weight: bold !important;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.79;
+    letter-spacing: 0.1px;
+    text-align: left;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+  }
+  .OfferTable__header{
+    font-size: 9.5px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-stretch: normal;
+    line-height: 2.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .OfferTable__row__item{
+    font-size: 9.5px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal;
+    line-height: 1.8;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .header--block{
+    height: 60px;
+  }
+  .panel-tabs .tabs-list{
+    padding: 0 !important;
+    padding-left: 40px !important;
+    padding-top: 84px !important;
+  }
+
+  .panel-tabs .tabs-list li{
+    padding: 0 !important;
+    margin-bottom: 43px !important;
+    padding-left: 15px !important;
+    //margin: 0 0 10px;
+    position: relative;
+    cursor: pointer;
+    font-size: 11.5px !important;
+    font-weight: 500;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.48 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #818181;
+  }
+  .panel-tabs .tab-panel{
+    padding: 0 20px 40px 48px !important;
+  }
+  .exchange-block .offers-main-form .buy-form .field,
+  .exchange-block .offers-main-form .sell-form .field {
+    margin-bottom: 2px !important;
+  }
+  .offers-main{
+    max-width: 98% !important;
+    width: 100% !important;
+  }
+  .my-Offer-title{
+    margin-bottom: 0px !important;
+  }
+  .offers-main-form{
+    .holder{
+      padding-bottom: 0px !important;
+      margin-bottom: 0px !important;
+      max-height: 178px !important;
+    }
+  }
+  .balances-container .exchange-table th:nth-child(odd),
+  .balances-container .exchange-table th:nth-child(even){
+    font-size: 7.5px !important;
+  }
+  .island__sub{
+    padding: 0 2px 11px 2px !important;
+    margin-bottom: 10px !important;
+  }
+  .OfferTable__cell--depth{
+    width: 25% !important;
+
+  }
+  .OfferTable__header__item{
+    width: 25% !important;
+    padding: 0 !important;
+  }
+  .island__sub__division:first-child{
+    margin-right: 2px;
+  }
+  .exchange-block .table{
+    //margin-top: 46px !important;
+  }
+  .so-back{
+    padding-left: 0 !important;
+  }
+  .MarketTable-style{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+  }
+  .MarketTable-style td{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: normal !important;
+    text-align: left;
+    color: #656565 !important;
+    background-color: #fafafa;
+  }
+  .balances-container .recent-trades-title{
+    font-size: 11.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.83 !important;
+    letter-spacing: 0.1px;
+    text-align: center !important;
+    color: #201e1f;
+    padding: 0 !important;
+  }
+  .stock-block .ui.small.table, .offers-main-form .ui.small.table{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+    th{
+      font-size: 7.5px !important;
+      font-weight: bold !important;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 2.8;
+      letter-spacing: normal;
+      color: #656565;
+      width: 33% !important;
+      display: inline-block;
+      text-align: center;
+      &:last-child{
+        padding-right: 15px;
+      }
+    }
+  }
+  table.recent-table tbody{
+    max-height: 196px !important;
+  }
+  .amChartWrap{
+    min-height: auto !important;
+  }
+}
+
+@media screen
+    and (min-width: 1150px)
+    and (min-device-width: 1150px)
+    and (max-width: 1345px)
+    and (max-device-width: 1345px)
+    and (-webkit-min-device-pixel-ratio: 1){
+
+  .pages-container{
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .my-Offer-title{
+    line-height: 1 !important;
+  }
+  .loginLink{
+    font-size: 9.5px !important;
+  }
+
+  .exchange-block{
+    padding-right: 20px;
+  }
+  .stock-block{
+    padding-left: 20px;
+  }
+
+  #PriceChart, .PriceChartChunk{
+    height: 260px !important;
+    .highcharts-container{
+      height: 260px !important;
+      .highcharts-root{
+        height: 260px !important;
+      }
+    }
+  }
+  .exchange-block .table th,
+  .exchange-block .table td{
+    padding: 3px 10px 3px 10px !important;
+    .btn-icon{
+      width: 19px !important;
+      height: 19px !important;
+      &:after{
+        width: 9px !important;
+        height: 12px !important;
+      }
+    }
+  }
+  .islandBack{
+    padding-bottom: 14px !important;
+  }
+
+  .MarketTable-style td{
+    padding: 1px 10px !important;
+  }
+  .depth-chart{
+    height: 241px !important;
+  }
+  .order-wrap img.top-image{
+    width: 45px !important;
+    height: 45px !important;
+    top: 50% !important;
+  }
+  .order-book{
+    & > .column{
+      & > .row{
+        padding-bottom: 0px !important;
+      }
+    }
+  }
+
+  .exchange-block .create-btn .button{
+    padding: 6px 20px !important;
+    font-size: 9.5px !important;
+  }
+
+  .island__sub__division .OfferTable .OfferTable__table{
+    max-height: 160px !important;
+    width: 101% !important;
+  }
+
+  .buy-form-table, .sell-form-table{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    .exchange-table{
+      margin: 0 !important;
+    }
+  }
+
+  .form-title{
+    font-size: 9.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #201e1f !important;
+  }
+  .form-available {
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+    margin-bottom: 0;
+  }
+  .exchange-block label {
+    font-size: 9.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+  }
+  .exchange-block .offers-main-form .buy-form input[type=number],
+  .exchange-block .offers-main-form .sell-form input[type=number] {
+    //max-width: 158px !important;
+    //width: 100% !important;
+    height: 26px !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    border: solid 1px #dedede !important;
+    //border: solid 1px var(--white) !important;
+  }
+
+  .buy-form .price-form-amount,
+  .buy-form .price-form-price,
+  .sell-form .price-form-amount,
+  .sell-form .price-form-price{
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+  .buy-form .twelve .field:before,
+  .sell-form .twelve .field:before{
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+
+
+  .panel-tabs{
+    margin-top: -5px !important;
+    .tabs-list{
+      flex: 0 0 174px !important;
+    }
+  }
+  .order-book{
+    .row{
+      .column{
+        //width: 40% !important;
+      }
+    }
+    .order-wrap{
+      width: 100%;
+      //max-width: 203px;
+      height: 48px;
+      border-radius: 4px;
+      background-color: #3cb46d;
+      border: solid 1px transparent !important;
+    }
+  }
+  .buy-form, .sell-form{
+    //width: 100% !important;
+    //max-width: 203px !important;
+    //padding-left: 0px !important;
+  }
+  .sell-form{
+    //padding-left: 7px !important;
+  }
+  .offers-main-form{
+    max-width: 98% !important;
+    width: 100% !important;
+    padding-top: 11px !important;
+  }
+  .OfferTable{
+    width: 102% !important;
+  }
+  .island__sub__division__title{
+    font-size: 11.5px !important;
+    font-weight: bold !important;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.79;
+    letter-spacing: 0.1px;
+    text-align: left;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+  }
+  .OfferTable__header{
+    font-size: 9.5px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-stretch: normal;
+    line-height: 2.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .OfferTable__row__item{
+    font-size: 9.5px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal;
+    line-height: 1.8;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .header--block{
+    height: 60px;
+  }
+  .panel-tabs .tabs-list{
+    padding: 0 !important;
+    padding-left: 40px !important;
+    padding-top: 84px !important;
+  }
+
+  .panel-tabs .tabs-list li{
+    padding: 0 !important;
+    margin-bottom: 43px !important;
+    padding-left: 15px !important;
+    //margin: 0 0 10px;
+    position: relative;
+    cursor: pointer;
+    font-size: 11.5px !important;
+    font-weight: 500;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.48 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #818181;
+  }
+  .panel-tabs .tab-panel{
+    padding: 0 20px 40px 48px !important;
+  }
+  .exchange-block .offers-main-form .buy-form .field,
+  .exchange-block .offers-main-form .sell-form .field {
+    margin-bottom: 2px !important;
+  }
+  .offers-main{
+    max-width: 98% !important;
+    width: 100% !important;
+  }
+  .my-Offer-title{
+    margin-bottom: 0px !important;
+  }
+  .offers-main-form{
+    .holder{
+      padding-bottom: 0px !important;
+      margin-bottom: 0px !important;
+      max-height: 178px !important;
+    }
+  }
+  .balances-container .exchange-table th:nth-child(odd),
+  .balances-container .exchange-table th:nth-child(even){
+    font-size: 7.5px !important;
+  }
+  .island__sub{
+    padding: 0 2px 11px 2px !important;
+    margin-bottom: 10px !important;
+  }
+  .OfferTable__cell--depth{
+    width: 25% !important;
+
+  }
+  .OfferTable__header__item{
+    width: 25% !important;
+    padding: 0 !important;
+  }
+  .island__sub__division:first-child{
+    margin-right: 2px;
+  }
+  .exchange-block .table{
+    //margin-top: 46px !important;
+  }
+  .so-back{
+    padding-left: 0 !important;
+  }
+  .MarketTable-style{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+  }
+  .MarketTable-style td{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: normal !important;
+    text-align: left;
+    color: #656565 !important;
+    background-color: #fafafa;
+  }
+  .balances-container .recent-trades-title{
+    font-size: 11.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.83 !important;
+    letter-spacing: 0.1px;
+    text-align: center !important;
+    color: #201e1f;
+    padding: 0 !important;
+  }
+  .stock-block .ui.small.table, .offers-main-form .ui.small.table{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+    th{
+      font-size: 7.5px !important;
+      font-weight: bold !important;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 2.8;
+      letter-spacing: normal;
+      color: #656565;
+      width: 33% !important;
+      display: inline-block;
+      text-align: center;
+      &:last-child{
+        padding-right: 15px;
+      }
+    }
+  }
+  table.recent-table tbody{
+    max-height: 196px !important;
+  }
+  .amChartWrap{
+    min-height: auto !important;
+  }
+}
+
+@media screen
+    and (min-width: 1009px)
+    and (min-device-width: 1009px)
+    and (max-width: 1150px)
+    and (max-device-width: 1150px)
+    and (-webkit-min-device-pixel-ratio: 1){
+
+  .exchange-block{
+    padding-right: 20px;
+  }
+  .stock-block{
+    padding-left: 20px;
+  }
+  .loginLink{
+    font-size: 7px !important;
+  }
+  .header--block{
+    height: 55px !important;
+  }
+  .pages-container{
+    padding: 59px 0 55px !important;
+  }
+
+  .ui.fluid.selection.order-drop.dropdown{
+    padding: 0 !important;
+    height: 36px !important;
+  }
+
+  #PriceChart, .PriceChartChunk{
+    height: 238px !important;
+    .highcharts-container{
+      height: 238px !important;
+      .highcharts-root{
+        height: 238px !important;
+      }
+    }
+  }
+
+  .islandBack{
+    padding-bottom: 5px !important;
+  }
+
+  .MarketTable-style td{
+    padding: 1px 10px !important;
+  }
+  .depth-chart{
+    height: 181px !important;
+  }
+  .order-book{
+    & > .column{
+      & > .row{
+        padding-bottom: 0px !important;
+      }
+    }
+  }
+  .offers-main{
+    padding-bottom: 0 !important;
+  }
+
+  .exchange-block .create-btn .button{
+    padding: 6px 20px !important;
+    font-size: 8px !important;
+  }
+
+  .island__sub__division .OfferTable .OfferTable__table{
+    max-height: 133px !important;
+    width: 104% !important;
+  }
+
+  .buy-form-table, .sell-form-table{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    .exchange-table{
+      margin: 0 !important;
+    }
+  }
+
+  .form-title{
+    font-size: 7px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #201e1f !important;
+  }
+  .form-available {
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+    margin-bottom: -10px;
+    & + form{
+      & > div + div{
+        margin-bottom: 2px !important;
+      }
+    }
+    & + .exchange-form{
+      & > form{
+        & > div + div{
+          margin-bottom: 2px !important;
+        }
+      }
+    }
+  }
+  .exchange-block label {
+    font-size: 6.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+  }
+  .exchange-block .offers-main-form .buy-form input[type=number],
+  .exchange-block .offers-main-form .sell-form input[type=number] {
+    //max-width: 119px !important;
+    //width: 100% !important;
+    height: 20px !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    border: solid 1px #dedede !important;
+    //border: solid 1px var(--white) !important;
+    font-size: 7px !important;
+  }
+
+  .buy-form .price-form-amount,
+  .buy-form .price-form-price,
+  .sell-form .price-form-amount,
+  .sell-form .price-form-price{
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+  .buy-form .twelve .field:before,
+  .sell-form .twelve .field:before{
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+
+
+  .panel-tabs{
+    margin-top: -5px !important;
+    .tabs-list{
+      flex: 0 0 130px !important;
+    }
+  }
+  .order-book{
+    .row{
+      .column{
+        //width: 40% !important;
+      }
+    }
+    .order-wrap{
+      width: 100%;
+      //max-width: 203px;
+      height: 48px;
+      border-radius: 4px;
+      background-color: #3cb46d;
+      border: solid 1px transparent !important;
+    }
+  }
+  .buy-form, .sell-form{
+    //width: 100% !important;
+    //max-width: 153px !important;
+    //padding-left: 0px !important;
+  }
+  .sell-form{
+    //padding-left: 7px !important;
+  }
+  .offers-main-form{
+    max-width: 98% !important;
+    width: 100% !important;
+    padding-top: 9px !important;
+  }
+  .island__sub__division__title{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.79;
+    letter-spacing: 0.1px;
+    text-align: left;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+    margin-top: 0 !important;
+  }
+  .OfferTable__header{
+    font-size: 8.5px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-stretch: normal;
+    line-height: 2.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .OfferTable__header__item{
+    font-size: 7px !important;
+  }
+  .OfferTable__row__item{
+    font-size: 6.5px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal;
+    line-height: 1.8;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .header--block{
+    height: 77px;
+  }
+  .panel-tabs .tabs-list{
+    padding: 0 !important;
+    padding-left: 15px !important;
+    padding-top: 84px !important;
+    margin-top: -56px !important;
+  }
+
+  .panel-tabs .tabs-list li{
+    padding: 0 !important;
+    margin-bottom: 43px !important;
+    padding-left: 15px !important;
+    //margin: 0 0 10px;
+    position: relative;
+    cursor: pointer;
+    font-size: 11.5px !important;
+    font-weight: 500;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.48 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #818181;
+  }
+  .panel-tabs .tab-panel{
+    padding: 0 20px 0px 30px !important;
+  }
+  .exchange-block .offers-main-form .buy-form .field,
+  .exchange-block .offers-main-form .sell-form .field {
+    margin-bottom: 0px !important;
+  }
+  .offers-main{
+    max-width: 98% !important;
+    width: 100% !important;
+  }
+  .offers-main-form{
+    .holder{
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+      max-height: 125px !important;
+    }
+  }
+  .balances-container .exchange-table th:nth-child(odd),
+  .balances-container .exchange-table th:nth-child(even){
+    font-size: 7.5px !important;
+  }
+  .island__sub{
+    padding: 0 2px 5px 2px !important;
+    margin-bottom: 0px !important;
+  }
+  .my-Offer-title{
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .OfferTable__cell--depth{
+    width: 25% !important;
+
+  }
+  .OfferTable__header__item{
+    width: 25% !important;
+    padding: 0 !important;
+  }
+  .island__sub__division:first-child{
+    margin-right: 2px;
+  }
+  .exchange-block .table{
+    //margin-top: 46px !important;
+  }
+  .so-back{
+    padding-left: 0 !important;
+  }
+  .MarketTable-style{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+  }
+  .MarketTable-style td{
+    font-size: 6px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: normal !important;
+    text-align: left;
+    color: #656565 !important;
+    background-color: #fafafa;
+  }
+  .balances-container .recent-trades-title{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.83 !important;
+    letter-spacing: 0.1px;
+    text-align: center !important;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+    padding: 0 !important;
+  }
+  .stock-block .ui.small.table, .offers-main-form .ui.small.table{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+    th{
+      font-size: 6px !important;
+      font-weight: bold !important;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1 !important;
+      letter-spacing: normal;
+      text-align: left;
+      padding: 5px !important;
+      color: #656565;
+      width: 33% !important;
+      display: inline-block;
+      text-align: center;
+      &:last-child{
+        padding-right: 15px;
+      }
+    }
+  }
+  .balances-container .recent-table tbody td{
+    font-size: 7px !important;
+  }
+  table.recent-table tbody{
+    max-height: 145px !important;
+  }
+  .ui.fluid.selection.order-drop.dropdown .text{
+    font-size: 8px !important;
+    margin-top: 10px !important;
+  }
+  .order-wrap:last-child p{
+    font-size: 10px !important;
+    margin-bottom: 5px;
+  }
+  .order-wrap img.top-image{
+    width: 30px !important;
+    height: 30px !important;
+    margin-top: -5px;
+  }
+  .exchange-block .buy-form table tbody tr td,
+  .exchange-block .sell-form table tbody tr td{
+    font-size: 8px !important;
+    padding: 2px 10px 2px 10px !important;
+    .btn-icon{
+      height: 16px;
+      width: 16px;
+      &:after{
+        width: 8px !important;
+        height: 8px !important;
+      }
+    }
+  }
+  .amChartWrap{
+    min-height: auto !important;
+  }
+}
+
+
+@media screen
+    and (min-width: 1010px)
+    and (min-device-width: 1010px)
+    and (max-width: 1024px)
+    and (max-device-width: 1024px)
+    and (-webkit-min-device-pixel-ratio: 1){
+
+  .exchange-block{
+    padding-right: 20px;
+  }
+  .stock-block{
+    padding-left: 20px;
+  }
+  .loginLink{
+    font-size: 7px !important;
+  }
+  .header--block{
+    height: 55px !important;
+  }
+  .pages-container{
+    padding: 59px 0 55px !important;
+  }
+
+  .ui.fluid.selection.order-drop.dropdown{
+    padding: 0 !important;
+    height: 36px !important;
+  }
+
+  #PriceChart, .PriceChartChunk{
+    height: 238px !important;
+    .highcharts-container{
+      height: 238px !important;
+      .highcharts-root{
+        height: 238px !important;
+      }
+    }
+  }
+
+  .islandBack{
+    padding-bottom: 5px !important;
+  }
+
+  .MarketTable-style td{
+    padding: 1px 10px !important;
+  }
+  .depth-chart{
+    height: 181px !important;
+  }
+  .order-book{
+    & > .column{
+      & > .row{
+        padding-bottom: 0px !important;
+      }
+    }
+  }
+  .offers-main{
+    padding-bottom: 0 !important;
+  }
+
+  .exchange-block .create-btn .button{
+    padding: 6px 20px !important;
+    font-size: 8px !important;
+  }
+
+  .island__sub__division .OfferTable .OfferTable__table{
+    max-height: 133px !important;
+    width: 104% !important;
+  }
+
+  .buy-form-table, .sell-form-table{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    .exchange-table{
+      margin: 0 !important;
+    }
+  }
+
+  .form-title{
+    font-size: 7px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #201e1f !important;
+  }
+  .form-available {
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+    margin-bottom: -10px;
+    & + form{
+      & > div + div{
+        margin-bottom: 2px !important;
+      }
+    }
+    & + .exchange-form{
+      & > form{
+        & > div + div{
+          margin-bottom: 2px !important;
+        }
+      }
+    }
+  }
+  .exchange-block label {
+    font-size: 6.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+  }
+  .exchange-block .offers-main-form .buy-form input[type=number],
+  .exchange-block .offers-main-form .sell-form input[type=number] {
+    //max-width: 119px !important;
+    //width: 100% !important;
+    height: 20px !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    border: solid 1px #dedede !important;
+    //border: solid 1px var(--white) !important;
+    font-size: 7px !important;
+  }
+
+  .buy-form .price-form-amount,
+  .buy-form .price-form-price,
+  .sell-form .price-form-amount,
+  .sell-form .price-form-price{
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+  .buy-form .twelve .field:before,
+  .sell-form .twelve .field:before{
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+
+
+  .panel-tabs{
+    margin-top: -5px !important;
+    .tabs-list{
+      flex: 0 0 130px !important;
+    }
+  }
+  .order-book{
+    .row{
+      .column{
+        //width: 40% !important;
+      }
+    }
+    .order-wrap{
+      width: 100%;
+      //max-width: 203px;
+      height: 48px;
+      border-radius: 4px;
+      background-color: #3cb46d;
+      border: solid 1px transparent !important;
+    }
+  }
+  .buy-form, .sell-form{
+    //width: 100% !important;
+    //max-width: 153px !important;
+    //padding-left: 0px !important;
+  }
+  .sell-form{
+    //padding-left: 7px !important;
+  }
+  .offers-main-form{
+    max-width: 98% !important;
+    width: 100% !important;
+    padding-top: 9px !important;
+  }
+  .island__sub__division__title{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.79;
+    letter-spacing: 0.1px;
+    text-align: left;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+    margin-top: 0 !important;
+  }
+  .OfferTable__header{
+    font-size: 8.5px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-stretch: normal;
+    line-height: 2.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .OfferTable__header__item{
+    font-size: 7px !important;
+  }
+  .OfferTable__row__item{
+    font-size: 6.5px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal;
+    line-height: 1.8;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .header--block{
+    height: 77px;
+  }
+  .panel-tabs .tabs-list{
+    padding: 0 !important;
+    padding-left: 15px !important;
+    padding-top: 84px !important;
+    margin-top: -56px !important;
+  }
+
+  .panel-tabs .tabs-list li{
+    padding: 0 !important;
+    margin-bottom: 43px !important;
+    padding-left: 15px !important;
+    //margin: 0 0 10px;
+    position: relative;
+    cursor: pointer;
+    font-size: 11.5px !important;
+    font-weight: 500;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.48 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #818181;
+  }
+  .panel-tabs .tab-panel{
+    padding: 0 20px 0px 30px !important;
+  }
+  .exchange-block .offers-main-form .buy-form .field,
+  .exchange-block .offers-main-form .sell-form .field {
+    margin-bottom: 0px !important;
+  }
+  .offers-main{
+    max-width: 98% !important;
+    width: 100% !important;
+  }
+  .offers-main-form{
+    .holder{
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+      max-height: 125px !important;
+    }
+  }
+  .balances-container .exchange-table th:nth-child(odd),
+  .balances-container .exchange-table th:nth-child(even){
+    font-size: 7.5px !important;
+  }
+  .island__sub{
+    padding: 0 2px 5px 2px !important;
+    margin-bottom: 0px !important;
+  }
+  .my-Offer-title{
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .OfferTable__cell--depth{
+    width: 25% !important;
+
+  }
+  .OfferTable__header__item{
+    width: 25% !important;
+    padding: 0 !important;
+  }
+  .island__sub__division:first-child{
+    margin-right: 2px;
+  }
+  .exchange-block .table{
+    //margin-top: 46px !important;
+  }
+  .so-back{
+    padding-left: 0 !important;
+  }
+  .MarketTable-style{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+  }
+  .MarketTable-style td{
+    font-size: 6px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: normal !important;
+    text-align: left;
+    color: #656565 !important;
+    background-color: #fafafa;
+  }
+  .balances-container .recent-trades-title{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.83 !important;
+    letter-spacing: 0.1px;
+    text-align: center !important;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+    padding: 0 !important;
+  }
+  .stock-block .ui.small.table, .offers-main-form .ui.small.table{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+    th{
+      font-size: 6px !important;
+      font-weight: bold !important;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1 !important;
+      letter-spacing: normal;
+      text-align: left;
+      padding: 5px !important;
+      color: #656565;
+      width: 33% !important;
+      display: inline-block;
+      text-align: center;
+      &:last-child{
+        padding-right: 15px;
+      }
+    }
+  }
+  .balances-container .recent-table tbody td{
+    font-size: 7px !important;
+  }
+  table.recent-table tbody{
+    max-height: 145px !important;
+  }
+  .ui.fluid.selection.order-drop.dropdown .text{
+    font-size: 8px !important;
+    margin-top: 10px !important;
+  }
+  .order-wrap:last-child p{
+    font-size: 10px !important;
+    margin-bottom: 5px;
+  }
+  .order-wrap img.top-image{
+    width: 30px !important;
+    height: 30px !important;
+    margin-top: -5px;
+  }
+  .exchange-block .buy-form table tbody tr td,
+  .exchange-block .sell-form table tbody tr td{
+    font-size: 8px !important;
+    padding: 2px 10px 2px 10px !important;
+    .btn-icon{
+      height: 16px;
+      width: 16px;
+      &:after{
+        width: 8px !important;
+        height: 8px !important;
+      }
+    }
+  }
+  .amChartWrap{
+    min-height: auto !important;
+  }
+}
+
+@media screen
+    and (min-width: 768px)
+    and (min-device-width: 768px)
+    and (max-width: 1008px)
+    and (max-device-width: 1008px)
+    and (-webkit-min-device-pixel-ratio: 1){
+
+  .exchange-block{
+    padding-right: 20px;
+  }
+  .stock-block{
+    padding-left: 20px;
+  }
+  .loginLink{
+    font-size: 7px !important;
+  }
+  .header--block{
+    height: 55px !important;
+  }
+  .pages-container{
+    padding: 59px 0 55px !important;
+  }
+
+  .ui.fluid.selection.order-drop.dropdown{
+    padding: 0 !important;
+    height: 36px !important;
+  }
+
+  #PriceChart, .PriceChartChunk{
+    height: 238px !important;
+    .highcharts-container{
+      height: 238px !important;
+      .highcharts-root{
+        height: 238px !important;
+      }
+    }
+  }
+
+  .islandBack{
+    padding-bottom: 5px !important;
+  }
+
+  .MarketTable-style td{
+    padding: 1px 10px !important;
+  }
+  .depth-chart{
+    height: 181px !important;
+  }
+  .order-book{
+    & > .column{
+      & > .row{
+        padding-bottom: 0px !important;
+      }
+    }
+  }
+  .offers-main{
+    padding-bottom: 0 !important;
+  }
+
+  .exchange-block .create-btn .button{
+    padding: 6px 20px !important;
+    font-size: 8px !important;
+  }
+
+  .island__sub__division .OfferTable .OfferTable__table{
+    max-height: 133px !important;
+    width: 104% !important;
+  }
+
+  .buy-form-table, .sell-form-table{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    .exchange-table{
+      margin: 0 !important;
+    }
+  }
+
+  .form-title{
+    font-size: 7px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #201e1f !important;
+  }
+  .form-available {
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+    margin-bottom: -10px;
+    & + form{
+      & > div + div{
+        margin-bottom: 2px !important;
+      }
+    }
+    & + .exchange-form{
+      & > form{
+        & > div + div{
+          margin-bottom: 2px !important;
+        }
+      }
+    }
+  }
+  .exchange-block label {
+    font-size: 6.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #656565 !important;
+  }
+  .exchange-block .offers-main-form .buy-form input[type=number],
+  .exchange-block .offers-main-form .sell-form input[type=number] {
+    //max-width: 119px !important;
+    //width: 100% !important;
+    height: 20px !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    border: solid 1px #dedede !important;
+    //border: solid 1px var(--white) !important;
+    font-size: 7px !important;
+  }
+
+  .buy-form .price-form-amount,
+  .buy-form .price-form-price,
+  .sell-form .price-form-amount,
+  .sell-form .price-form-price{
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+  .buy-form .twelve .field:before,
+  .sell-form .twelve .field:before{
+    font-size: 7px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.21 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #3cb46d !important;
+    top: 3px !important;
+  }
+
+
+  .panel-tabs{
+    margin-top: -5px !important;
+    .tabs-list{
+      flex: 0 0 130px !important;
+    }
+  }
+  .order-book{
+    .row{
+      .column{
+        //width: 40% !important;
+      }
+    }
+    .order-wrap{
+      width: 100%;
+      //max-width: 203px;
+      height: 48px;
+      border-radius: 4px;
+      background-color: #3cb46d;
+      border: solid 1px transparent !important;
+    }
+  }
+  .buy-form, .sell-form{
+    //width: 100% !important;
+    //max-width: 153px !important;
+    //padding-left: 0px !important;
+  }
+  .sell-form{
+    //padding-left: 7px !important;
+  }
+  .offers-main-form{
+    max-width: 98% !important;
+    width: 100% !important;
+    padding-top: 9px !important;
+  }
+  .island__sub__division__title{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.79;
+    letter-spacing: 0.1px;
+    text-align: left;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+    margin-top: 0 !important;
+  }
+  .OfferTable__header{
+    font-size: 8.5px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-stretch: normal;
+    line-height: 2.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .OfferTable__header__item{
+    font-size: 7px !important;
+  }
+  .OfferTable__row__item{
+    font-size: 6.5px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal;
+    line-height: 1.8;
+    letter-spacing: normal;
+    text-align: left;
+    color: #656565;
+    white-space: nowrap;
+  }
+  .header--block{
+    height: 77px;
+  }
+  .panel-tabs .tabs-list{
+    padding: 0 !important;
+    padding-left: 15px !important;
+    padding-top: 84px !important;
+    margin-top: -56px !important;
+  }
+
+  .panel-tabs .tabs-list li{
+    padding: 0 !important;
+    margin-bottom: 43px !important;
+    padding-left: 15px !important;
+    //margin: 0 0 10px;
+    position: relative;
+    cursor: pointer;
+    font-size: 11.5px !important;
+    font-weight: 500;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.48 !important;
+    letter-spacing: 0.1px !important;
+    text-align: left !important;
+    color: #818181;
+  }
+  .panel-tabs .tab-panel{
+    padding: 0 20px 0px 30px !important;
+  }
+  .exchange-block .offers-main-form .buy-form .field,
+  .exchange-block .offers-main-form .sell-form .field {
+    margin-bottom: 0px !important;
+  }
+  .offers-main{
+    max-width: 98% !important;
+    width: 100% !important;
+  }
+  .offers-main-form{
+    .holder{
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+      max-height: 125px !important;
+    }
+  }
+  .balances-container .exchange-table th:nth-child(odd),
+  .balances-container .exchange-table th:nth-child(even){
+    font-size: 7.5px !important;
+  }
+  .island__sub{
+    padding: 0 2px 5px 2px !important;
+    margin-bottom: 0px !important;
+  }
+  .my-Offer-title{
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .OfferTable__cell--depth{
+    width: 25% !important;
+
+  }
+  .OfferTable__header__item{
+    width: 25% !important;
+    padding: 0 !important;
+  }
+  .island__sub__division:first-child{
+    margin-right: 2px;
+  }
+  .exchange-block .table{
+    //margin-top: 46px !important;
+  }
+  .so-back{
+    padding-left: 0 !important;
+  }
+  .MarketTable-style{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+  }
+  .MarketTable-style td{
+    font-size: 6px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 2.19 !important;
+    letter-spacing: normal !important;
+    text-align: left;
+    color: #656565 !important;
+    background-color: #fafafa;
+  }
+  .balances-container .recent-trades-title{
+    font-size: 8.5px !important;
+    font-weight: bold !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.83 !important;
+    letter-spacing: 0.1px;
+    text-align: center !important;
+    color: #201e1f;
+    margin-bottom: 3px !important;
+    padding: 0 !important;
+  }
+  .stock-block .ui.small.table, .offers-main-form .ui.small.table{
+    table-layout: fixed;
+    width: 100% !important;
+    //max-width: 312px !important;
+    th{
+      font-size: 6px !important;
+      font-weight: bold !important;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1 !important;
+      letter-spacing: normal;
+      text-align: left;
+      padding: 5px !important;
+      color: #656565;
+      width: 33% !important;
+      display: inline-block;
+      text-align: center;
+      &:last-child{
+        padding-right: 15px;
+      }
+    }
+  }
+  .balances-container .recent-table tbody td{
+    font-size: 7px !important;
+  }
+  table.recent-table tbody{
+    max-height: 145px !important;
+  }
+  .ui.fluid.selection.order-drop.dropdown .text{
+    font-size: 8px !important;
+    margin-top: 10px !important;
+  }
+  .order-wrap:last-child p{
+    font-size: 10px !important;
+    margin-bottom: 5px;
+  }
+  .order-wrap img.top-image{
+    width: 30px !important;
+    height: 30px !important;
+    margin-top: -5px;
+  }
+  .exchange-block .buy-form table tbody tr td,
+  .exchange-block .sell-form table tbody tr td{
+    font-size: 8px !important;
+    padding: 2px 10px 2px 10px !important;
+    .btn-icon{
+      height: 16px;
+      width: 16px;
+      &:after{
+        width: 8px !important;
+        height: 8px !important;
+      }
+    }
+  }
+  .amChartWrap{
+    min-height: auto !important;
+  }
+}
+
+@media screen
+and (min-width: 300px)
+and (min-device-width: 300px)
+and (max-width: 767px)
+and (max-device-width: 767px)
+and (-webkit-min-device-pixel-ratio: 1){
+  .panel-tabs .tab-panel{
+    padding: 15px 20px 40px 20px !important;
+  }
+}
+
+
+
+
+.my-Offer-title{
+  font-size: 11.5px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.83;
+  letter-spacing: 0.1px;
+  text-align: left;
+  color: #201e1f;
+  text-align: center;
+  margin-bottom: 0;
+  & + .holder{
+    border-bottom: 1px solid transparent !important;
+  }
+}
+.MarketTable-style{
+  border: solid 1px #dedede !important;
+  border-collapse: inherit !important;
+  border-spacing: inherit !important;
+  border-radius: 3px !important;
+}
+.MarketTable-style td{
+  border-bottom: solid 1px #dedede !important;
+}
+.MarketTable-wrap{
+  padding-left: 0 !important;
+  padding-right: 18px !important;
+}
+.exchange-block .offers-main-form .holder{
+  //border-top: 1px solid #ccc !important;
+  //border-bottom: 1px solid transparent;
+}
+.OfferTables.island__sub{
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 11px;
+}
+.header--block{
+  z-index: 9999 !important;
 }

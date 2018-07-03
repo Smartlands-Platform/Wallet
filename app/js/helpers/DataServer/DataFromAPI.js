@@ -1,32 +1,34 @@
 const ParseData = {
-    Orderbook(Server, baseBuying, counterSelling, onUpdate, limit) {
+    // console.log();
+    Orderbook(Server, baseBuying, counterSelling, onUpdate) {
         this.ready = false;
-        const initialOrderbook = Server.orderbook(baseBuying, baseBuying).call()
-            .then((res) => {
-                this.asks = res.asks;
-                this.bids = res.bids;
-                this.baseBuying = baseBuying;
-                this.counterSelling = counterSelling;
-                this.ready = true;
-                onUpdate();
-            });
-        let streamingOrderbookClose = Server.orderbook(baseBuying, counterSelling, limit)
-            .stream({
-                onmessage: res => {
-                    let updated = false;
-                    if (!_.isEqual(this.bids, res.bids)) {
-                        this.bids = res.bids;
-                        updated = true;
-                    }
-                    if (!_.isEqual(this.asks, res.asks)) {
-                        this.asks = res.asks;
-                        updated = true;
-                    }
-                    if (updated) {
-                        onUpdate();
-                    }
-                }
-            })
+        // const initialOrderbook = Server.orderbook(baseBuying, baseBuying).call()
+        //     .then((res) => {
+        //         this.asks = res.asks;
+        //         this.bids = res.bids;
+        //         this.baseBuying = baseBuying;
+        //         this.counterSelling = counterSelling;
+        //         this.ready = true;
+        //         onUpdate();
+        //     });
+        // let streamingOrderbookClose = Server.orderbook(baseBuying, counterSelling, limit)
+        //     .stream({
+        //         onmessage: res => {
+        //             console.log("res", res);
+        //             let updated = false;
+        //             if (!_.isEqual(this.bids, res.bids)) {
+        //                 this.bids = res.bids;
+        //                 updated = true;
+        //             }
+        //             if (!_.isEqual(this.asks, res.asks)) {
+        //                 this.asks = res.asks;
+        //                 updated = true;
+        //             }
+        //             if (updated) {
+        //                 onUpdate();
+        //             }
+        //         }
+        //     });
         let smoothTrades = (trades) => {
             let result = [];
             for (let i = 2; i < trades.length; i++) {
@@ -70,24 +72,30 @@ const ParseData = {
                 let tradeRecent;
                 if (first) {
 
-                    tradeResults = await Server.tradeAggregation(baseBuying, counterSelling, 1514764800, Date.now() + 86400000, 900000).limit(200).order('desc').call()
+                    tradeResults = await Server.tradeAggregation(baseBuying, counterSelling, 1514764800, Date.now() + 86400000, 900000).limit(200).order('desc').call();
 
-                    tradeRecent = await Server.trades().forAssetPair(baseBuying, counterSelling).limit(10).order('desc').call();
+                    // tradeRecent = await Server.trades().forAssetPair(baseBuying, counterSelling).limit(20).order('desc').call();
+
+                    // console.log("Server buying", baseBuying);
+                    // console.log("Server selling", counterSelling);
+
+                    // console.log("tradeRecent", tradeRecent);
 
                     first = false;
                 }
                 else {
 
-                    tradeRecent =  await prevCall();
+                    // tradeRecent =  await prevCall();
                     tradeResults = await prevCall();
+                    // console.log("tradeResults", tradeResults);
                 }
 
                 prevCall = tradeResults.next;
-                prevCall = tradeRecent.next;
+                // prevCall = tradeRecent.next;
 
                 // console.log("tradeRecent", tradeRecent);
 
-                recentRecords.push(...tradeRecent.records);
+                // recentRecords.push(...tradeRecent.records);
 
                 records.push(...tradeResults.records);
 
@@ -95,12 +103,6 @@ const ParseData = {
                 if (tradeResults.records.length < 200) {
                     satisfied = true;
                 }
-
-                if (tradeRecent.records.length < 200) {
-                    satisfied = true;
-                }
-
-                // console.log("tradeRecent", recentRecords);
 
                 // Optimization: use this filter before saving it into the records array
                 result = _.filter(
@@ -117,7 +119,6 @@ const ParseData = {
                 });
 
                 if (!firstFullFetchFinished) {
-                    this.recentTrades = recentRecords;
                     this.trades = smoothTrades(result);
                 }
                 if (depth > 1) {
@@ -126,7 +127,6 @@ const ParseData = {
             }
             firstFullFetchFinished = true;
 
-            this.recentTrades = recentRecords;
 
             this.trades = smoothTrades(result);
 
@@ -139,13 +139,13 @@ const ParseData = {
                     fetchManyTrades();
                 }
             }, 5*60*1000);
-        }
+        };
 
         fetchManyTrades();
 
         this.close = () => {
             this.closed = true;
-            streamingOrderbookClose;
+            // streamingOrderbookClose;
         }
     },
 

@@ -85,24 +85,50 @@ class Payment extends Component {
       type: this.setType(props.selectedIndex),
       destinationKeypair: null,
       asset: this.curAsset,
+      open: false,
+      hashData: null,
+      size: 'small',
+      close: false,
+      rerender: false
+
     };
 
     this.checkDestinationDebounced = debounce(this.checkDestinationDebounced, 200);
+
+  }
+
+  componentDidMount(){
+    if(this.props.sendingPaymentData != null){
+        this.setState({rerender: true});
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+      if(this.props.sendingPaymentData != null && nextProps.sendingPaymentData != null){
+          if(!this.state.rerender && nextProps.sendingPaymentData.hash != this.state.hashData && !this.state.open ){
+              this.setState({hashData: nextProps.sendingPaymentData.hash, open: true});
+          }else if(this.state.hashData === null && this.state.rerender && this.props.sendingPaymentData.hash != nextProps.sendingPaymentData.hash){
+              this.setState({rerender: false});
+          }
+
+      }
+
     if (!isEqual(nextProps.selectedIndex, this.props.selectedIndex)) {
       this.setState({type: this.setType(nextProps.selectedIndex)});
     }
   }
+    // show = size => () => this.setState({ open: true });
+    close = () => {
+      this.setState({ open: false});
+    };
 
   setType(tabIndex) {
     let type = OPERATIONS.PAYMENT;
     switch (tabIndex) {
-      case 3:
+      case 5:
         type = OPERATIONS.ISSUE_ASSET;
         break;
-      case 4:
+      case 6:
         type = OPERATIONS.CREATE_ACCOUNT;
         break;
       default:
@@ -310,7 +336,10 @@ class Payment extends Component {
     this.setState({ confirmModalOpen: true });
   }
   closeConfirmModal() {
-    this.setState({ confirmModalOpen: false });
+      this.setState({ confirmModalOpen: false});
+      // setTimeout(()=>{
+      //     this.setState({ confirmModalOpen: false, rerender: false });
+      // }, 2000)
   }
 
   submitForm() {
@@ -323,6 +352,7 @@ class Payment extends Component {
       ...this.props.values,
       destination: this.state.destinationKeypair.publicKey(),
     };
+    // console.log("enhancedFormData", enhancedFormData);
     this.state.type === OPERATIONS.PAYMENT ? Object.assign(enhancedFormData, {asset: this.state.asset}) : {};
     return this.props.sendOperation(this.state.type, enhancedFormData);
   }
@@ -331,6 +361,7 @@ class Payment extends Component {
     this.setState({ resolving: true });
     this.checkDestinationDebounced(destinationAddress);
   }
+
 
   checkDestinationDebounced(destinationAddress) {
     resolveAddress(destinationAddress)
@@ -397,7 +428,7 @@ class Payment extends Component {
           </button>
           <a
             href="https://smartlands.io/pdf/TokenIssue.pdf"
-            className="btn gray">
+            className="btn gray" target="_blank">
             How to issue a token guide
           </a>
       </div>
@@ -438,8 +469,32 @@ class Payment extends Component {
     return null;
   }
 
+
+  getHashModal(){
+      const { open, size, hashData } = this.state;
+      return (
+          <Modal size={size} open={open} onClose={this.close}>
+            <Modal.Header style={{textAlign: 'center', fontSize: 20 + "px"}}>Your payment was made successfully</Modal.Header>
+            <Modal.Content>
+              <p style={{textAlign: 'center', fontSize: 14 + "px"}}> <strong>Hash code:</strong> {hashData}
+              <button
+                  style={{marginLeft: 20 + "px"}}
+                  type="button"
+                  className="btn-icon account-address-copy"
+                  size="mini"
+                  data-clipboard-text={hashData}
+                  data-hover="Copy"
+              /></p>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button onClick={this.close}>Close</Button>
+            </Modal.Actions>
+          </Modal>
+      );
+  }
   render() {
-    if (!this.props.canSign) return this.getNoSigner();
+    // this.getHashModal();
+      if (!this.props.canSign) return this.getNoSigner();
 
     const destinationFormLabel = {
       color: this.state.destinationKeypair ? 'teal' : 'red',
@@ -455,6 +510,7 @@ class Payment extends Component {
 
     const buttonContent = () => {
       let type;
+
       switch (this.state.type) {
         case OPERATIONS.ISSUE_ASSET:
           type = 'Issue tokens';
@@ -531,6 +587,7 @@ class Payment extends Component {
           <KeypairGenerator open={this.props.keypairModalOpen} close={this.props.closeKeypairModal} />
         </div>
 
+        {this.getHashModal()}
         {this.renderConfirmModal()}
       </FormUI>
       </div>

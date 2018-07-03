@@ -5,6 +5,7 @@ import BottomBar from './BottomBar';
 
 const mapDispatchToProps = dispatch => ({
   goDesktop: () => dispatch(push('/desktop')),
+
 });
 
 export default connect(null, mapDispatchToProps)(BottomBar);

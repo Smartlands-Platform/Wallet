@@ -1,5 +1,5 @@
 import * as actions from '../actions/account';
-import { OffersStream, EffectsStream, AccountStream, PaymentStream } from '../helpers/StellarServer';
+import { OffersStream, EffectsStream, AccountStream, PaymentStream, TradesStream } from '../helpers/StellarServer';
 import { getPaymentsStream, getEffectsStream, getOffersSuccess } from '../actions/stellar';
 import { newStream, killStreams } from '../helpers/monoStreamer';
 import { AsyncActions } from '../helpers/asyncActions';
@@ -43,6 +43,7 @@ const stellarStreamerMiddleware = store => next => (action) => {
           OffersStream(keypair.publicKey(), (offers) => {
             store.dispatch(getOffersSuccess(offers));
           }));
+
       } catch (e) {
         traceError(e);
       }

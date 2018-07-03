@@ -68,7 +68,6 @@ function setDestinationTrustlines(state, action) {
 
 export function toggleNavigation(state, action) {
   const { toggle } = action;
-    console.log('action', toggle);
   return {
     ...state,
     toggle,

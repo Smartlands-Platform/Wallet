@@ -9,16 +9,18 @@ import '../../../../styles/orderbook_dropdown.scss';
 import data from '../../../helpers/DataServer/logos.json';
 import '../../../../styles/style.scss';
 import {Asset} from 'stellar-sdk';
-// import DepthChart from '../../../elements/Charts/depth_chart';
-// import logo from '../../../../../content/assets/images/vector-smart-object.png';
 
-import OfferTables from '../../SellBuyTables/OfferTables';
+// import OfferTables from '../../SellBuyTables';
 // import ManageOffers from '../../SellBuyTables/ManageOffers';
 
 
 export default class OrderBook extends Component {
   constructor(props) {
     super(props);
+    this.base ={
+        trustLinesLength: 1
+    };
+
     this.state = {
       isChange: false,
       selling: null,
@@ -27,32 +29,44 @@ export default class OrderBook extends Component {
       trustlines: {},
       selectValue: null,
        tickersPrice: [{}],
-        baseBuying: {}
+        baseBuying: {},
+
       // site: null
     };
     this.getMoviesFromApiAsync();
       setTimeout(()=>{
           this.setFullList();
       }, 1000);
-
   }
 
   componentDidMount(){
+
+      setTimeout(()=>{
+          this.getDropdownList(this.base.trustLinesLength);
+      }, 5000);
+
         var id = document.getElementsByClassName("order-wrap");
         var newSpan = document.createElement('p');
         newSpan.innerHTML = "<strong>XLM </strong> Stellar Network <p>native</p>";
-        if (id.length > 0) {
-            id[1].appendChild(newSpan);
-        }
+
+
+    if (id.length > 0) {
+        id[1].appendChild(newSpan);
+    }
       this.changeSellingAsset();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.getDropdownList(this.base.trustLinesLength);
     }
 
 
   getBidRow(bid, index) {
+      let amountRound = Math.round(bid.amount/bid.price);
     return (
       <Table.Row key={index}>
         <Table.Cell textAlign="right">
-          <Amount amount={Math.round(bid.amount/bid.price)} />
+          <Amount amount={String(amountRound)} />
         </Table.Cell>
         <Table.Cell>
           <Amount amount={bid.price} />
@@ -138,32 +152,13 @@ export default class OrderBook extends Component {
   componentWillUnmount() {
       //TODO will add clean up of orderbooks reducer!!!
       this.setDefaultAsset();
-    // this.props.isFetching = false;
-    // console.log('this.props', this.props);
-    // this.props.isFetching = false;
-    // this.props.orderbook = {};
-    // this.props.isFetching = false;
-    // this.props.orderbook = null;
   }
 
-    // getDataOrder(orderData){
-    //     // let base = orderData.base;
-    //     let baseBuying = {
-    //         code: orderData.base.asset_code,
-    //         issuer: orderData.base.asset_issuer
-    //     };
-    //     this.setState(baseBuying);
-    //
-    //     this.props.setOrderbook(this.state);
-    //
-    //     console.log("baseBuying", this.props.orderbook);
-    // }
-
   getOrderbook() {
+
     if (!this.props.isFetching && isEmpty(this.props.orderbook)) {
       return (
         <Grid.Row centered className="notify-title">
-          {/*<Header as="h3">Please select a pair of assets to see an orderbook.</Header>*/}
         </Grid.Row>
       );
     }
@@ -173,10 +168,6 @@ export default class OrderBook extends Component {
               {this.getAsks()}
               {this.getBids()}
           </div>
-          {/*{TODO SELL/BUY add data to table from orderbook props - Chapter 1}*/}
-          <OfferTables d={this.props} change={this.state.isChange} />
-          {/*{console.log("this.props.orderbook", this.props)}*/}
-          {/*<ManageOffers d={this.props} />*/}
       </div>
     );
   }
@@ -201,6 +192,12 @@ export default class OrderBook extends Component {
       const buying = find(this.props.trustlines, t => ( AssetUid(t) === "native" ));
       const selling = find(this.props.trustlines, t => ( AssetUid(t) === defaultValue ));
       this.props.resetOrderbook();
+      // setTrust = (buying, selling) =>{
+      //         selling = buying;
+      //         buying = selling;
+      //     this.props.setTrades({buying, selling});
+      // };
+      // setTrust();
       this.props.setOrderbook({
           selling,
           buying
@@ -211,55 +208,61 @@ export default class OrderBook extends Component {
       //TODO refactor!!!!!
       let defaultValue = "custom:SLT:GCKA6K5PCQ6PNF5RQBF7PQDJWRHO6UOGFMRLK3DYHDOI244V47XKQ4GP";
 
-
       if (b === undefined){
           var asset = find(this.props.trustlines, t => (AssetUid(t) === defaultValue));
           this.setState({ selling: asset, selectValue: defaultValue }, ::this.updateOrderbook);
       }else{
+
           var asset = find(this.props.trustlines, t => (AssetUid(t) === b.value));
-          var newArray=this.setFullList();
-          var asset2 = find(newArray, t => ("custom:"+t.value === b.value));
-          // var asset2 = find(this.props.trustlines,t);
-          // console.log("in else");
-          this.setState({isChange: true});
-          setTimeout(()=>{
-              this.setState({isChange: false});
-          }, 1000);
-          this.setState({isChange: true});
           let code = b.value.slice(0, -57);
           let issuer = b.value.substr(-56);
-          document.getElementById("dropImage").src=asset2.image;
+
           var formData = {
               'asset_code': code,
               'asset_issuer': issuer
           };
+
           if(asset === undefined){
-              this.props.createTrustline(AssetInstance(formData));
-              // console.log("undefined", formData);
+              let bValue = b.value;
+              asset = AssetInstance(formData);
+              b.value = "custom:" + bValue;
           }
+
+          var newArray = this.setFullList();
+          var asset2 = find(newArray, t => ("custom:" + t.value === b.value));
+          // var asset2 = find(this.props.trustlines,t);
+          // console.log("in else");
+          let isChange = true;
+          this.props.setOrderbookIsChanged({isChange});
+
+          this.setState({isChange: true});
+          setTimeout(()=>{
+              let isChange = false;
+              this.props.setOrderbookIsChanged({isChange});
+              this.setState({isChange: false});
+          }, 1000);
+          this.props.setOrderbookIsChanged({isChange});
+          this.setState({isChange: true});
+
+          document.getElementById("dropImage").src = asset2.image;
+
           this.setState({ selling: asset, selectValue: b.value }, ::this.updateOrderbook);
 
       }
-      // console.log("asset", asset);
-    // let code = b.value.slice(0, -57);
-    // let issuer = b.value.substr(-56);
-    // var formData = {
-    //       'asset_code': code,
-    //       'asset_issuer': issuer
-    // };
 
     this.changeBuyingAsset();
   }
 
-    getMoviesFromApiAsync() {
-        return fetch('https://api.stellarterm.com/v1/ticker.json')
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({tickersPrice: responseJson.assets});
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+    async getMoviesFromApiAsync() {
+        try{
+            let response = await fetch('https://api.stellarterm.com/v1/ticker.json');
+            let data = await response.json();
+            await this.props.setTicker(data.assets);
+            await this.setState({tickersPrice: data.assets});
+            return data;
+        }catch(error){
+            console.error(error);
+        }
     }
 
     setFullList(){
@@ -285,7 +288,6 @@ export default class OrderBook extends Component {
 
             fullArray.push(Asset);
         }
-        // console.log("fullArray", fullArray);
         return fullArray;
     };
 
@@ -309,7 +311,6 @@ export default class OrderBook extends Component {
               newArray.forEach((newItem) => {
                   let value = newItem.value.split(':');
                   let text= newItem.text.split(' ');
-                  // console.log(text)
                   if (trustline.code === value[0] && trustline.issuer === value[1]) {
                       trustline.text = text[0]+" "+text[1]+" "+text[2]+" "+text[3]+" "+text[4].substring(0,9)+"..."+text[4].substring(text[4].length-9,text[4].length);
                       trustline.image = AssetComponent.setNewData(newItem.image);
@@ -317,26 +318,78 @@ export default class OrderBook extends Component {
               });
               return trustline;
             });
-/*            trustlines.push(...newArray);*/
-      // console.log("trustlines", trustlines)
 
-            return trustlines.filter(v=> {
-                return v.issuer
-            })
+            trustlines.filter(v=> {
+              return v.issuer
+            });
+
+            let addNotTrustlines = newArray.filter(arrayItem=>{
+              trustlines.forEach((trustline) => {
+                  let value = arrayItem.value.split(':');
+                  if (trustline.code === value[0] && trustline.issuer === value[1]) {
+                      arrayItem.filter = true
+                  }
+              });
+              if(arrayItem.filter ||arrayItem.value==='XLM:null'){
+                  return false;
+              }else{
+                  return true;
+              }
+
+            });
+
+            let toDelete = new Set(['XLM']);
+
+            let newTrustlinesArray = trustlines.filter(obj => !toDelete.has(obj.code));
+            newTrustlinesArray.unshift(newTrustlinesArray.splice(newTrustlinesArray.findIndex(elt => elt.code === 'SLT'), 1)[0]);
+            this.base.trustLinesLength = addNotTrustlines.length;
+            // this.getDropdownList(this.base.trustLinesLength);
+            newTrustlinesArray.push(...addNotTrustlines);
+            return newTrustlinesArray;
+
+            // return trustlines.filter(v=> {
+            //     return v.issuer
+            // })
 
     }
-
-  // }
-
   updateOrderbook() {
     if (this.state.selling && this.state.buying) {
-      this.props.setOrderbook(this.state);
-      // console.log("this.state", this.state);
+
+        let selling = this.state.buying;
+        let buying = this.state.selling;
+
+        let sellingTrades = this.state.buying;
+        let buyingTrades = this.state.selling;
+
+        let buyingData = this.state.buying;
+        let sellingData = this.state.selling;
+
+        this.props.setSellingBuying({sellingData, buyingData});
+        this.props.setTrades({buying, selling});
+
+        this.props.setTradesAggregation({buyingTrades, sellingTrades});
+        this.props.setOrderbook(this.state);
+
     }
   }
 
+  getDropdownList(length){
+
+      let items = document.querySelectorAll(".order-wrap.left-block .item");
+      let elList = Array.prototype.slice.call(items, -length);
+      // console.log("elList", elList);
+      Array.from(elList).forEach(function(el) {
+          // console.log(el);
+          el.classList.add('form-group')
+      });
+      // for (const div of elList) {
+      //     console.log(div);
+      //    // div.classList.add('form-group');
+      // }
+
+  }
+
   render() {
-      // console.log("this.props.orderbook", this.props.orderbook);
     const baseAsset = this.props.orderbook
       && this.props.orderbook.base
       && AssetInstance(this.props.orderbook.base);
@@ -354,61 +407,39 @@ export default class OrderBook extends Component {
         <Grid columns={2}>
           <Grid.Row>
             <Grid.Column>
-              {/*<label className="text-center">*/}
-                {/*{*/}
-                  {/*baseAsset ?*/}
-                    {/*<div>Base <Asset asset={baseAsset} /></div>*/}
-                    {/*:*/}
-                    {/*'Choose a base asset'*/}
-                {/*}*/}
-              {/*</label>*/}
-
-              <div className="order-wrap">
+              <div className="order-wrap left-block">
                   <img id="dropImage" className="top-image"
                        src={changeImage}
                        alt=""/>
-
-                  <Dropdown
-                      className="order-drop"
-                      selection fluid
-                      // defaultOpen={true}
-                      // onOpen={::this.changeSellingAsset}
-                      options={this.getTrustedAssets()}
-                      placeholder="SLT | smartlands.io GCKA6K5PC...V47XKQ4GP"
-                      // onLabelClick={::this.defaultImage}
-                      onChange={::this.changeSellingAsset}
-                  />
-
-
-
+                  <div>
+                      <Dropdown
+                          className="order-drop"
+                          selection fluid
+                          options={this.getTrustedAssets()}
+                          placeholder="SLT | smartlands.io GCKA6K5PC...V47XKQ4GP"
+                          onChange={::this.changeSellingAsset}
+                      />
+                  </div>
               </div>
-
             </Grid.Column>
             <Grid.Column>
-              {/*<label className="text-center">*/}
-                {/*{*/}
-                  {/*baseAsset ?*/}
-                    {/*<div>Counter <Asset asset={counterAsset} /></div>*/}
-                    {/*:*/}
-                    {/*'Choose a counter asset'*/}
-                {/*}*/}
-              {/*</label>*/}
                 <div className="order-wrap">
                     <img className="top-image"
                          src={imageDefault}
                          alt=""/>
+                    <div>
                       <Dropdown
                         className="order-drop"
                         selection fluid disabled
                         options={this.getTrustedAssets()}
                         onChange={::this.changeBuyingAsset}
                       />
+                    </div>
                 </div>
             </Grid.Column>
           </Grid.Row>
-            {/*<OffersViewer d={this.props} canCreate={true} />*/}
-            {/*{console.log("this.props", this.props)}*/}
           {this.getOrderbook()}
+          {}
         </Grid>
       </div>
     );

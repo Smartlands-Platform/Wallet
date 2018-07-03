@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import AmCharts from '@amcharts/amcharts3-react';
-import {get, map, sortBy, isEqual} from 'lodash';
+import {get, map, sortBy, isEqual, uniq} from 'lodash';
 import { ClipLoader } from 'react-spinners';
 import Stellar from '../../../../libs/stellar-sdk';
+
+//SCPRRMFSFUNEWVLJEJ7KEOP3FB6G3ZPGQV3UC6LQZSWKMXIXEBATXPSV
 
 // TODO implement common chart component! Move it there!
 import AssetSlug from '../../helpers/DataServer/Assets/Assets';
@@ -49,8 +51,8 @@ export default class AmChart extends Component {
             loading: true
         };
         this.base = {
-            code: get(this.props.d.orderbook, 'base.asset_code', 'not'),
-            issuer: get(this.props.d.orderbook, 'base.asset_issuer', 'not')
+            code: get(this.props.orderbook, 'base.asset_code', 'not'),
+            issuer: get(this.props.orderbook, 'base.asset_issuer', 'not')
         };
         this._config = {
             "type": "serial",
@@ -93,15 +95,19 @@ export default class AmChart extends Component {
             }],
             "categoryField": "value",
             "chartCursor": {},
+            "columnSpacing": 10,
+            "columnWidth": 0.1,
             "balloon": {
                 "textAlign": "left"
             },
             "valueAxes": [{
-                "title": "Volume"
+                // "gridCount": 4,
+                // "labelFrequency": 10,
+                "autoGridCount": true,
             }],
             "categoryAxis": {
                 "minHorizontalGap": 100,
-                "startOnAxis": true,
+                "startOnAxis": false,
                 "showFirstLabel": false,
                 "showLastLabel": false
             },
@@ -187,7 +193,8 @@ export default class AmChart extends Component {
         // DataNew.push([dataForChart2[0,0],zeroPoint]);
         // driver.orderbook.data.asks.push({amount:0,price:zeroPoint})
         // driver.orderbook.data.bids.push({amount:0,price:zeroPoint})
-        if (withReCall) this.processData(driver.orderbook.data)
+        if (withReCall) this.processData(driver.orderbook.data);
+        console.log("driver.orderbook.data", driver.orderbook.data);
     }
 
     get isDataReady() {
@@ -203,18 +210,22 @@ export default class AmChart extends Component {
 
             }
         }), ['value']);
+        const intList = uniq(list.reduce((newList, item) => {
+            newList.push(parseInt(item.value, 10));
+           return newList;
+        }, []));
 
         // Calculate cummulative volume
         if (desc) {
+            console.log('list.length - 1', list.length - 1)
             for(let i = list.length - 1; i >= 0; i--) {
-                if (i < (list.length - 1)) {
+                    if (i < (list.length - 1)) {
                     list[i].totalvolume = list[i+1].totalvolume + list[i].volume;
-                    // console.log("total volime", list[i].totalvolume)
                 } else {
                     list[i].totalvolume = list[i].volume;
-
                 }
                 const dp = {};
+                dp['axis'] = Math.floor(list[i].value);
                 dp['value'] = list[i].value;
                 dp[type + 'volume'] = list[i].volume / list[i].value;
                 dp[type + 'totalvolume'] = list[i].totalvolume / list[i].value;
@@ -229,6 +240,7 @@ export default class AmChart extends Component {
                     list[i].totalvolume = list[i].volume;
                 }
                 const dp = {};
+                dp['axis'] = Math.floor(list[i].value);
                 dp['value'] = list[i].value;
                 dp[type + 'volume'] = list[i].volume;
                 dp[type + 'totalvolume'] = list[i].totalvolume;
@@ -238,7 +250,6 @@ export default class AmChart extends Component {
     }
 
     processData(orderbooks) {
-        // console.log('orderbooks', orderbooks);
         let {asks, bids} = orderbooks;
         this._res.length = 0;
         // if (!bids.length && !asks.length) {
@@ -249,6 +260,9 @@ export default class AmChart extends Component {
         this.dataFormatter(asks, 'asks', false);
 
         this.config = this._res;
+
+        //TODO console data
+        // console.log('this.config', JSON.stringify(this.config));
     }
 
     get config() {
@@ -260,7 +274,7 @@ export default class AmChart extends Component {
     }
 
     balloon(item, graph) {
-        console.log("item", item)
+        // console.log("item", item)
         let txt;
         if (graph.id === "asks") {
             txt = "Ask: <strong>" + this.formatNumber(item.dataContext.value, graph.chart, 4) + "</strong><br />"

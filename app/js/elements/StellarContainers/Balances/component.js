@@ -39,11 +39,11 @@ class Balances extends React.Component {
   }
 
   componentDidMount(){
-      let tableWrap = document.querySelectorAll(".balances-container > table")[0].offsetHeight;
+      // let tableWrap = document.querySelectorAll(".balances-container > table")[0].offsetHeight;
       // let tableWrapSecond = document.querySelectorAll(".balances-container > table")[1].offsetHeight;
       // console.log("tableWrapSecond", tableWrapSecond);
       setTimeout(()=>{
-          this.setState({trustFirstHeight: tableWrap});
+          // this.setState({trustFirstHeight: tableWrap});
       }, 1000);
       // console.log("tableWrap", tableWrap);
 
@@ -227,7 +227,7 @@ class Balances extends React.Component {
         if (trustline.code === value[0] && trustline.issuer === value[1]) {
           arrayItem.filter=true
         }
-      })
+      });
       if(arrayItem.filter||arrayItem.value==='XLM:null')
         return false;
       else
@@ -268,7 +268,7 @@ class Balances extends React.Component {
                 <img src={trustline.image} />
               </div>
             </Table.Cell>
-            <Table.Cell>
+            <Table.Cell className="tableTrustCell">
                 <Table.Row>
                   <div className="item-table">
                       {trustline.text.split(/\r?\n/)[0]}
@@ -281,7 +281,7 @@ class Balances extends React.Component {
             </Table.Cell>
             <Table.Cell collapsing textAlign='right'>
               <div className="item-table">
-                {window.innerWidth > 767 ? code &&
+                {this.props.canSign ? window.innerWidth > 767 ? code &&
                 <button
                   type="button"
                   className="btn green normal margin-bottom-md"
@@ -291,7 +291,7 @@ class Balances extends React.Component {
                         type="button"
                         className="btn green normal margin-bottom-md"
                         onClick={() => {this.props.createTrustline(AssetInstance(formData)), this.handleLoaderTrustlines()}}
-                    >Accept {formData.asset_code}</button> }
+                    >Accept {formData.asset_code}</button>: null }
               </div>
 
           </Table.Cell>
@@ -349,7 +349,7 @@ class Balances extends React.Component {
               placeholder="Code"
               width="5"
               maxLength={12}
-              required
+              // required
             />
             <Form.Field
               name="asset_issuer"
@@ -360,7 +360,7 @@ class Balances extends React.Component {
               maxLength={56}
               placeholder="Issuer"
               width="12"
-              required
+              // required
             />
             <Form.Button
               size="big"
@@ -396,6 +396,7 @@ class Balances extends React.Component {
   }
 
   render() {
+    // console.log("", this.props.orderbook);
     return (
       <div className='balances-container'>
         <Table fixed singleLine size="small" compact unstackable style={{height: this.state.trustFirstHeight}}>
@@ -421,7 +422,7 @@ class Balances extends React.Component {
         {this.getTrustlineForm()}
           {/*{console.log("tickersPrice", this.getBalanceRows())}*/}
         {!pageWidth() ? this.mobileTableFilter() : null}
-        {<Table celled striped>
+        {<Table celled striped className="trustTable">
             {this.state.loadingTrust ? <div className='sweet-loading'>
               <ClipLoader
                   color={'#000000'}
@@ -446,6 +447,7 @@ Balances.propTypes = {
   deleteTrustline: PropTypes.func.isRequired,
   curTab: PropTypes.func,
   trustlines: PropTypes.array,
+    orderbook: PropTypes.object
 };
 
 export default Balances;

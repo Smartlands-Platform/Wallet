@@ -5,6 +5,8 @@ import BalancesContainer from '../../../elements/StellarContainers/Balances';
 import Payment from '../../../elements/StellarContainers/Payment';
 import PaymentsViewer from '../../../elements/StellarContainers/PaymentsViewer';
 import OffersViewer from '../../../elements/StellarContainers/OffersViewer';
+import ActiveOffers from '../../../elements/StellarContainers/ActiveOffers';
+import {DEFAULT_KEY} from '../../../helpers/defaultData';
 import '../../../../styles/panel_tabs.scss';
 
 class TabsPanel extends React.Component {
@@ -29,16 +31,30 @@ class TabsPanel extends React.Component {
     //TODO Active offers comments, changed order tabs
 
     get navigation() {
-        const tabs = ['Wallet', 'Payments', 'Exchange', /*'Active offers',*/ 'Payment history', 'Token issue', 'Create account'];
-        const slides = tabs.map((tab, index) =>
-            <li key={index}
-                className={this.state.tabIndex === index ? 'active' : ''}
-                onClick={this.onSelect.bind(this, index, 'code')}>{tab}</li>
-        );
+        if(this.props.keypair.publicKey() === DEFAULT_KEY){
+            const tabs = ['Exchange'];
+            const slides = tabs.map((tab, index) =>
+                <li key={index}
+                    className={this.state.tabIndex === index ? 'active' : ''}
+                    onClick={this.onSelect.bind(this, index, 'code')}>{tab}</li>
+            );
 
-        return <ul className="tabs-list">
-            {slides}
-        </ul>;
+            return <ul className="tabs-list">
+                {slides}
+            </ul>;
+        }else{
+            const tabs = ['Wallet', 'Payments', 'Exchange', 'Active offers', 'Payments history', 'Token issue', 'Create account'];
+            const slides = tabs.map((tab, index) =>
+                <li key={index}
+                    className={this.state.tabIndex === index ? 'active' : ''}
+                    onClick={this.onSelect.bind(this, index, 'code')}>{tab}</li>
+            );
+
+            return <ul className="tabs-list">
+                {slides}
+            </ul>;
+        }
+
     }
 
     headerPanel(title) {
@@ -46,52 +62,73 @@ class TabsPanel extends React.Component {
     }
 
     get tabPanel() {
+        if(this.props.keypair.publicKey() === DEFAULT_KEY) {
+            history.pushState(null, "", location.href.split("?")[0]);
+        }
         let tabPanel;
-        switch(this.state.tabIndex) {
-            case 1:
-                tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Payments')}
-                    <Payment curCode={this.state.code} selectedIndex={this.state.tabIndex} />
-                </div>;
-                break;
-            case 2:
-                tabPanel = <div className="tab-panel">
-                    <OffersViewer canCreate={true} />
-                </div>;
-                break;
-           //  case 3:
-           //      tabPanel = <div className="tab-panel">
-           //          {this.headerPanel('Active offers')}
-           //          <OffersViewer />
-           //      </div>;
-           //      break;
-           case 3:
-                tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Payments history')}
-                    <PaymentsViewer />
-                </div>;
-                break;
-            case 4:
-                tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Token issue')}
-                    <Payment selectedIndex={this.state.tabIndex} curTab={::this.onSelect}/>
-                </div>;
-                break;
-            case 5:
-                tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Create account')}
-                    <Payment selectedIndex={this.state.tabIndex} />
-                </div>;
-                break;
-            default:
-                tabPanel = <div className="tab-panel">
-                    {this.headerPanel('Wallet balances and trustlines')}
-                    <CurrentAccount/>
-                    <BalancesContainer curTab={::this.onSelect} />
-                </div>;
+        if(this.props.keypair.publicKey() === DEFAULT_KEY){
+            switch(this.state.tabIndex) {
+                case 1:
+                    tabPanel = <div className="tab-panel">
+                        {/*{this.headerPanel('Exchange')}*/}
+                        <OffersViewer canCreate={true} curTab={::this.onSelect} />
+                    </div>;
+                    break;
+                default:
+                    tabPanel = <div className="tab-panel">
+                        {/*{this.headerPanel('Wallet balances and trustlines')}*/}
+                        <OffersViewer canCreate={true} curTab={::this.onSelect} />
+                    </div>;
+            }
+            return tabPanel;
+        }else{
+            switch(this.state.tabIndex) {
+                case 1:
+                    tabPanel = <div className="tab-panel">
+                        {this.headerPanel('Payments')}
+                        <Payment curCode={this.state.code} selectedIndex={this.state.tabIndex} />
+                    </div>;
+                    break;
+                case 2:
+                    tabPanel = <div className="tab-panel">
+                        {/*{this.headerPanel('Exchange')}*/}
+                        <OffersViewer canCreate={true} curTab={::this.onSelect} />
+                    </div>;
+                    break;
+                case 3:
+                    tabPanel = <div className="tab-panel">
+                        {this.headerPanel('Active offers')}
+                        <ActiveOffers />
+                    </div>;
+                    break;
+                case 4:
+                    tabPanel = <div className="tab-panel">
+                        {this.headerPanel('Payments history')}
+                        <PaymentsViewer />
+                    </div>;
+                    break;
+                case 5:
+                    tabPanel = <div className="tab-panel">
+                        {this.headerPanel('Token issue')}
+                        <Payment selectedIndex={this.state.tabIndex} curTab={::this.onSelect}/>
+                    </div>;
+                    break;
+                case 6:
+                    tabPanel = <div className="tab-panel">
+                        {this.headerPanel('Create account')}
+                        <Payment selectedIndex={this.state.tabIndex} curTab={::this.onSelect}/>
+                    </div>;
+                    break;
+                default:
+                    tabPanel = <div className="tab-panel">
+                        {this.headerPanel('Wallet balances and trustlines')}
+                        <CurrentAccount/>
+                        <BalancesContainer curTab={::this.onSelect} />
+                    </div>;
+            }
+            return tabPanel;
         }
 
-        return tabPanel;
     }
 
     render() {
@@ -106,6 +143,7 @@ class TabsPanel extends React.Component {
 }
 
 TabsPanel.propTypes = {
+    orderbook: PropTypes.object,
   toggle: React.PropTypes.bool,
   closeNavigation: PropTypes.func.isRequired,
 };

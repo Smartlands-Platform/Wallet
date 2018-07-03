@@ -13,14 +13,15 @@ class ErrorModal extends React.Component {
     const resultCodes = get(error, 'extras.result_codes.operations', null);
 
     return (
-      <Modal open={this.props.open}>
+      <Modal className="error_modal" open={this.props.open}>
         <Modal.Header style={{ color: 'red' }}>Operation error</Modal.Header>
         <Modal.Content >
           <Modal.Description>
             <Message negative>
-              <Message.Header>There was an error with your transaction.</Message.Header>
-              <p>{error.title}</p>
-              {error.message && <p>{error.message}</p>}
+              <Message.Header>{JSON.stringify(error, null, 2)}</Message.Header>
+              {/*<Message.Header>There was an error with your transaction.</Message.Header>*/}
+              {/*<p>{error.title}</p>*/}
+              {/*{error.message && <p>{error.message}</p>}*/}
             </Message>
             {!!resultCodes &&
               <div>
@@ -34,8 +35,8 @@ class ErrorModal extends React.Component {
                 </List>
               </div>
             }
-            JSON error:
-            <pre>{JSON.stringify(error, null, 2)}</pre>
+            {/*JSON error:*/}
+            {/*<pre>{JSON.stringify(error, null, 2)}</pre>*/}
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
