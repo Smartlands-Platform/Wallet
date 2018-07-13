@@ -39,7 +39,8 @@ class Offers extends React.Component {
             buyingData: null,
             sellData: null,
             loading: true,
-            tabIndex: 0,
+            tabIndex: 1,
+            isDisable: false,
             windowWidth: window.innerWidth,
 
             priceBuy: '',
@@ -256,7 +257,7 @@ class Offers extends React.Component {
     }
 
 
-    updateState(item, value){
+    updateState(item, value, e){
         // console.log("item");
         let state = Object.assign(this.state, {
             // Reset messages
@@ -267,21 +268,27 @@ class Offers extends React.Component {
 
         switch (item) {
             case 'price_buy':
+
                 state.priceBuy = value;
                 break;
             case 'amount_buy':
+
                 state.amountBuy = value;
                 break;
             case 'total_buy':
+
                 state.totalBuy = value;
                 break;
             case 'price_sell':
+
                 state.priceSell = value;
                 break;
             case 'amount_sell':
+
                 state.amountSell = value;
                 break;
             case 'total_sell':
+
                 state.totalSell = value;
                 break;
             default:
@@ -289,7 +296,6 @@ class Offers extends React.Component {
         }
 
         try {
-
             switch (item) {
                 case 'price_buy':
                     state.totalBuy = new BigNumber(new BigNumber(value).times(new BigNumber(state.amountBuy)).toFixed(7)).toString();
@@ -319,6 +325,7 @@ class Offers extends React.Component {
             // Invalid input somewhere
         }
         this.setState(state);
+
     };
 
     getBuyOfferTable() {
@@ -341,7 +348,7 @@ class Offers extends React.Component {
                 });
         }
         let buyOffers = getValues(OffersArray, buyingCode);
-        let sortOffersBuy = buyOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).reverse();
+        let sortOffersBuy = buyOffers.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
 
         const colSpanDefault = pageWidth() ? '3' : '2';
 
@@ -534,7 +541,6 @@ class Offers extends React.Component {
     }
     getOfferFormSell(balance) {
         const {resetAccount} = this.props;
-        // console.log("balance", balance);
         let sellBuyBTN;
         if(this.props.canSign && balance != undefined ? balance.length > 0: null){
             sellBuyBTN =<Form.Button
@@ -575,6 +581,7 @@ class Offers extends React.Component {
                                 step={STROOP}
                                 style={priceStyle}
                                 value={this.state.priceSell}
+                                onClick={()=>this.setState({isDisable: true})}
                                 onChange={(e) => this.updateState('price_sell', e.target.value)}
                                 required
                             />
@@ -589,6 +596,7 @@ class Offers extends React.Component {
                                 placeholder="0"
                                 step={STROOP}
                                 value={this.state.amountSell}
+                                onClick={()=>this.setState({isDisable: true})}
                                 onChange={(e) => this.updateState('amount_sell', e.target.value)}
                                 required
                             />
@@ -601,6 +609,7 @@ class Offers extends React.Component {
                             placeholder="1"
                             step={STROOP}
                             value={this.state.totalSell}
+                            onClick={()=>this.setState({isDisable: true})}
                             onChange={(e) => this.updateState('total_sell', e.target.value)}
                         />
 
@@ -624,11 +633,11 @@ class Offers extends React.Component {
     }
 
     get tabList() {
-        const tabs = ['Buy', 'Sell'];
-        const slides = tabs.map((tab, index) =>
-            <li key={index}
-                className={this.state.tabIndex === index + 1 ? 'active' : ''}
-                onClick={this.onSelect.bind(this, index + 1)}>{tab}</li>
+        const tabs = [{name: 'Buy', id: 1}, {name:'Sell', id: 2}];
+        const slides = tabs.map((tab) =>
+            <li key={tab.id}
+                className={this.state.tabIndex === tab.id ? 'active' : ''}
+                onClick={this.onSelect.bind(this, tab.id)}>{tab.name}</li>
         );
 
         return <ul className="tabs-nav">
@@ -697,9 +706,14 @@ class Offers extends React.Component {
         </div>;
     }
 
-    onSelect(tabIndex) {
-        this.setState({ tabIndex });
+    onSelect(tabIndex, e) {
+        if(!this.state.isDisable){
+            this.setState({ tabIndex });
+        }else if(tabIndex === 1){
+            this.setState({ isDisable: false });
+        }
     }
+
 
     get tabView() {
         return <div className="holder">

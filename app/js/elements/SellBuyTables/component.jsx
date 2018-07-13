@@ -86,6 +86,12 @@ export default class OfferTables extends React.Component {
     let sellDepth = 0;
     let cappedSellDepth = 0;
     let sellBestPrice;
+    let sortAsks = asks;
+
+    // if(asks != null){
+    //    sortAsks = asks.sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).reverse();
+    // }
+
     let sells = map(asks, (ask) => {
       if (!sellBestPrice) {
         sellBestPrice = Number(ask.price);

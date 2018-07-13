@@ -120,7 +120,6 @@ export const createOffer = offer => (dispatch, getState) => {
   dispatch(UiActions.sendingOffer());
   const authData = getAuthData(getState());
   if (!authData) return Promise.reject();
-
   return StellarOperations
     .manageOffer(offer, authData)
     .then((d) => {

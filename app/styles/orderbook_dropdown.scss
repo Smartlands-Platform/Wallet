@@ -48,8 +48,8 @@
       font-size: 12px;
     }
 
-    @media screen and (min-width: 1371px) and (max-width: 1920px){
-      font-size: 14px;
+    @media screen and (min-width: 1700px) and (max-width: 1920px){
+      font-size: 16.5px !important;
     }
   }
 }
@@ -392,6 +392,12 @@
   position: relative;
   z-index: 9;
 }
+.pages-container{
+  .panel-title{
+    margin-top: 20px !important;
+  }
+}
+
 .order-book{
   & > .ui.two.column.grid{
     & > .row{
@@ -403,7 +409,7 @@
         width: 50px;
         height: 6px;
         border: 1px solid rgba(0,0,0,0.5);
-        top: 50%;
+        top: 59%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 8;
